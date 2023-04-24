@@ -43,9 +43,7 @@ yarn start
 ```bash
 back 폴더 내부 README 참고
 ```
-commit test
-commit test 유희조 commit test
-commit test 진수현 commit test
+
 ---
 
 본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다.
