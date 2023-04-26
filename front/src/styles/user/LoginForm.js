@@ -32,6 +32,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 177px 130px 33px 95px;
+  margin-top: 57px;
 `;
 
 export const ImgBox = styled.div`
