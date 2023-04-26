@@ -4,6 +4,18 @@ import { login_required } from '../middlewares/login_required';
 
 const projectRouter = express.Router();
 
+projectRouter.get('/',
+  login_required,
+  async (req, res ,next) => {
+    console.log('userId', req.currentUserId)
+
+    const projects = await ProjectModel.find({ authorId: req.currentUserId })
+
+    console.log(projects)
+
+    res.json(projects)
+});
+
 // User project 조회
 projectRouter.get('/:id', async (req, res ,next) => {
   try {
@@ -17,6 +29,24 @@ projectRouter.get('/:id', async (req, res ,next) => {
     console.log('YHJ db/routers/projectRouter.projectRouter.get() : ' + error); // 디버깅
     next(error);
   }
+});
+
+// rest api => method + url 
+// 프로젝트 생성
+projectRouter.post('/',
+  login_required,
+  async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const { projectName, startDate, endDate, content } = req.body;
+      
+      const project = new ProjectModel({ projectName, startDate, endDate, content, userId });
+
+      await project.save();
+      res.json(project);
+    } catch (error) {
+      next(error);
+    }
 });
 
 // 프로젝트 생성
@@ -46,7 +76,8 @@ projectRouter.post('/create/:id', async (req, res, next) => {
 });
 
 // 프로젝트 수정
-projectRouter.put('/update/:id', async (req, res, next) => {
+projectRouter.put('/:project_id', // project의 object id, 즉, _id
+  async (req, res, next) => {
   try {
     const { id } = req.params;
     const { projectName, startDate, endDate, content } = req.body;
