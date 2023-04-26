@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PortfolioBox = styled.div`
   width: 100%;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 8px;
   &:hover {
     box-shadow: 0px 0px 15px 0.5px rgba(255, 255, 255, 0.2);
@@ -11,7 +11,7 @@ export const PortfolioBox = styled.div`
 
   .css-ke5b6m-MuiButtonBase-root-MuiButton-root {
     display: block;
-    margin: 20px auto;
+    margin: 20px auto 0;
   }
 `;
 
