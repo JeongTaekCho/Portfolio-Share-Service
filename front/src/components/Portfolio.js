@@ -1,10 +1,31 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
+// import { Container, Col, Row } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
+import { Container, PortfolioList, Wrap } from "../styles/Portfolio";
+import Box from "./portfolio/Box";
+
+const LIST = [
+  {
+    title: "학력",
+    url: "/education",
+  },
+  {
+    title: "수상이력",
+    url: "/education",
+  },
+  {
+    title: "프로젝트",
+    url: "/education",
+  },
+  {
+    title: "자격증",
+    url: "/education",
+  },
+];
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -52,23 +73,33 @@ function Portfolio() {
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
-          <User
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
-        </Col>
-        <Col>
+    <Wrap>
+      <Container>
+        <User portfolioOwnerId={portfolioOwner.id} isEditable={portfolioOwner.id === userState.user?.id} />
+        <PortfolioList>
+          {LIST.map((el) => (
+            <Box title={el.title} />
+          ))}
+        </PortfolioList>
+      </Container>
+    </Wrap>
+    // <Container fluid>
+    //   <Row>
+    //     <Col md="3" lg="3">
+    //       <User
+    //         portfolioOwnerId={portfolioOwner.id}
+    //         isEditable={portfolioOwner.id === userState.user?.id}
+    //       />
+    //     </Col>
+    //     <Col>
 
-          <div style={{ textAlign: "center" }}>
-            학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
-          </div>
+    //       <div style={{ textAlign: "center" }}>
+    //         학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
+    //       </div>
 
-        </Col>
-      </Row>
-    </Container>
+    //     </Col>
+    //   </Row>
+    // </Container>
   );
 }
 
