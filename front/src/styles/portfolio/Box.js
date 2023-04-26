@@ -18,5 +18,5 @@ export const PortfolioBox = styled.div`
 export const Title = styled.h2`
   font-size: 18px;
   font-weight: 500;
-  color: #9932cc;
+  color: #fff;
 `;
