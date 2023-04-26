@@ -23,12 +23,12 @@ const ProjectSchema = new Schema({
         ,required: true
         ,
     },
-    // author:{ // 참조할 User Schema
-    //     type: String
-    //     ,required: true
-    //     ,ref: 'User' // UserModel 이름
-    //     ,
-    // }
+    userId:{ // 참조할 User Schema
+        type: String
+        ,required: true
+        ,ref: 'User' // UserModel 이름
+        ,
+    }
 },
     {
         timestamps: true,    
