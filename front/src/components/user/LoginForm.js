@@ -67,7 +67,7 @@ function LoginForm() {
     <Wrap>
       <Container>
         <ImgBox>
-          <img src="/image/kkam.jpeg" />
+          <img src="/images/kkam.jpeg" />
         </ImgBox>
         <Form onSubmit={handleSubmit}>
           <Title>Login</Title>
