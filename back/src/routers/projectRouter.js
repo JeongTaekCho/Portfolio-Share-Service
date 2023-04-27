@@ -4,12 +4,27 @@ import { login_required } from '../middlewares/login_required';
 
 const projectRouter = express.Router();
 
-// User project 조회
+// project 조회
 projectRouter.get('/:id'
   ,login_required 
   ,async (req, res ,next) => {
   try {
-    const projects = await ProjectModel.findOne({userId: req.params.id});
+    const projectId = req.params.id;
+    const projects = await ProjectModel.findOne({projectId});
+
+    res.json(projects);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// User project 조회
+projectRouter.get('/user/:id'
+  ,login_required 
+  ,async (req, res ,next) => {
+  try {
+    const userId = req.params.id;
+    const projects = await ProjectModel.find({userId});
 
     res.json(projects);
   } catch (error) {
@@ -23,7 +38,7 @@ projectRouter.post('/',
   async (req, res, next) => {
     try {
       const userId = req.currentUserId; // 글쓴이
-      const { projectName, startDate, endDate, content } = req.body;
+      const { projectName, startDate, endDate, content } = req.body
       
       const project = new ProjectModel({ projectName, startDate, endDate, content, userId });
 
