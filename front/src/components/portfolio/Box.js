@@ -42,9 +42,15 @@ export default function Box({ title }) {
     <PortfolioBox>
       <Title>{title}</Title>
       {title === "학력" && educationDatas.map((education) => <EducationDetail education={education} />)}
-      {isProject && <ProjectForm setIsProject={setIsProject} />}
-      {isEducation && <EducationForm setIsEducation={setIsEducation} />}
+      {isEducation && (
+        <EducationForm
+          setIsEducation={setIsEducation}
+          educationDatas={educationDatas}
+          setEducationDatas={setEducationDatas}
+        />
+      )}
       {isAward && <AwardForm setIsAward={setIsAward} />}
+      {isProject && <ProjectForm setIsProject={setIsProject} />}
       {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} />}
       <Button variant="contained" color="success" onClick={onClickBtn}>
         {isProject || isEducation || isAward || isCertificate ? "-" : "+"}
