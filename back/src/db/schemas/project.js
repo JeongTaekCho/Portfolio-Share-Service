@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-// import { UserModel } from './user';
 
 // project schema
 const ProjectSchema = new Schema({
@@ -23,11 +22,8 @@ const ProjectSchema = new Schema({
         ,required: true
         ,
     },
-    userId:{ // 참조할 User Schema
-        type: String
-        ,required: true
-        ,ref: 'User' // UserModel 이름
-        ,
+    userId:{ // userId
+        type: String,
     }
 },
     {
