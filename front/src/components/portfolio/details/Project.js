@@ -10,7 +10,7 @@ import {
 import ProjectForm from "../forms/Project";
 import { Button } from "@mui/material";
 
-export default function EducationDetail({ project }) {
+export default function ProjectDetail({ project }) {
   const [isEditShow, setIsEditShow] = useState(false);
 
   const onClickToggleShowBtn = () => {
@@ -24,7 +24,7 @@ export default function EducationDetail({ project }) {
           <ProjectTextBox>
             <ProjectText>📄 프로젝트명: {project.projectName}</ProjectText>
             <ProjectText>
-              📆 프로젝트 기간: {project.startDate} ~ {project.endDate}
+              📆 프로젝트 기간: {project.startDate.slice(0, 10)} ~ {project.endDate.slice(0, 10)}
             </ProjectText>
           </ProjectTextBox>
           <ProjectContentBox>

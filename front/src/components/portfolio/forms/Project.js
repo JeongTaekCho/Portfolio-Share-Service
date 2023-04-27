@@ -7,10 +7,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
-import axios from "axios";
 import { post } from "../../../api";
 
-export default function ProjectForm({ setIsProject, isEdit }) {
+export default function ProjectForm({ setIsProject, getProjectData }) {
   const [projectName, setProjectName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -25,7 +24,6 @@ export default function ProjectForm({ setIsProject, isEdit }) {
       setContent(value);
     }
   };
-  const accessToken = sessionStorage.getItem("userToken");
 
   const onChangeStartDate = ({ $d }) => {
     setStartDate($d);
@@ -49,6 +47,7 @@ export default function ProjectForm({ setIsProject, isEdit }) {
         };
         const result = await post("projects", data);
         setIsProject(false);
+        getProjectData();
         alert("프로젝트가 등록되었습니다.");
       } else {
         alert("빈칸을 채워주세요.");
