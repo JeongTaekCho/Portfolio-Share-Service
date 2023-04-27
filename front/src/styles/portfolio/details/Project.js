@@ -13,7 +13,8 @@ export const ProjectBox = styled.div`
 `;
 export const ProjectTextBox = styled.div`
   display: flex;
-  gap: 40px;
+  flex-direction: column;
+  gap: 15px;
   margin-bottom: 30px;
 `;
 export const ProjectText = styled.span`
@@ -30,4 +31,14 @@ export const ProjectContent = styled.pre`
   color: #111;
   white-space: pre-wrap;
   line-height: 1.8;
+`;
+
+export const BtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  .css-ke5b6m-MuiButtonBase-root-MuiButton-root {
+    margin: 0;
+  }
 `;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  BtnBox,
   DetailWrap,
   ProjectBox,
   ProjectContent,
@@ -9,9 +10,20 @@ import {
 } from "../../../styles/portfolio/details/Project";
 import ProjectForm from "../forms/Project";
 import { Button } from "@mui/material";
+import * as Api from "../../../api";
 
 export default function ProjectDetail({ project, getProjectData }) {
   const [isEditShow, setIsEditShow] = useState(false);
+
+  const onClickDeleteProject = async () => {
+    try {
+      await Api.delete(`projects/${project._id}`);
+      getProjectData();
+      alert("프로젝트가 삭제되었습니다.");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const onClickToggleShowBtn = () => {
     setIsEditShow((prev) => !prev);
@@ -29,14 +41,24 @@ export default function ProjectDetail({ project, getProjectData }) {
           <ProjectContentBox>
             <ProjectContent>{project.content}</ProjectContent>
           </ProjectContentBox>
-          <Button
-            style={{ backgroundColor: "#999" }}
-            variant="contained"
-            color="success"
-            onClick={onClickToggleShowBtn}
-          >
-            {isEditShow ? "취소" : "수정"}
-          </Button>
+          <BtnBox>
+            <Button
+              style={{ backgroundColor: "#999" }}
+              variant="contained"
+              color="success"
+              onClick={onClickToggleShowBtn}
+            >
+              {isEditShow ? "취소" : "수정"}
+            </Button>
+            <Button
+              style={{ backgroundColor: "#f00" }}
+              variant="contained"
+              color="success"
+              onClick={onClickDeleteProject}
+            >
+              삭제
+            </Button>
+          </BtnBox>
         </ProjectBox>
       </DetailWrap>
       {isEditShow && (
