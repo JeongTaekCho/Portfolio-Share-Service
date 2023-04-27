@@ -14,7 +14,7 @@ export const Head = styled.header`
 `;
 
 export const HeadContainer = styled.div`
-  width: 960px;
+  width: 1200px;
   height: 100%;
   margin: 0 auto;
   display: flex;
