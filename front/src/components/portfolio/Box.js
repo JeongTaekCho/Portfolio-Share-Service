@@ -7,6 +7,7 @@ import EducationForm from "./forms/Education";
 import AwardForm from "./forms/Award";
 import CertificateForm from "./forms/Certificate";
 import EducationDetail from "./details/Education";
+import Project from "./details/Project";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -16,10 +17,14 @@ export default function Box({ title }) {
   const [isAward, setIsAward] = useState(false);
   const [isCertificate, setIsCertificate] = useState(false);
   const [educationDatas, setEducationDatas] = useState([]);
+  const [projectDatas, setProjectDatas] = useState([]);
 
   useEffect(() => {
     axios.get("/data/education.json").then((res) => {
       setEducationDatas(res.data);
+    });
+    axios.get("/data/project.json").then((res) => {
+      setProjectDatas(res.data);
     });
   }, []);
 
@@ -42,6 +47,7 @@ export default function Box({ title }) {
     <PortfolioBox>
       <Title>{title}</Title>
       {title === "학력" && educationDatas.map((education) => <EducationDetail education={education} />)}
+      {title === "프로젝트" && projectDatas.map((project) => <Project project={project} />)}
       {isEducation && (
         <EducationForm
           setIsEducation={setIsEducation}
