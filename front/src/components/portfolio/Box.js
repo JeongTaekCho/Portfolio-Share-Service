@@ -58,7 +58,8 @@ export default function Box({ title }) {
     <PortfolioBox>
       <Title>{title}</Title>
       {title === "학력" && educationDatas.map((education) => <EducationDetail education={education} />)}
-      {title === "프로젝트" && projectDatas?.map((project) => <Project project={project} />)}
+      {title === "프로젝트" &&
+        projectDatas?.map((project) => <Project project={project} getProjectData={getProjectData} />)}
       {isEducation && (
         <EducationForm
           setIsEducation={setIsEducation}

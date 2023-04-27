@@ -10,13 +10,12 @@ import {
 import ProjectForm from "../forms/Project";
 import { Button } from "@mui/material";
 
-export default function ProjectDetail({ project }) {
+export default function ProjectDetail({ project, getProjectData }) {
   const [isEditShow, setIsEditShow] = useState(false);
 
   const onClickToggleShowBtn = () => {
     setIsEditShow((prev) => !prev);
   };
-
   return (
     <>
       <DetailWrap>
@@ -40,7 +39,9 @@ export default function ProjectDetail({ project }) {
           </Button>
         </ProjectBox>
       </DetailWrap>
-      {isEditShow && <ProjectForm />}
+      {isEditShow && (
+        <ProjectForm project={project} onClickToggleShowBtn={onClickToggleShowBtn} getProjectData={getProjectData} />
+      )}
     </>
   );
 }
