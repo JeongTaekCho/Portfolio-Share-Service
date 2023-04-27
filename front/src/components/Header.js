@@ -30,11 +30,26 @@ function Header() {
     <Wrap>
       <Head>
         <HeadContainer>
-          <LogoBox>
+          <LogoBox
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <img src="/images/logo.png" />
           </LogoBox>
           <Navigation>
             <Menu>
+              {isLogin && (
+                <MenuList>
+                  <ListBtn
+                    onClick={() => {
+                      navigate("/network");
+                    }}
+                  >
+                    포트폴리오 공유
+                  </ListBtn>
+                </MenuList>
+              )}
               {location.pathname === "/login" && (
                 <MenuList>
                   <ListBtn
@@ -58,9 +73,7 @@ function Header() {
                 </MenuList>
               )}
 
-              <MenuList>
-                <ListBtn>로그아웃</ListBtn>
-              </MenuList>
+              <MenuList>{isLogin && <ListBtn onClick={logout}>로그아웃</ListBtn>}</MenuList>
             </Menu>
           </Navigation>
         </HeadContainer>

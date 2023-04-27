@@ -24,8 +24,13 @@ export const HeadContainer = styled.div`
 
 export const LogoBox = styled.div`
   width: 95px;
+  cursor: pointer;
   img {
     width: 100%;
+  }
+  &:hover img {
+    transform: scale(1.2);
+    transition: 0.2s;
   }
 `;
 
