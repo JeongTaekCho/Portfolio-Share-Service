@@ -34,12 +34,15 @@ export default function Box({ title }) {
     const result = await get(`projects/user/${userInfo?.id}`);
     setProjectDatas(result.data);
   };
+  const getEducationData = async () => {
+    const result = await get(`educations/user/${userInfo?.id}`);
+    setEducationDatas(result.data);
+  };
 
   useEffect(() => {
     getProjectData();
+    getEducationData();
   }, [userInfo]);
-
-  console.log(projectDatas);
 
   const onClickBtn = () => {
     if (title === "프로젝트") {
