@@ -67,13 +67,29 @@ function LoginForm() {
     <Wrap>
       <Container>
         <ImgBox>
-          <img src="/image/kkam.jpeg" />
+          <img src="/images/kkam.jpeg" />
         </ImgBox>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Title>Login</Title>
-          <TextField id="outlined-basic" label="Email" variant="outlined" />
-          <TextField id="outlined-basic" label="Password" variant="outlined" />
-          <Button variant="contained" size="large">
+          <TextField
+            id="outlined-basic"
+            label="Email"
+            variant="outlined"
+            type="email"
+            autoComplete="on"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Password"
+            variant="outlined"
+            type="password"
+            autoComplete="on"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button variant="contained" size="large" type="submit" disabled={!isFormValid}>
             Login
           </Button>
         </Form>
