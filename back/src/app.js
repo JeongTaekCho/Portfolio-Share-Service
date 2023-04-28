@@ -2,8 +2,9 @@ import cors from "cors";
 import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
-import { ProjectModel } from "./db/schemas/project";
+
 import projectRouter from "./routers/projectRouter";
+import {awardRouter} from "./routers/awardRouter";
 
 import { educationRouter } from "./routers/educationRouter";
 
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 app.use(userAuthRouter);
 app.use('/educations', educationRouter);
 app.use('/projects',projectRouter);
+app.use('/awards',awardRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
