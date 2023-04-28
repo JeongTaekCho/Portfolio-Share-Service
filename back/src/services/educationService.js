@@ -2,9 +2,9 @@ import  EducationModel  from "../db/schemas/educaion";
 import { v4 as uuidv4 } from "uuid";
 
 export default class EducationService {
-  static createEducation = async (school, major, position) => {
+  static createEducation = async (userId, school, major, position) => {
     const educationId = uuidv4();
-    const education = new EducationModel({ school, major, position });
+    const education = new EducationModel({userId, educationId, school, major, position });
     console.log("education :", education)
     await education.save();
     return education;

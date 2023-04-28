@@ -6,8 +6,10 @@ const educationRouter = Router();
 
 educationRouter.post("/", login_required, async (req, res, next) => {
   try {
+
+    const userId = req.currentUserId;
     const { school, major, position } = req.body;
-    const education = await EducationService.createEducation(school, major, position);
+    const education = await EducationService.createEducation(userId, school, major, position);
     res.status(201).json(education)
 
   } catch (error) {
