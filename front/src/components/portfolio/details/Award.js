@@ -5,8 +5,8 @@ export default function AwardDetail({ award }) {
   return (
     <DetailWrap>
       <AwardBox>
-        <AwardText>🏆 수상이름: 국제 우주선 만들기 대상</AwardText>
-        <AwardText>📅 수상날짜: 2023-04-05</AwardText>
+        <AwardText>🏆 수상이름: {award?.awardName}</AwardText>
+        <AwardText>📅 수상날짜: {award?.date.slice(0, 10)}</AwardText>
       </AwardBox>
     </DetailWrap>
   );
