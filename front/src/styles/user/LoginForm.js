@@ -32,6 +32,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 177px 130px 33px 95px;
+  margin-top: 57px;
 `;
 
 export const ImgBox = styled.div`
@@ -60,5 +61,6 @@ export const Title = styled.span`
   text-align: center;
   width: 100%;
   display: block;
-  padding-bottom: 54px;
+  padding-bottom: 30px;
+  font-weight: 300;
 `;
