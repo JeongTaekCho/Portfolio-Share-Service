@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { get } from "../../api";
 import AwardDetail from "./details/Award";
 import CertificateDetail from "./details/Certificate";
+import { useLocation, useNavigate, useNavigation } from "react-router-dom";
 
 export default function Box({ title }) {
   const [isProject, setIsProject] = useState(false);
@@ -22,6 +23,8 @@ export default function Box({ title }) {
   const [projectDatas, setProjectDatas] = useState([]);
   const [awardDatas, setAwardDatas] = useState([]);
   const [userInfo, setUserInfo] = useState();
+
+  const location = useLocation();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -69,8 +72,6 @@ export default function Box({ title }) {
     }
   };
 
-  console.log(projectDatas);
-
   return (
     <PortfolioBox>
       <Title>{title}</Title>
@@ -86,13 +87,17 @@ export default function Box({ title }) {
       {title === "수상이력" && awardDatas.map((award) => <AwardDetail />)}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
       {title === "프로젝트" &&
-        projectDatas?.map((project) => <Project project={project} getProjectData={getProjectData} />)}
+        projectDatas?.map((project) => (
+          <Project project={project} getProjectData={getProjectData} userId={userInfo.id} />
+        ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
       {title === "자격증" && <CertificateDetail />}
       {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} />}
-      <Button variant="contained" color="success" onClick={onClickBtn}>
-        {isProject || isEducation || isAward || isCertificate ? "-" : "+"}
-      </Button>
+      {location.pathname === "/" && (
+        <Button variant="contained" color="success" onClick={onClickBtn}>
+          {isProject || isEducation || isAward || isCertificate ? "-" : "+"}
+        </Button>
+      )}
     </PortfolioBox>
   );
 }
