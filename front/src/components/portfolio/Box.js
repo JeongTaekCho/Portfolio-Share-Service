@@ -20,6 +20,7 @@ export default function Box({ title }) {
   const [isCertificate, setIsCertificate] = useState(false);
   const [educationDatas, setEducationDatas] = useState([]);
   const [projectDatas, setProjectDatas] = useState([]);
+  const [awardDatas, setAwardDatas] = useState([]);
   const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
@@ -34,15 +35,24 @@ export default function Box({ title }) {
     const result = await get(`projects/user/${userInfo?.id}`);
     setProjectDatas(result.data);
   };
+
   const getEducationData = async () => {
     const result = await get(`educations/user/${userInfo?.id}`);
     setEducationDatas(result.data);
   };
 
+  const getAwardData = async () => {
+    const result = await get(`awards/user/${userInfo?.id}`);
+    setAwardDatas(result.data);
+  };
+
   useEffect(() => {
     getProjectData();
     getEducationData();
+    getAwardData();
   }, [userInfo]);
+
+  console.log(awardDatas);
 
   const onClickBtn = () => {
     if (title === "프로젝트") {
@@ -70,7 +80,8 @@ export default function Box({ title }) {
           setEducationDatas={setEducationDatas}
         />
       )}
-      {title === "수상이력" && <AwardDetail />}
+
+      {title === "수상이력" && awardDatas.map((award) => <AwardDetail />)}
       {isAward && <AwardForm setIsAward={setIsAward} />}
       {title === "프로젝트" &&
         projectDatas?.map((project) => <Project project={project} getProjectData={getProjectData} />)}
