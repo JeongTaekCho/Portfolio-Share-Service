@@ -12,8 +12,8 @@ import dayjs from "dayjs";
 
 export default function ProjectForm({ setIsProject, getProjectData, project, onClickToggleShowBtn }) {
   const [projectName, setProjectName] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [content, setContent] = useState("");
 
   useEffect(() => {
