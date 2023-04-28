@@ -18,3 +18,13 @@ export const AwardText = styled.span`
   font-weight: 400;
   color: #111;
 `;
+
+export const BtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  .css-ke5b6m-MuiButtonBase-root-MuiButton-root {
+    margin: 0;
+  }
+`;

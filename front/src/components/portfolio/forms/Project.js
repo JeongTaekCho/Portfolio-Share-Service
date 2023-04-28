@@ -46,6 +46,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
     setIsProject(false);
   };
 
+  //겹치는 API리팩토링 예정
   const onClickAddProject = async () => {
     try {
       if (projectName && startDate && endDate && content) {
@@ -67,6 +68,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
     }
   };
 
+  //겹치는 API리팩토링 예정
   const onClickEditProject = async () => {
     try {
       if (projectName && startDate && endDate && content) {

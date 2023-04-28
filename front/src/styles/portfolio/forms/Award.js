@@ -5,6 +5,7 @@ export const Form = styled.form`
   padding: 30px;
   background-color: #fff;
   border-radius: 8px;
+  margin-bottom: 20px;
 
   .css-ekfslj-MuiFormControl-root-MuiTextField-root {
     width: 100%;
