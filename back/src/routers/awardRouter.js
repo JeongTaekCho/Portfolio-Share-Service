@@ -53,7 +53,9 @@ awardRouter.get("/:awardId"
   }
 });
 
-awardRouter.get("/user/:id", async function (req, res, next) {
+awardRouter.get("/user/:id"
+,login_required
+,async function (req, res, next) {
   try {
     const userId = req.params.id;
     const awards = await AwardService.getAwards({ userId });
