@@ -17,7 +17,7 @@ export const Wrap = styled.div`
   background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
   background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
   background: linear-gradient(-135deg, #c850c0, #4158d0);
-`;
+`
 
 export const Container = styled.div`
   width: 960px;
@@ -31,36 +31,49 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 177px 130px 33px 95px;
+  padding: 100px 130px 100px 95px;
   margin-top: 57px;
-`;
-
+`
 export const ImgBox = styled.div`
-  width: 316px;
+  width: 300px;
+  padding-top: 50px;
   img {
     width: 100%;
   }
 `;
 
-export const Form = styled.form`
+  
+export const Title = styled.span`
+  font-family: Poppins-Bold;
+  font-size: 40px;
+  color: black;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  display: block;
+  padding-bottom: 50px;
+  font-weight: 700;
+  `;
+
+
+  export const Form = styled.form`
   width: 290px;
   .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
     width: 100%;
     margin-bottom: 20px;
   }
-  .css-jh47zj-MuiButtonBase-root-MuiButton-root {
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
     width: 100%;
+    margin-bottom: 20px;
   }
-`;
-
-export const Title = styled.span`
-  font-family: Poppins-Bold;
-  font-size: 24px;
-  color: #333;
-  line-height: 1.2;
-  text-align: center;
-  width: 100%;
-  display: block;
-  padding-bottom: 30px;
-  font-weight: 300;
-`;
+  .css-10botns-MuiInputBase-input-MuiFilledInput-input{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .css-sghohy-MuiButtonBase-root-MuiButton-root{
+    width: 100%;
+    margin-top: 20px;
+    font-family: Poppins-Bold;
+    font-weight: 550;
+  }
+  `;
