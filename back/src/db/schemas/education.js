@@ -6,7 +6,6 @@ const educationSchema = new Schema(
       type: String,
       required: true,
     },
-    // educationId : 학력 추가 시 프론트에서 넘겨주는 educaiton의 고유id
     educationId: {  
       type: String,
       //required: true,
@@ -23,8 +22,6 @@ const educationSchema = new Schema(
       type: String,
       required: true,
     },
-    
-    
   },
   {
     timestamps: true,
@@ -39,4 +36,4 @@ const educationSchema = new Schema(
 
 const EducationModel = model("EducationModel", educationSchema);
 
-export default EducationModel;
+export { EducationModel };

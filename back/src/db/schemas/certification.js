@@ -9,7 +9,7 @@ const CertificationSchema = new Schema(
     },
     certificationId: {
       type: String,
-      required: true,
+      //required: true,
     },
     certificationName: {
       type: String,

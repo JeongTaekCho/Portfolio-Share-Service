@@ -2,33 +2,38 @@ import { EducationModel } from "../schemas/education";
 
 class Education {
   // 학력 생성
-  static async create({ newEducation }) {
+  static async create( newEducation ) {
+      console.log('newEducation model: ',newEducation);
       const createdNewEducation = await EducationModel.create(newEducation);
       return createdNewEducation;
   }
   // 학력 검색
-  static async findAllById({ userId }) {
+  static async findByUserId({ userId }) {
+      console.log('userId: ',userId);
       const educations = await EducationModel.find({ userId });
       return educations;
   }
   // 개인 학력 검색
-  static async findByEducationId({ educationId }) {
-      const education = await EducationModel.findOne({ educationId });
+  static async findById({ educationId }) {
+      console.log('educationId: ',educationId);
+      const education = await EducationModel.findById(educationId);
       return education;
   }
   
   // update
-  static async update(educationId, fieldToUpdate, newValue) {
-    const updatedEducation = await EducationModel.findByIdAndUpdate( 
-        educationId,  // filter
-        { [fieldToUpdate]: newValue }, // update
-        { new: true } // option
+  static async update({ educationId, school, major, position }) {
+    const updatedAward = await EducationModel.updateOne(
+      {_id:awardId}
+      ,{ educationId, school, major, position }
+      ,{new: true}
     );
-    return updatedEducation
+
+    return updatedAward;
   }
 
-  static async delete({ educationId }) {
-      await EducationModel.findOneAndDelete({ educationId });
+
+  static async deleteById({ educationId }) {
+      await EducationModel.findByIdAndDelete({ educationId });
       return;
   }
 }

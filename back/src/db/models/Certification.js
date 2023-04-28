@@ -1,26 +1,28 @@
-import { CertificateModel } from "../schemas/certificate";
+import { CertificationModel } from "../schemas/certification";
 
 class Certification {
-  static async create({ newcertification }) {
-    const createdNewCertification = await CertificateModel.create(newcertification);
+  static async create( newcertification ) {
+    console.log('newcertification: ',newcertification);
+    const createdNewCertification = await CertificationModel.create(newcertification);
     return createdNewCertification;
   }
 
-  static async findById({ certificationId }) {
-    const certification = await CertificateModel.findById(acertificationId);
-    console.log(certificationId);
+  static async findById({certificationId}) {
+    const certification = await CertificationModel.findById(certificationId);
+    console.log('certification: ',certification);
     return certification;
   }
 
-  static async findByUserId({ userId }) {
-    const certification = await CertificateModel.find({ userId });
+  static async findByUserId({userId}) {
+    const certification = await CertificationModel.find({ userId });
+    console.log('userId certification: ',certification);
     return certification;
   }
 
-  static async update({ certificationId, certificationName, date }) {
-    const update = await CertificateModel.updateOne(
+  static async update({ certificationId, certificationName, description, date }) {
+    const update = await CertificationModel.updateOne(
       {_id:certificationId}
-      ,{certificationName,date}
+      ,{certificationName, description, date}
       ,{new: true}
     );
 
@@ -28,7 +30,7 @@ class Certification {
   }
 
   static async deleteById(certificateId) {
-    await CertificateModel.findByIdAndDelete(certificateId);
+    await CertificationModel.findByIdAndDelete(certificateId);
   }
 }
 

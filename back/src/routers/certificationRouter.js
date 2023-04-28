@@ -6,27 +6,20 @@ import { CertificationService } from "../services/certificationService";
 const certificationRouter = express.Router();
 
 // certification 생성
-certificationRouter.post("/"
-,login_required
-,async function (req, res, next) {
+certificationRouter.post("/", login_required ,async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-
     const userId = req.currentUserId;
     console.log(userId);
-    const { certificationName, date} = req.body;
-
+    const { certificationName, description, date} = req.body;
     const newCertification = await CertificationService.addCertification({
-      certificationName
-      ,date
-      ,userId
-      ,
+      userId, certificationName, description, date
     });
-
+    console.log('newCertification ',newCertification);
     res.json(newCertification);
   } catch (error) {
     next(error);
@@ -34,13 +27,11 @@ certificationRouter.post("/"
 });
 
 // certification 조회
-CertificationRouter.get("/:id"
-,login_required
-,async function (req, res, next) {
+certificationRouter.get("/:id" ,login_required ,async function (req, res, next) {
   try {
     const certificationId = req.params.id;
     console.log(certificationId);
-    const certification = await CertificationService.getcertification({ certificationId });
+    const certification = await CertificationService.getCertification({ certificationId });
 
     if (certification.errorMessage) {
       throw new Error(certification.errorMessage);
@@ -52,28 +43,22 @@ CertificationRouter.get("/:id"
   }
 });
 
-certificationRouter.get("/user/:id"
-,login_required
-,async function (req, res, next) {
+certificationRouter.get("/user/:id", login_required, async function (req, res, next) {
   try {
     const userId = req.params.id;
-    const certifications = await CertificationService.getCertification({ userId });
+    const certifications = await CertificationService.getCertifications({ userId });
     res.json(certifications);
   } catch (error) {
     next(error);
   }
 });
 
-certificationRouter.put("/:certificationId"
-,login_required
-,async function (req, res, next) {
+certificationRouter.put("/:certificationId", login_required, async function (req, res, next) {
   try {
     const { certificationId } = req.params;
     // const userId = req.currentUserId;
-
-    const {certificationName, date} = req.body;
-
-    const certification = await CertificationService.setCertification({ certificationId, certificationName, date});
+    const {certificationName, description, date} = req.body;
+    const certification = await CertificationService.setCertification({ certificationId, certificationName, description, date});
 
     if (certification.errorMessage) {
       throw new Error(certification.errorMessage);
@@ -85,20 +70,18 @@ certificationRouter.put("/:certificationId"
   }
 });
 
-certificationRouter.delete("/:id"
-,login_required
-, async function (req, res, next) {
+certificationRouter.delete("/:id", login_required, async function (req, res, next) {
   try {
     const certificationId = req.params.id;
-    console.log('certificationRouter certificationId : ', certificationId);
-
-    const result = await CertificationService.deleteCertification(certificationId);
-
-    if (result.errorMessage) {
-      throw new Error(result.errorMessage);
-    }
-
-    res.json({ message: '프로젝트 삭제 완료' });
+    if (certificationId){
+      res.status(201).json({ message: "certification 삭제 완료" });
+      const result = await CertificationService.deleteCertification(certificationId);
+      
+      if (result.errorMessage) {
+        throw new Error(result.errorMessage);
+      }
+    } 
+    else res.status(401).json({ message: "삭제할 수 없습니다." });
   } catch (error) {
     next(error);
   }
