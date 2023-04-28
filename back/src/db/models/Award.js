@@ -17,23 +17,18 @@ class Award {
     return awards;
   }
 
-  static async update({ awardId, fieldToUpdate, newValue }) {
-    const filter = { id: awardId };
-    const update = { [fieldToUpdate]: newValue };
-    const option = { returnOriginal: false };
-
-    const updatedAward = await AwardModel.findOneAndUpdate(
-      filter,
-      update,
-      option
+  static async update({ awardId, awardName, date }) {
+    const updatedAward = await AwardModel.updateOne(
+      {_id:awardId}
+      ,{awardName,date}
+      ,{new: true}
     );
+
     return updatedAward;
   }
 
-  static async deleteById({ awardId }) {
-    const deleteResult = await AwardModel.deleteOne({ id: awardId });
-    const isDataDeleted = deleteResult.deletedCount === 1;
-    return isDataDeleted;
+  static async deleteById(awardId) {
+    await AwardModel.findByIdAndDelete(awardId);
   }
 }
 

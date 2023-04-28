@@ -76,7 +76,7 @@ projectRouter.put("/:id"
     const userId = req.currentUserId;
     console.log('projectRouter projectId : ',projectId);
     const { projectName,startDate,endDate,content } = req.body;
-    const project = await ProjectService.setProject({ projectId, projectName, startDate, endDate, content, userId });
+    const project = await ProjectService.setProject({ projectId, projectName, startDate, endDate, content });
     console.log('projectRouter project: ', project);
 
     if (project.errorMessage) {
