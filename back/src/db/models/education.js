@@ -17,17 +17,14 @@ class Education {
       return education;
   }
   
+  // update
   static async update(educationId, fieldToUpdate, newValue) {
-      const filter = { educationId };
-      const update = { [fieldToUpdate]: newValue };
-      const option = { returnOriginal : false };
-
-      const updatedEducation = await EducationModel.findOneAndUpdate(
-          filter,
-          update,
-          option
-      );
-      return updatedEducation;
+    const updatedEducation = await EducationModel.findByIdAndUpdate( 
+        educationId,  // filter
+        { [fieldToUpdate]: newValue }, // update
+        { new: true } // option
+    );
+    return updatedEducation
   }
 
   static async delete({ educationId }) {
