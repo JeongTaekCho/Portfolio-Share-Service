@@ -68,20 +68,16 @@ projectRouter.post("/"
 });
 
 // 프로젝트 수정
-projectRouter.put("/:projectId"
+projectRouter.put("/:id"
 ,login_required
 ,async function (req, res, next) {
   try {
-    const { projectId } = req.params;
-    //const userId = req.currentUserId;
-    const projectName = req.body.projectName ?? null;
-    const startDate = req.body.startDate ?? null;
-    const endDate = req.body.endDate ?? null;
-    const content = req.body.content ?? null;
-
-    const toUpdate = { projectName, startDate, endDate, content };
-
-    const project = await ProjectService.setProject({ projectId, toUpdate });
+    const projectId = req.params.id;
+    const userId = req.currentUserId;
+    console.log('projectRouter projectId : ',projectId);
+    const { projectName,startDate,endDate,content } = req.body;
+    const project = await ProjectService.setProject({ projectId, projectName, startDate, endDate, content, userId });
+    console.log('projectRouter project: ', project);
 
     if (project.errorMessage) {
       throw new Error(project.errorMessage);
@@ -94,13 +90,14 @@ projectRouter.put("/:projectId"
 });
 
 // 프로젝트 삭제
-projectRouter.delete("/:projectId"
+projectRouter.delete("/:id"
 ,login_required
 , async function (req, res, next) {
   try {
-    const { projectId } = req.params;
+    const projectId = req.params.id;
+    console.log(projectId);
 
-    const result = await ProjectService.deleteProject({ projectId });
+    const result = await ProjectService.deleteProject(projectId);
 
     if (result.errorMessage) {
       throw new Error(result.errorMessage);
