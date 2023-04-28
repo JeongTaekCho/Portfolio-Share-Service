@@ -1,81 +1,112 @@
-import express from 'express';
-import { ProjectModel } from '../db/schemas/project';
-import { login_required } from '../middlewares/login_required';
+import is from "@sindresorhus/is";
+import express from "express";
+import { login_required } from "../middlewares/login_required";
+import { ProjectService } from "../services/projectService";
 
 const projectRouter = express.Router();
 
 // project 조회
-projectRouter.get('/:id'
-  ,login_required 
-  ,async (req, res ,next) => {
+projectRouter.get("/:id"
+,login_required
+,async function (req, res, next) {
   try {
     const projectId = req.params.id;
-    const projects = await ProjectModel.findOne({projectId});
+    console.log(projectId);
+    const project = await ProjectService.getProject({ projectId });
 
-    res.json(projects);
+    if (project.errorMessage) {
+      throw new Error(project.errorMessage);
+    }
+    res.json(project);
+
   } catch (error) {
     next(error);
   }
 });
 
 // User project 조회
-projectRouter.get('/user/:id'
-  ,login_required 
-  ,async (req, res ,next) => {
+projectRouter.get("/user/:id"
+,login_required
+,async function (req, res, next) {
   try {
     const userId = req.params.id;
-    const projects = await ProjectModel.find({userId});
-
+    const projects = await ProjectService.getProjects({ userId });
     res.json(projects);
   } catch (error) {
     next(error);
   }
 });
 
-// 프로젝트 생성
-projectRouter.post('/',
-  login_required,
-  async (req, res, next) => {
-    try {
-      const userId = req.currentUserId; // 글쓴이
-      const { projectName, startDate, endDate, content } = req.body
-      
-      const project = new ProjectModel({ projectName, startDate, endDate, content, userId });
 
-      await project.save();
-      res.json(project);
-    } catch (error) {
-      next(error);
+// 프로젝트 생성
+projectRouter.post("/"
+,login_required
+,async function (req, res, next) {
+  try {
+    if (is.emptyObject(req.body)) {
+      throw new Error(
+        "headers의 Content-Type을 application/json으로 설정해주세요"
+      );
     }
+
+    const userId = req.currentId;
+    const { projectName, startDate, endDate, content } = req.body;
+
+    const newProject = await ProjectService.addProject({
+      projectName
+      ,startDate
+      ,endDate
+      ,content
+      ,userId
+      ,
+    });
+
+    res.json(newProject);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // 프로젝트 수정
-projectRouter.put('/:projectId'
-  ,login_required
-  ,async (req, res, next) => {
+projectRouter.put("/:projectId"
+,login_required
+,async function (req, res, next) {
   try {
     const { projectId } = req.params;
-    const userId = req.currentUserId;
-    const { projectName, startDate, endDate, content } = req.body;
+    // const userId = req.currentUserId;
+    const projectName = req.body.projectName ?? null;
+    const startDate = req.body.startDate ?? null;
+    const endDate = req.body.endDate ?? null;
+    const content = req.body.content ?? null;
 
-    const updatedProject = await ProjectModel.findByIdAndUpdate(projectId, { projectName, startDate, endDate, content,userId}, { new: true }); // new: true -> 수정 후 project를 반환
+    const toUpdate = { projectName, startDate, endDate, content };
 
-    res.json({ project: updatedProject });
+    const project = await ProjectService.setProject({ projectId, toUpdate });
+
+    if (project.errorMessage) {
+      throw new Error(project.errorMessage);
+    }
+
+    res.json(project);
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
 
 // 프로젝트 삭제
-projectRouter.delete('/:projectId' 
-  ,login_required
-  ,async (req, res, next) => {
+projectRouter.delete("/:projectId"
+,login_required
+, async function (req, res, next) {
   try {
     const { projectId } = req.params;
 
-    await ProjectModel.findByIdAndDelete(projectId);
-    res.json({ message: '프로젝트 삭제 완료' });
+    const result = await ProjectService.deleteProject({ projectId });
+
+    if (result.errorMessage) {
+      throw new Error(result.errorMessage);
+    }
+
+    res.json({ message: 'project 삭제 완료' });
   } catch (error) {
     next(error);
   }
