@@ -16,14 +16,13 @@ awardRouter.post("/"
       );
     }
 
-    const userId = req.currentId;
-    const { awardName, date, organization, content } = req.body;
+    const userId = req.currentUserId;
+    console.log(userId);
+    const { awardName, date} = req.body;
 
     const newAward = await AwardService.addAward({
       awardName
       ,date
-      ,organization
-      ,content
       ,userId
       ,
     });
@@ -35,12 +34,12 @@ awardRouter.post("/"
 });
 
 // award 조회
-awardRouter.get("/:awardId"
+awardRouter.get("/:id"
 ,login_required
 ,async function (req, res, next) {
   try {
     const awardId = req.params.id;
-
+    console.log(awardId);
     const award = await AwardService.getAward({ awardId });
 
     if (award.errorMessage) {
@@ -73,10 +72,8 @@ awardRouter.put("/:awardId"
     // const userId = req.currentUserId;
     const awardName = req.body.awardName ?? null;
     const date = req.body.date ?? null;
-    const organization = req.body.organization ?? null;
-    const content = req.body.content ?? null;
 
-    const toUpdate = { awardName, date, organization, content };
+    const toUpdate = { awardName, date};
 
     const award = await AwardService.setAward({ awardId, toUpdate });
 

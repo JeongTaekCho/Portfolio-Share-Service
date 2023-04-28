@@ -1,8 +1,8 @@
 import { Award } from "../db/models/Award"; 
 
 class AwardService {
-  static async addAward({ awardName, date, organization, content, userId }) {
-    const newAward = { awardName, date, organization, content, userId };
+  static async addAward({ awardName, date, userId }) {
+    const newAward = { awardName, date, userId };
 
     const createdNewAward = await Award.create({ newAward });
 
@@ -10,7 +10,7 @@ class AwardService {
   }
 
   static async getAward({ awardId }) {
-
+    console.log(awardId)
     const award = await Award.findById({ awardId });
     if (!award) {
       const errorMessage =
@@ -47,18 +47,6 @@ class AwardService {
         const newValue = toUpdate.date;
         award = await Award.update({ awardId, fieldToUpdate, newValue });
       }
-
-    if (toUpdate.organization) {
-      const fieldToUpdate = "organization";
-      const newValue = toUpdate.organization;
-      award = await Award.update({ awardId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.content) {
-      const fieldToUpdate = "content";
-      const newValue = toUpdate.content;
-      award = await Award.update({ awardId, fieldToUpdate, newValue });
-    }
 
     return award;
   }

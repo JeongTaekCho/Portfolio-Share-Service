@@ -12,19 +12,9 @@ const AwardSchema = new Schema({
         ,required: true
         ,
     },
-    organization:{ // award 발급 기관
-        type: String
-        ,required: true
-        ,
-    }
-    ,
-    content :{ // award 설명
-        type: String
-        ,required: true
-        ,
-    }, 
     userId:{ // userId
         type: String,
+        required:true,
     },
 },
     {

@@ -49,7 +49,7 @@ projectRouter.post("/"
       );
     }
 
-    const userId = req.currentId;
+    const userId = req.currentUserId
     const { projectName, startDate, endDate, content } = req.body;
 
     const newProject = await ProjectService.addProject({
@@ -73,7 +73,7 @@ projectRouter.put("/:projectId"
 ,async function (req, res, next) {
   try {
     const { projectId } = req.params;
-    // const userId = req.currentUserId;
+    //const userId = req.currentUserId;
     const projectName = req.body.projectName ?? null;
     const startDate = req.body.startDate ?? null;
     const endDate = req.body.endDate ?? null;

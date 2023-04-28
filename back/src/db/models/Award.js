@@ -8,6 +8,7 @@ class Award {
 
   static async findById({ awardId }) {
     const award = await AwardModel.findById(awardId);
+    console.log(awardId);
     return award;
   }
 
