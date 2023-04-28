@@ -69,6 +69,8 @@ export default function Box({ title }) {
     }
   };
 
+  console.log(projectDatas);
+
   return (
     <PortfolioBox>
       <Title>{title}</Title>
@@ -82,7 +84,7 @@ export default function Box({ title }) {
       )}
 
       {title === "수상이력" && awardDatas.map((award) => <AwardDetail />)}
-      {isAward && <AwardForm setIsAward={setIsAward} />}
+      {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
       {title === "프로젝트" &&
         projectDatas?.map((project) => <Project project={project} getProjectData={getProjectData} />)}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}

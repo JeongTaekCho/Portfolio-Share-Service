@@ -19,8 +19,8 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
   useEffect(() => {
     if (project) {
       setProjectName(project?.projectName);
-      setStartDate(dayjs(project?.startDate));
-      setEndDate(dayjs(project?.endDate));
+      setStartDate(dayjs(project?.startDate, "ko-kr"));
+      setEndDate(dayjs(project?.endDate, "ko-kr"));
       setContent(project?.content);
     }
   }, []);
