@@ -4,7 +4,7 @@ const educationSchema = new Schema(
   {
     userId: {
       type: String,
-      //required: true,
+      required: true,
     },
     // educationId : 학력 추가 시 프론트에서 넘겨주는 educaiton의 고유id
     educationId: {  

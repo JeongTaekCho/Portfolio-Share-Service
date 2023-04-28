@@ -24,6 +24,7 @@ const ProjectSchema = new Schema({
     },
     userId:{ // userId
         type: String,
+        required:true,
     }
 },
     {
