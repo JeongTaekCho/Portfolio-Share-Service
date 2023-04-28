@@ -11,6 +11,7 @@ import Project from "./details/Project";
 import { useEffect } from "react";
 import { get } from "../../api";
 import AwardDetail from "./details/Award";
+import CertificateDetail from "./details/Certificate";
 
 export default function Box({ title }) {
   const [isProject, setIsProject] = useState(false);
@@ -67,11 +68,11 @@ export default function Box({ title }) {
         />
       )}
       {title === "수상이력" && <AwardDetail />}
-
       {isAward && <AwardForm setIsAward={setIsAward} />}
       {title === "프로젝트" &&
         projectDatas?.map((project) => <Project project={project} getProjectData={getProjectData} />)}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
+      {title === "자격증" && <CertificateDetail />}
       {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} />}
       <Button variant="contained" color="success" onClick={onClickBtn}>
         {isProject || isEducation || isAward || isCertificate ? "-" : "+"}
