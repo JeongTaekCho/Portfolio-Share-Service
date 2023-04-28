@@ -12,7 +12,7 @@ import ProjectForm from "../forms/Project";
 import { Button } from "@mui/material";
 import * as Api from "../../../api";
 
-export default function ProjectDetail({ project, getProjectData }) {
+export default function ProjectDetail({ project, getProjectData, userId }) {
   const [isEditShow, setIsEditShow] = useState(false);
 
   const onClickDeleteProject = async () => {
@@ -41,24 +41,26 @@ export default function ProjectDetail({ project, getProjectData }) {
           <ProjectContentBox>
             <ProjectContent>{project.content}</ProjectContent>
           </ProjectContentBox>
-          <BtnBox>
-            <Button
-              style={{ backgroundColor: "#999" }}
-              variant="contained"
-              color="success"
-              onClick={onClickToggleShowBtn}
-            >
-              {isEditShow ? "취소" : "수정"}
-            </Button>
-            <Button
-              style={{ backgroundColor: "#f00" }}
-              variant="contained"
-              color="success"
-              onClick={onClickDeleteProject}
-            >
-              삭제
-            </Button>
-          </BtnBox>
+          {project.userId === userId && (
+            <BtnBox>
+              <Button
+                style={{ backgroundColor: "#999" }}
+                variant="contained"
+                color="success"
+                onClick={onClickToggleShowBtn}
+              >
+                {isEditShow ? "취소" : "수정"}
+              </Button>
+              <Button
+                style={{ backgroundColor: "#f00" }}
+                variant="contained"
+                color="success"
+                onClick={onClickDeleteProject}
+              >
+                삭제
+              </Button>
+            </BtnBox>
+          )}
         </ProjectBox>
       </DetailWrap>
       {isEditShow && (
