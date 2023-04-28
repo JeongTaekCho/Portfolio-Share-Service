@@ -42,14 +42,7 @@ class ProjectService {
 
   static async deleteProject(projectId) {
     console.log(projectId);
-    const isDataDeleted = await Project.deleteById(projectId);
-
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!isDataDeleted) {
-      const errorMessage =
-        "해당 id를 가진 project 데이터는 없습니다.";
-      return { errorMessage };
-    }
+    await Project.deleteById(projectId);
 
     return { status: "ok" };
   }

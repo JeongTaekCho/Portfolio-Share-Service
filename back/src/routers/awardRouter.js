@@ -70,12 +70,10 @@ awardRouter.put("/:awardId"
   try {
     const { awardId } = req.params;
     // const userId = req.currentUserId;
-    const awardName = req.body.awardName ?? null;
-    const date = req.body.date ?? null;
 
-    const toUpdate = { awardName, date};
+    const {awardName, date} = req.body;
 
-    const award = await AwardService.setAward({ awardId, toUpdate });
+    const award = await AwardService.setAward({ awardId, awardName, date});
 
     if (award.errorMessage) {
       throw new Error(award.errorMessage);
@@ -87,13 +85,14 @@ awardRouter.put("/:awardId"
   }
 });
 
-awardRouter.delete("/:awardId"
+awardRouter.delete("/:id"
 ,login_required
 , async function (req, res, next) {
   try {
-    const { awardId } = req.params;
+    const awardId = req.params.id;
+    console.log('awardRouter awaridId : ', awardId);
 
-    const result = await AwardService.deleteAward({ awardId });
+    const result = await AwardService.deleteAward(awardId);
 
     if (result.errorMessage) {
       throw new Error(result.errorMessage);
