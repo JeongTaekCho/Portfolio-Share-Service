@@ -84,7 +84,8 @@ export default function Box({ title }) {
         />
       )}
 
-      {title === "수상이력" && awardDatas.map((award) => <AwardDetail award={award} />)}
+      {title === "수상이력" &&
+        awardDatas.map((award) => <AwardDetail award={award} getAwardData={getAwardData} userId={userInfo.id} />)}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
       {title === "프로젝트" &&
         projectDatas?.map((project) => (
