@@ -17,23 +17,18 @@ class Project {
     return projects;
   }
 
-  static async update({ projectId, fieldToUpdate, newValue }) {
-    const filter = { id: projectId };
-    const update = { [fieldToUpdate]: newValue };
-    const option = { returnOriginal: false };
+  static async update({ projectId, projectName,startDate,endDate,content }) {
+    const updatedProject = await ProjectModel.updateOne(
+      {_id:projectId}
+      ,{projectName,startDate,endDate,content}
+      ,{new: true});
 
-    const updatedProject = await ProjectModel.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
     return updatedProject;
   }
 
-  static async deleteById({ projectId }) {
-    const deleteResult = await ProjectModel.deleteOne({ id: projectId });
-    const isDataDeleted = deleteResult.deletedCount === 1;
-    return isDataDeleted;
+  static async deleteById(projectId) {
+    console.log(projectId);
+    await ProjectModel.findByIdAndDelete(projectId);
   }
 }
 

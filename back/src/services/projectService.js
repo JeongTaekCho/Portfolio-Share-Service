@@ -25,8 +25,9 @@ class ProjectService {
     return projects;
   }
 
-  static async setProject({ projectId, toUpdate }) {
-    let project = await Project.findById({ projectId });
+  static async setProject({ projectId, projectName,startDate,endDate,content }) {
+    let project = await Project.findById({projectId});
+    console.log('projectService : ', project);
 
     if (!project) {
       const errorMessage =
@@ -34,36 +35,14 @@ class ProjectService {
       return { errorMessage };
     }
 
-    // 업데이트 대상의 값이 null 이 아니라면 업데이트 진행
-    if (toUpdate.projectName) {
-      const fieldToUpdate = "projectName";
-      const newValue = toUpdate.projectName;
-      project = await Project.update({ projectId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.startDate) {
-        const fieldToUpdate = "startDate";
-        const newValue = toUpdate.startDate;
-        project = await Project.update({ projectId, fieldToUpdate, newValue });
-      }
-
-    if (toUpdate.endDate) {
-      const fieldToUpdate = "endDate";
-      const newValue = toUpdate.endDate;
-      project = await Project.update({ projectId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.content) {
-      const fieldToUpdate = "content";
-      const newValue = toUpdate.content;
-      project = await Project.update({ projectId, fieldToUpdate, newValue });
-    }
+    project = await Project.update({projectId,projectName,startDate,endDate,content})
 
     return project;
   }
 
-  static async deleteProject({ projectId }) {
-    const isDataDeleted = await Project.deleteById({ projectId });
+  static async deleteProject(projectId) {
+    console.log(projectId);
+    const isDataDeleted = await Project.deleteById(projectId);
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!isDataDeleted) {
