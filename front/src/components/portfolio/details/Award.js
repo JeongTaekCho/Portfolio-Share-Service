@@ -7,7 +7,7 @@ import * as Api from "../../../api";
 export default function AwardDetail({ award, userId, getAwardData }) {
   const [isEditShow, setIsEditShow] = useState(false);
 
-  //겹치는 API리팩토링 예정
+  //겹치는 API리팩토링 예정.
   const onClickDeleteAward = async () => {
     try {
       await Api.delete(`awards/${award._id}`);
