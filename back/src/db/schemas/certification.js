@@ -7,10 +7,6 @@ const CertificationSchema = new Schema(
       type: String,
       required: true,
     },
-    certificationId: {
-      type: String,
-      //required: true,
-    },
     certificationName: {
       type: String,
       required: true,

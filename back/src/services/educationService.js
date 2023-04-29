@@ -6,6 +6,7 @@ class EducationService {
   static async addEducation({ userId, school, major, position }) {
     const newEducation = { userId, school, major, position };
     const createdNewEducation = await Education.create(newEducation);
+    createdNewEducation.errorMessage = null;
     return createdNewEducation;
   }
   
@@ -25,16 +26,33 @@ class EducationService {
     return educations;
   }
 
-  static async setEducation({ educationId, school, major, position }) {
-    let check = await Education.findById({ educationId });
+  static async setEducation({ educationId, toUpdate }) {
+    let education = await Education.findById({ educationId });
 
-    if (!check) {
+    if (!education) {
       const errorMessage =
         "해당 id를 가진 education 데이터는 없습니다.";
       return { errorMessage };
     }
+    
+    if (toUpdate.school) {
+      const fieldToUpdate = "school";
+      const newValue = toUpdate.school;
+      education = await Education.update({ educationId, fieldToUpdate, newValue });
+    }
 
-    const education = await Education.update({educationId, school, major, position})
+    if (toUpdate.major) {
+      const fieldToUpdate = "major";
+      const newValue = toUpdate.major;
+      education = await Education.update({ educationId, fieldToUpdate, newValue });
+    }
+
+    if (toUpdate.position) {
+      const fieldToUpdate = "position";
+      const newValue = toUpdate.position;
+      education = await Education.update({ educationId, fieldToUpdate, newValue });
+    }
+
     return education;
   }
   
