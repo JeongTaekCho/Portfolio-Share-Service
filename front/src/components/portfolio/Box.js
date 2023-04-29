@@ -34,6 +34,7 @@ export default function Box({ title }) {
     getUserInfo();
   }, []);
 
+  // 중복되는 API 수정 예정
   const getProjectData = async () => {
     const result = await get(`projects/user/${userInfo?.id}`);
     setProjectDatas(result.data);
@@ -75,7 +76,10 @@ export default function Box({ title }) {
   return (
     <PortfolioBox>
       <Title>{title}</Title>
-      {title === "학력" && educationDatas.map((education) => <EducationDetail education={education} />)}
+      {title === "학력" &&
+        educationDatas.map((education) => (
+          <EducationDetail education={education} userId={userInfo.id} getEducationData={getEducationData} />
+        ))}
       {isEducation && (
         <EducationForm
           setIsEducation={setIsEducation}
