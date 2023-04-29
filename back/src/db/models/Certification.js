@@ -21,7 +21,7 @@ class Certification {
   }
   // update
   static async update({ certificationId, certificationName, description, date }) {
-    const update = await CertificationModel.updateOne(
+    const update = await CertificationModel.findOneAndUpdate(
       {_id:certificationId}
       ,{certificationName, description, date}
       ,{new: true}

@@ -21,17 +21,13 @@ class Education {
   }
   
   // update
-  static async update({ educationId, fieldToUpdate, newValue }) {
-    const filter = { id: educationId };
-    const update = { [fieldToUpdate]: newValue };
-    const option = { returnOriginal: false };
+  static async update({ educationId, school, major, position }) {
+    const updatedEducation = await EducationModel.findOneAndUpdate(
+      {_id:educationId}
+      ,{school, major, position}
+      ,{new: true});
 
-    const updatedUser = await EducationModel.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
-    return updatedUser;
+    return updatedEducation;
   }
 
 
