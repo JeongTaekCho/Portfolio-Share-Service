@@ -19,8 +19,13 @@ certificationRouter.post("/", login_required ,async function (req, res, next) {
     const newCertification = await CertificationService.addCertification({
       userId, certificationName, description, date
     });
+
+    if (newCertification.errorMessage) {
+      throw new Error(newCertification.errorMessage);
+    }
+
     console.log('newCertification ',newCertification);
-    res.json(newCertification);
+    res.status(201).json(newCertification);
   } catch (error) {
     next(error);
   }
@@ -56,8 +61,7 @@ certificationRouter.get("/user/:id", login_required, async function (req, res, n
 certificationRouter.put("/:certificationId", login_required, async function (req, res, next) {
   try {
     const { certificationId } = req.params;
-    // const userId = req.currentUserId;
-    const {certificationName, description, date} = req.body;
+    const { certificationName, description, date } = req.body;
     const certification = await CertificationService.setCertification({ certificationId, certificationName, description, date});
 
     if (certification.errorMessage) {
@@ -81,7 +85,7 @@ certificationRouter.delete("/:id", login_required, async function (req, res, nex
         throw new Error(result.errorMessage);
       }
     } 
-    else res.status(401).json({ message: "삭제할 수 없습니다." });
+    else res.status(400).json({ message: "certificationId는 필수값입니다." });
   } catch (error) {
     next(error);
   }

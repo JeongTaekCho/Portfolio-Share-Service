@@ -21,19 +21,22 @@ class Education {
   }
   
   // update
-  static async update({ educationId, school, major, position }) {
-    const updatedAward = await EducationModel.updateOne(
-      {_id:awardId}
-      ,{ educationId, school, major, position }
-      ,{new: true}
-    );
+  static async update({ educationId, fieldToUpdate, newValue }) {
+    const filter = { id: educationId };
+    const update = { [fieldToUpdate]: newValue };
+    const option = { returnOriginal: false };
 
-    return updatedAward;
+    const updatedUser = await EducationModel.findOneAndUpdate(
+      filter,
+      update,
+      option
+    );
+    return updatedUser;
   }
 
 
-  static async deleteById({ educationId }) {
-      await EducationModel.findByIdAndDelete({ educationId });
+  static async deleteById( educationId ) {
+      await EducationModel.findByIdAndDelete(educationId );
       return;
   }
 }
