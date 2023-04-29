@@ -80,7 +80,7 @@ export default function Box({ title }) {
         <EducationForm
           setIsEducation={setIsEducation}
           educationDatas={educationDatas}
-          setEducationDatas={setEducationDatas}
+          getEducationData={getEducationData}
         />
       )}
 

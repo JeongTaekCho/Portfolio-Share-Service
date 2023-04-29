@@ -7,7 +7,7 @@ export default function EducationDetail({ education }) {
       <EducationBox>
         <EducationText>🖍️ 학교: {education.school}</EducationText>
         <EducationText>
-          📖 전공: {education.major} / {education.status}
+          📖 전공: {education.major} / {education.position}
         </EducationText>
       </EducationBox>
     </DetailWrap>
