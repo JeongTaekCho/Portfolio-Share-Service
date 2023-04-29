@@ -23,7 +23,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
       setEndDate(dayjs(project?.endDate, "ko-kr"));
       setContent(project?.content);
     }
-  }, []);
+  }, [project]);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
