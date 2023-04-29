@@ -29,6 +29,7 @@ export default function EducationForm({ setIsEducation, educationDatas, getEduca
     }
   };
 
+  // 중복되는 API 수정예정
   const onSubmitBtn = async (e) => {
     e.preventDefault();
     try {
