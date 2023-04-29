@@ -26,35 +26,21 @@ class EducationService {
     return educations;
   }
 
-  static async setEducation({ educationId, toUpdate }) {
-    let education = await Education.findById({ educationId });
+  static async setEducation({ educationId, school, major, position }) {
+    let education = await Education.findById({educationId});
+    console.log('educationService : ', education);
 
     if (!education) {
       const errorMessage =
         "해당 id를 가진 education 데이터는 없습니다.";
       return { errorMessage };
     }
-    
-    if (toUpdate.school) {
-      const fieldToUpdate = "school";
-      const newValue = toUpdate.school;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.major) {
-      const fieldToUpdate = "major";
-      const newValue = toUpdate.major;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
-    }
-
-    if (toUpdate.position) {
-      const fieldToUpdate = "position";
-      const newValue = toUpdate.position;
-      education = await Education.update({ educationId, fieldToUpdate, newValue });
-    }
+    education = await Education.update({ educationId, school, major, position })
 
     return education;
   }
+
+
   
   static async deleteEducation(educationId) {
     await Education.deleteById(educationId);

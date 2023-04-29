@@ -6,7 +6,9 @@ import { CertificationService } from "../services/certificationService";
 const certificationRouter = express.Router();
 
 // certification 생성
-certificationRouter.post("/", login_required ,async function (req, res, next) {
+certificationRouter.post("/"
+,login_required
+,async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -32,7 +34,9 @@ certificationRouter.post("/", login_required ,async function (req, res, next) {
 });
 
 // certification 조회
-certificationRouter.get("/:id" ,login_required ,async function (req, res, next) {
+certificationRouter.get("/:id"
+,login_required
+,async function (req, res, next) {
   try {
     const certificationId = req.params.id;
     console.log(certificationId);
@@ -48,7 +52,9 @@ certificationRouter.get("/:id" ,login_required ,async function (req, res, next) 
   }
 });
 
-certificationRouter.get("/user/:id", login_required, async function (req, res, next) {
+certificationRouter.get("/user/:id"
+,login_required
+,async function (req, res, next) {
   try {
     const userId = req.params.id;
     const certifications = await CertificationService.getCertifications({ userId });
@@ -58,9 +64,11 @@ certificationRouter.get("/user/:id", login_required, async function (req, res, n
   }
 });
 
-certificationRouter.put("/:certificationId", login_required, async function (req, res, next) {
+certificationRouter.put("/:id"
+,login_required
+,async function (req, res, next) {
   try {
-    const { certificationId } = req.params;
+    const  certificationId = req.params.id;
     const { certificationName, description, date } = req.body;
     const certification = await CertificationService.setCertification({ certificationId, certificationName, description, date});
 
@@ -74,7 +82,9 @@ certificationRouter.put("/:certificationId", login_required, async function (req
   }
 });
 
-certificationRouter.delete("/:id", login_required, async function (req, res, next) {
+certificationRouter.delete("/:id"
+,login_required
+,async function (req, res, next) {
   try {
     const certificationId = req.params.id;
     if (certificationId){
