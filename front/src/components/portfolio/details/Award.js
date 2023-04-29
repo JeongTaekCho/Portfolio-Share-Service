@@ -10,7 +10,7 @@ export default function AwardDetail({ award, userId, getAwardData }) {
   //겹치는 API리팩토링 예정
   const onClickDeleteAward = async () => {
     try {
-      await Api.delete(`projects/${award._id}`);
+      await Api.delete(`awards/${award._id}`);
       getAwardData();
       alert("수상이력이 삭제되었습니다.");
     } catch (err) {

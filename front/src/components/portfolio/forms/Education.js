@@ -6,11 +6,12 @@ import Radio from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import FormControl from "@mui/joy/FormControl";
 import { useState } from "react";
+import { post } from "../../../api";
 
-export default function EducationForm({ setIsEducation, educationDatas, setEducationDatas }) {
+export default function EducationForm({ setIsEducation, educationDatas, getEducationData }) {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
-  const [status, setStatus] = useState("");
+  const [position, setPosition] = useState("");
 
   const onClickCancelForm = () => {
     setIsEducation(false);
@@ -23,21 +24,23 @@ export default function EducationForm({ setIsEducation, educationDatas, setEduca
       setSchool(value);
     } else if (name === "major") {
       setMajor(value);
-    } else if (name === "status") {
-      setStatus(value);
+    } else if (name === "position") {
+      setPosition(value);
     }
   };
 
-  const onSubmitBtn = (e) => {
+  // 중복되는 API 수정예정
+  const onSubmitBtn = async (e) => {
     e.preventDefault();
     try {
       const data = {
         school,
         major,
-        status,
+        position,
       };
-      if (school !== "" && major !== "" && status !== "") {
-        setEducationDatas([...educationDatas, data]);
+      if (school !== "" && major !== "" && position !== "") {
+        const result = await post("educations", data);
+        getEducationData();
         setIsEducation(false);
       } else {
         alert("빈칸을 입력해주세요.");
@@ -65,11 +68,11 @@ export default function EducationForm({ setIsEducation, educationDatas, setEduca
       />
       <FormControl>
         <RadioGroup defaultValue="medium" name="radio-buttons-group">
-          <Radio value="재학중" name="status" label="재학중" size="md" onChange={onChangeValue} />
-          <Radio value="고등학교 졸업" name="status" label="고등학교 졸업" size="md" onChange={onChangeValue} />
-          <Radio value="학사 졸업" name="status" label="학사 졸업" size="md" onChange={onChangeValue} />
-          <Radio value="석사 졸업" name="status" label="석사 졸업" size="md" onChange={onChangeValue} />
-          <Radio value="박사 졸업" name="status" label="박사 졸업" size="md" onChange={onChangeValue} />
+          <Radio value="재학중" name="position" label="재학중" size="md" onChange={onChangeValue} />
+          <Radio value="고등학교 졸업" name="position" label="고등학교 졸업" size="md" onChange={onChangeValue} />
+          <Radio value="학사 졸업" name="position" label="학사 졸업" size="md" onChange={onChangeValue} />
+          <Radio value="석사 졸업" name="position" label="석사 졸업" size="md" onChange={onChangeValue} />
+          <Radio value="박사 졸업" name="position" label="박사 졸업" size="md" onChange={onChangeValue} />
         </RadioGroup>
       </FormControl>
 
