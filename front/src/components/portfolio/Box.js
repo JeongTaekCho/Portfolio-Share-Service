@@ -25,6 +25,9 @@ export default function Box({ title }) {
   const [userInfo, setUserInfo] = useState();
 
   const location = useLocation();
+  const pathname = location.pathname.slice(7);
+
+  console.log(pathname);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -36,17 +39,17 @@ export default function Box({ title }) {
 
   // 중복되는 API 수정 예정
   const getProjectData = async () => {
-    const result = await get(`projects/user/${userInfo?.id}`);
+    const result = await get(`projects/user/${pathname || userInfo?.id}`);
     setProjectDatas(result.data);
   };
 
   const getEducationData = async () => {
-    const result = await get(`educations/user/${userInfo?.id}`);
+    const result = await get(`educations/user/${pathname || userInfo?.id}`);
     setEducationDatas(result.data);
   };
 
   const getAwardData = async () => {
-    const result = await get(`awards/user/${userInfo?.id}`);
+    const result = await get(`awards/user/${pathname || userInfo?.id}`);
     setAwardDatas(result.data);
   };
 
@@ -54,7 +57,7 @@ export default function Box({ title }) {
     getProjectData();
     getEducationData();
     getAwardData();
-  }, [userInfo]);
+  }, [userInfo, location.pathname]);
 
   console.log(awardDatas);
 
@@ -78,7 +81,7 @@ export default function Box({ title }) {
       <Title>{title}</Title>
       {title === "학력" &&
         educationDatas.map((education) => (
-          <EducationDetail education={education} userId={userInfo.id} getEducationData={getEducationData} />
+          <EducationDetail education={education} userId={userInfo?.id} getEducationData={getEducationData} />
         ))}
       {isEducation && (
         <EducationForm
@@ -89,11 +92,11 @@ export default function Box({ title }) {
       )}
 
       {title === "수상이력" &&
-        awardDatas.map((award) => <AwardDetail award={award} getAwardData={getAwardData} userId={userInfo.id} />)}
+        awardDatas.map((award) => <AwardDetail award={award} getAwardData={getAwardData} userId={userInfo?.id} />)}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
       {title === "프로젝트" &&
         projectDatas?.map((project) => (
-          <Project project={project} getProjectData={getProjectData} userId={userInfo.id} />
+          <Project project={project} getProjectData={getProjectData} userId={userInfo?.id} />
         ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
       {title === "자격증" && <CertificateDetail />}
