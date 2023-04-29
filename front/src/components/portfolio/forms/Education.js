@@ -59,7 +59,8 @@ export default function EducationForm({ setIsEducation, education, getEducationD
   };
 
   //겹치는 API리팩토링 예정
-  const onClickEditEducation = async () => {
+  const onClickEditEducation = async (e) => {
+    e.preventDefault();
     try {
       if (school && major && position) {
         const data = {
