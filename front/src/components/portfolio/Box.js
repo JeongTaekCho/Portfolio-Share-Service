@@ -34,6 +34,7 @@ export default function Box({ title }) {
     getUserInfo();
   }, []);
 
+  // 중복되는 API 수정 예정
   const getProjectData = async () => {
     const result = await get(`projects/user/${userInfo?.id}`);
     setProjectDatas(result.data);
