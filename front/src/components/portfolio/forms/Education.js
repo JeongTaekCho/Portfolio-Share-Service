@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BtnBox, Form } from "../../../styles/portfolio/forms/Education";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/joy/Button";
@@ -6,12 +6,20 @@ import Radio from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
 import FormControl from "@mui/joy/FormControl";
 import { useState } from "react";
-import { post } from "../../../api";
+import { post, put } from "../../../api";
 
-export default function EducationForm({ setIsEducation, educationDatas, getEducationData }) {
+export default function EducationForm({ setIsEducation, education, getEducationData, onClickToggleShowBtn }) {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [position, setPosition] = useState("");
+
+  useEffect(() => {
+    if (education) {
+      setSchool(education?.school);
+      setMajor(education?.major);
+      setPosition(education?.position);
+    }
+  }, []);
 
   const onClickCancelForm = () => {
     setIsEducation(false);
@@ -49,14 +57,36 @@ export default function EducationForm({ setIsEducation, educationDatas, getEduca
     }
   };
 
+  //겹치는 API리팩토링 예정
+  const onClickEditEducation = async () => {
+    try {
+      if (school && major && position) {
+        const data = {
+          school,
+          major,
+          position,
+        };
+        const result = await put(`educations/${education._id}`, data);
+        getEducationData();
+        onClickToggleShowBtn();
+        alert("학력정보가 수정되었습니다.");
+      } else {
+        alert("빈칸을 채워주세요.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <Form onSubmit={onSubmitBtn}>
+    <Form onSubmit={education ? onClickEditEducation : onSubmitBtn}>
       <TextField
         label="학교명"
         name="school"
         id="outlined-start-adornment"
         sx={{ m: 1, width: "25ch" }}
         onChange={onChangeValue}
+        value={school}
       />
       <TextField
         label="전공"
@@ -64,20 +94,56 @@ export default function EducationForm({ setIsEducation, educationDatas, getEduca
         id="outlined-start-adornment"
         sx={{ m: 1, width: "25ch" }}
         onChange={onChangeValue}
+        value={major}
       />
       <FormControl>
         <RadioGroup defaultValue="medium" name="radio-buttons-group">
-          <Radio value="재학중" name="position" label="재학중" size="md" onChange={onChangeValue} />
-          <Radio value="고등학교 졸업" name="position" label="고등학교 졸업" size="md" onChange={onChangeValue} />
-          <Radio value="학사 졸업" name="position" label="학사 졸업" size="md" onChange={onChangeValue} />
-          <Radio value="석사 졸업" name="position" label="석사 졸업" size="md" onChange={onChangeValue} />
-          <Radio value="박사 졸업" name="position" label="박사 졸업" size="md" onChange={onChangeValue} />
+          <Radio
+            value="재학중"
+            name="position"
+            label="재학중"
+            size="md"
+            onChange={onChangeValue}
+            checked={position === "재학중"}
+          />
+          <Radio
+            value="고등학교 졸업"
+            name="position"
+            label="고등학교 졸업"
+            size="md"
+            onChange={onChangeValue}
+            checked={position === "고등학교 졸업"}
+          />
+          <Radio
+            value="학사 졸업"
+            name="position"
+            label="학사 졸업"
+            size="md"
+            onChange={onChangeValue}
+            checked={position === "학사 졸업"}
+          />
+          <Radio
+            value="석사 졸업"
+            name="position"
+            label="석사 졸업"
+            size="md"
+            onChange={onChangeValue}
+            checked={position === "석사 졸업"}
+          />
+          <Radio
+            value="박사 졸업"
+            name="position"
+            label="박사 졸업"
+            size="md"
+            onChange={onChangeValue}
+            checked={position === "박사 졸업"}
+          />
         </RadioGroup>
       </FormControl>
 
       <BtnBox>
-        <Button type="submit">등록</Button>
-        <Button className="cancelBtn" onClick={onClickCancelForm}>
+        <Button type="submit">{education ? "수정" : "등록"}</Button>
+        <Button className="cancelBtn" onClick={education ? onClickToggleShowBtn : onClickCancelForm}>
           취소
         </Button>
       </BtnBox>
