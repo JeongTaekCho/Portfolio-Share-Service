@@ -7,6 +7,7 @@ import * as Api from "../api";
 import User from "./user/User";
 import { Container, PortfolioList, Wrap } from "../styles/Portfolio";
 import Box from "./portfolio/Box";
+import Loading from "./Loading";
 
 const LIST = [
   {
@@ -53,7 +54,7 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Loading />;
   }
 
   return (
