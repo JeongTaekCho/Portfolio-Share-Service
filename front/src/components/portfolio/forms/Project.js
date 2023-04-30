@@ -12,15 +12,15 @@ import dayjs from "dayjs";
 
 export default function ProjectForm({ setIsProject, getProjectData, project, onClickToggleShowBtn }) {
   const [projectName, setProjectName] = useState("");
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [content, setContent] = useState("");
 
   useEffect(() => {
     if (project) {
       setProjectName(project?.projectName);
-      setStartDate(dayjs(project?.startDate, "ko-kr"));
-      setEndDate(dayjs(project?.endDate, "ko-kr"));
+      setStartDate(dayjs(project?.startDate));
+      setEndDate(dayjs(project?.endDate));
       setContent(project?.content);
     }
   }, [project]);
@@ -46,7 +46,6 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
     setIsProject(false);
   };
 
-  //겹치는 API리팩토링 예정
   const onClickAddProject = async () => {
     try {
       if (projectName && startDate && endDate && content) {
@@ -56,7 +55,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
           endDate,
           content,
         };
-        const result = await post("projects", data);
+        await post("projects", data);
         setIsProject(false);
         getProjectData();
         alert("프로젝트가 등록되었습니다.");
@@ -68,7 +67,6 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
     }
   };
 
-  //겹치는 API리팩토링 예정
   const onClickEditProject = async () => {
     try {
       if (projectName && startDate && endDate && content) {
@@ -78,7 +76,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
           endDate,
           content,
         };
-        const result = await put(`projects/${project._id}`, data);
+        await put(`projects/${project._id}`, data);
         onClickToggleShowBtn();
         getProjectData();
         alert("프로젝트가 수정되었습니다.");

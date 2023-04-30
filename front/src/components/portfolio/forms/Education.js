@@ -37,7 +37,6 @@ export default function EducationForm({ setIsEducation, education, getEducationD
     }
   };
 
-  // 중복되는 API 수정예정
   const onSubmitBtn = async (e) => {
     e.preventDefault();
     try {
@@ -47,7 +46,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
         position,
       };
       if (school !== "" && major !== "" && position !== "") {
-        const result = await post("educations", data);
+        await post("educations", data);
         getEducationData();
         setIsEducation(false);
       } else {
@@ -58,7 +57,6 @@ export default function EducationForm({ setIsEducation, education, getEducationD
     }
   };
 
-  //겹치는 API리팩토링 예정
   const onClickEditEducation = async (e) => {
     e.preventDefault();
     try {
@@ -68,7 +66,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
           major,
           position,
         };
-        const result = await put(`educations/${education._id}`, data);
+        await put(`educations/${education._id}`, data);
         getEducationData();
         onClickToggleShowBtn();
         alert("학력정보가 수정되었습니다.");

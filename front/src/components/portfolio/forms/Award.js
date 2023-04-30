@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowBtn, award }) {
   const [awardName, setAwardName] = useState("");
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(null);
 
   useEffect(() => {
     if (award) {
@@ -28,7 +28,6 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
     setDate($d);
   };
 
-  //겹치는 API리팩토링 예정
   const onClickAddAward = async (e) => {
     e.preventDefault();
     try {
@@ -38,7 +37,7 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
           date,
         };
 
-        const result = await post("awards", data);
+        await post("awards", data);
         getAwardData();
         setIsAward(false);
         alert("수상이력이 등록되었습니다.");
@@ -50,7 +49,6 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
     }
   };
 
-  //겹치는 API리팩토링 예정
   const onClickEditAward = async () => {
     try {
       if (awardName && date) {
@@ -58,7 +56,7 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
           awardName,
           date,
         };
-        const result = await put(`awards/${award._id}`, data);
+        await put(`awards/${award._id}`, data);
         onClickToggleShowBtn();
         getAwardData();
         alert("수상이력이 수정되었습니다.");
