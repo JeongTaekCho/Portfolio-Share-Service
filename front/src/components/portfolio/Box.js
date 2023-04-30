@@ -9,10 +9,10 @@ import CertificateForm from "./forms/Certificate";
 import EducationDetail from "./details/Education";
 import Project from "./details/Project";
 import { useEffect } from "react";
-import { get } from "../../api";
 import AwardDetail from "./details/Award";
 import CertificateDetail from "./details/Certificate";
 import { useLocation } from "react-router-dom";
+import { getData } from "../../hooks/getData";
 
 const TITLE = {
   education: "학력",
@@ -36,26 +36,23 @@ export default function Box({ title, mvp }) {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      const result = await get("user/current");
-      setUserInfo(result.data);
+      setUserInfo(await getData("user/current"));
     };
     getUserInfo();
   }, []);
 
   // 중복되는 API 수정 예정
+
   const getProjectData = async () => {
-    const result = await get(`projects/user/${pathname || userInfo?.id}`);
-    setProjectDatas(result.data);
+    setProjectDatas(await getData(`projects/user/${pathname || userInfo?.id}`));
   };
 
   const getEducationData = async () => {
-    const result = await get(`educations/user/${pathname || userInfo?.id}`);
-    setEducationDatas(result.data);
+    setEducationDatas(await getData(`educations/user/${pathname || userInfo?.id}`));
   };
 
   const getAwardData = async () => {
-    const result = await get(`awards/user/${pathname || userInfo?.id}`);
-    setAwardDatas(result.data);
+    setAwardDatas(await getData(`awards/user/${pathname || userInfo?.id}`));
   };
 
   useEffect(() => {
@@ -83,7 +80,7 @@ export default function Box({ title, mvp }) {
     <PortfolioBox>
       <Title>{title}</Title>
       {title === TITLE.education &&
-        educationDatas.map((education) => (
+        educationDatas?.map((education) => (
           <EducationDetail education={education} userId={userInfo?.id} getEducationData={getEducationData} />
         ))}
       {isEducation && (
@@ -95,7 +92,7 @@ export default function Box({ title, mvp }) {
       )}
 
       {title === TITLE.award &&
-        awardDatas.map((award) => <AwardDetail award={award} getAwardData={getAwardData} userId={userInfo?.id} />)}
+        awardDatas?.map((award) => <AwardDetail award={award} getAwardData={getAwardData} userId={userInfo?.id} />)}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
       {title === TITLE.project &&
         projectDatas?.map((project) => (
