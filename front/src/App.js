@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useReducer, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { StyleProvider } from "@ant-design/cssinjs";
 
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
@@ -53,17 +54,19 @@ function App() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" exact element={<Portfolio />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/register" element={<RegisterForm />} />
-            <Route path="/users/:userId" element={<Portfolio />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="*" element={<Portfolio />} />
-          </Routes>
-        </Router>
+        <StyleProvider hashPriority="high">
+          <Router>
+            <Header />
+            <Routes>
+              <Route path="/" exact element={<Portfolio />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/users/:userId" element={<Portfolio />} />
+              <Route path="/network" element={<Network />} />
+              <Route path="*" element={<Portfolio />} />
+            </Routes>
+          </Router>
+        </StyleProvider>
       </UserStateContext.Provider>
     </DispatchContext.Provider>
   );

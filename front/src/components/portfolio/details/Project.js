@@ -11,6 +11,7 @@ import {
 import ProjectForm from "../forms/Project";
 import { Button } from "@mui/material";
 import * as Api from "../../../api";
+import { errorModal, successModal } from "../../modals/AlertModal";
 
 export default function ProjectDetail({ project, getProjectData, userId }) {
   const [isEditShow, setIsEditShow] = useState(false);
@@ -19,9 +20,9 @@ export default function ProjectDetail({ project, getProjectData, userId }) {
     try {
       await Api.delete(`projects/${project._id}`);
       getProjectData();
-      alert("프로젝트가 삭제되었습니다.");
+      successModal("프로젝트가 삭제되었습니다.");
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 

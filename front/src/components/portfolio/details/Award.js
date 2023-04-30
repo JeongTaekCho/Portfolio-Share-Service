@@ -3,6 +3,7 @@ import { AwardBox, AwardText, BtnBox, DetailWrap } from "../../../styles/portfol
 import { Button } from "@mui/material";
 import AwardForm from "../forms/Award";
 import * as Api from "../../../api";
+import { errorModal, successModal } from "../../modals/AlertModal";
 
 export default function AwardDetail({ award, userId, getAwardData }) {
   const [isEditShow, setIsEditShow] = useState(false);
@@ -11,9 +12,9 @@ export default function AwardDetail({ award, userId, getAwardData }) {
     try {
       await Api.delete(`awards/${award._id}`);
       getAwardData();
-      alert("수상이력이 삭제되었습니다.");
+      successModal("수상이력이 삭제되었습니다.");
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 

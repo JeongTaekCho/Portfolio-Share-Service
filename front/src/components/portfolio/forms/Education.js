@@ -7,6 +7,7 @@ import RadioGroup from "@mui/joy/RadioGroup";
 import FormControl from "@mui/joy/FormControl";
 import { useState } from "react";
 import { post, put } from "../../../api";
+import { errorModal, successModal } from "../../modals/AlertModal";
 
 export default function EducationForm({ setIsEducation, education, getEducationData, onClickToggleShowBtn }) {
   const [school, setSchool] = useState("");
@@ -48,12 +49,13 @@ export default function EducationForm({ setIsEducation, education, getEducationD
       if (school !== "" && major !== "" && position !== "") {
         await post("educations", data);
         getEducationData();
+        successModal("학력정보가 등록되었습니다.");
         setIsEducation(false);
       } else {
-        alert("빈칸을 입력해주세요.");
+        errorModal("빈칸을 입력해주세요.");
       }
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 
@@ -69,12 +71,12 @@ export default function EducationForm({ setIsEducation, education, getEducationD
         await put(`educations/${education._id}`, data);
         getEducationData();
         onClickToggleShowBtn();
-        alert("학력정보가 수정되었습니다.");
+        successModal("학력정보가 수정되었습니다.");
       } else {
-        alert("빈칸을 채워주세요.");
+        errorModal("빈칸을 입력해주세요.");
       }
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 

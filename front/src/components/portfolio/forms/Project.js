@@ -9,6 +9,7 @@ import Textarea from "@mui/joy/Textarea";
 import Button from "@mui/joy/Button";
 import { post, put } from "../../../api";
 import dayjs from "dayjs";
+import { errorModal, successModal } from "../../modals/AlertModal";
 
 export default function ProjectForm({ setIsProject, getProjectData, project, onClickToggleShowBtn }) {
   const [projectName, setProjectName] = useState("");
@@ -58,12 +59,12 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
         await post("projects", data);
         setIsProject(false);
         getProjectData();
-        alert("프로젝트가 등록되었습니다.");
+        successModal("수상이력이 등록되었습니다.");
       } else {
-        alert("빈칸을 채워주세요.");
+        errorModal("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 
@@ -79,12 +80,12 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
         await put(`projects/${project._id}`, data);
         onClickToggleShowBtn();
         getProjectData();
-        alert("프로젝트가 수정되었습니다.");
+        successModal("프로젝트가 수정되었습니다.");
       } else {
-        alert("빈칸을 채워주세요.");
+        errorModal("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 
