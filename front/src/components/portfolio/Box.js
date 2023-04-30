@@ -75,7 +75,6 @@ export default function Box({ title, mvp }) {
       setIsCertificate((prev) => !prev);
     }
   };
-  console.log(mvp.title);
   return (
     <PortfolioBox>
       <Title>{title}</Title>

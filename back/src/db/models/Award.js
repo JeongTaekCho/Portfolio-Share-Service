@@ -8,7 +8,6 @@ class Award {
 
   static async findById({ awardId }) {
     const award = await AwardModel.findById(awardId);
-    console.log(awardId);
     return award;
   }
 
@@ -18,11 +17,7 @@ class Award {
   }
 
   static async update({ awardId, awardName, date }) {
-    const updatedAward = await AwardModel.updateOne(
-      {_id:awardId}
-      ,{awardName,date}
-      ,{new: true}
-    );
+    const updatedAward = await AwardModel.updateOne({ _id: awardId }, { awardName, date }, { new: true });
 
     return updatedAward;
   }

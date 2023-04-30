@@ -8,8 +8,6 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  console.log(location);
-
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
 

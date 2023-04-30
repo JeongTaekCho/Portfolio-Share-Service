@@ -54,7 +54,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
         alert("빈칸을 입력해주세요.");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 
@@ -76,7 +76,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
         alert("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 
