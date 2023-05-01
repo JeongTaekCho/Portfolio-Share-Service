@@ -25,13 +25,14 @@ class CertificationService {
     return certification;
   }
 
-  static async setCertification({ certificationId, certificationName, description, date }) {
+  static async changeCertification({ certificationId, currentUserId, certificationName, description, date }) {
     let certification = await Certification.findById({certificationId});
-    console.log('certificationService : ', certification);
-
     if (!certification) {
-      const errorMessage =
-        "해당 id를 가진 certification 데이터는 없습니다.";
+      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
+      return { errorMessage };
+    }
+    if (certification.userId !== currentUserId) {
+      const errorMessage = "해당 certification 수정 권한이 없습니다.";
       return { errorMessage };
     }
 
@@ -39,7 +40,16 @@ class CertificationService {
     return certification;
   }
 
-  static async deleteCertification(certificationId) {
+  static async deleteCertification(certificationId, currentUserId) {
+    const certification = await Certification.findById({certificationId});
+    if (!certification) {
+      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
+      return { errorMessage };
+    }
+    if (certification.userId !== currentUserId) {
+      const errorMessage = "해당 certification 수정 권한이 없습니다.";
+      return { errorMessage };
+    }
     await Certification.deleteById(certificationId);
     return { status: "ok" };
   }

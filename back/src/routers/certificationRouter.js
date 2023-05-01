@@ -68,9 +68,10 @@ certificationRouter.put("/:id"
 ,login_required
 ,async function (req, res, next) {
   try {
-    const  certificationId = req.params.id;
+    const certificationId = req.params.id;
+    const currentUserId = req.currentUserId;
     const { certificationName, description, date } = req.body;
-    const certification = await CertificationService.setCertification({ certificationId, certificationName, description, date});
+    const certification = await CertificationService.changeCertification({ certificationId, currentUserId, certificationName, description, date});
 
     if (certification.errorMessage) {
       throw new Error(certification.errorMessage);
@@ -87,15 +88,13 @@ certificationRouter.delete("/:id"
 ,async function (req, res, next) {
   try {
     const certificationId = req.params.id;
-    if (certificationId){
-      res.status(201).json({ message: "certification 삭제 완료" });
-      const result = await CertificationService.deleteCertification(certificationId);
-      
-      if (result.errorMessage) {
-        throw new Error(result.errorMessage);
-      }
-    } 
-    else res.status(400).json({ message: "certificationId는 필수값입니다." });
+    const currentUserId = req.currentUserId;
+    const result = await CertificationService.deleteCertification(certificationId, currentUserId);
+    
+    if (result.errorMessage) throw new Error(result.errorMessage);
+    
+    res.status(200).json({ message: "certification 삭제 완료" });
+    
   } catch (error) {
     next(error);
   }
