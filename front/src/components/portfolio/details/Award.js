@@ -14,7 +14,7 @@ export default function AwardDetail({ award, userId, getAwardData }) {
       getAwardData();
       alert("수상이력이 삭제되었습니다.");
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 

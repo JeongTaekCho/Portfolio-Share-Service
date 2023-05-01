@@ -14,7 +14,6 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
   const [date, setDate] = useState();
 
   useEffect(() => {
-    console.log(award?.date);
     if (award) {
       setAwardName(award?.awardName);
       setDate(dayjs(award?.date));
@@ -47,7 +46,7 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
         alert("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 
@@ -67,7 +66,7 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
         alert("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 

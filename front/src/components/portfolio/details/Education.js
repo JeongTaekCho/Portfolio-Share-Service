@@ -14,7 +14,7 @@ export default function EducationDetail({ education, userId, getEducationData })
       getEducationData();
       alert("학력정보가 삭제되었습니다.");
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 

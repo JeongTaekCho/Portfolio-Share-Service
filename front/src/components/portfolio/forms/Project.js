@@ -64,7 +64,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
         alert("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 
@@ -86,7 +86,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
         alert("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 

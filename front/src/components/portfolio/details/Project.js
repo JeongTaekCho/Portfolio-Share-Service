@@ -22,7 +22,7 @@ export default function ProjectDetail({ project, getProjectData, userId }) {
       getProjectData();
       alert("프로젝트가 삭제되었습니다.");
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 
