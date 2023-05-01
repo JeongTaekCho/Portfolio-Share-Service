@@ -16,7 +16,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const handleShow = () => setShow(true);
 
   return (
-    <Card border="light" style={{ width: "23%", maxHeight: "500px", backgroundColor: "#a996f5" }}>
+    <Card border="light" style={{ width: "23.75%", maxHeight: "500px", backgroundColor: "#a996f5" }}>
       <Card.Header
         style={{
           fontWeight: "600",
