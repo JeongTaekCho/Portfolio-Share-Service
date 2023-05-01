@@ -15,7 +15,6 @@ import * as Api from "../../../api";
 export default function ProjectDetail({ project, getProjectData, userId }) {
   const [isEditShow, setIsEditShow] = useState(false);
 
-  //겹치는 API리팩토링 예정
   const onClickDeleteProject = async () => {
     try {
       await Api.delete(`projects/${project._id}`);

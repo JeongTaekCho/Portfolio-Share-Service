@@ -7,7 +7,6 @@ import EducationForm from "../forms/Education";
 export default function EducationDetail({ education, userId, getEducationData }) {
   const [isEditShow, setIsEditShow] = useState(false);
 
-  //겹치는 API리팩토링 예정
   const onClickDeleteEducation = async () => {
     try {
       await Api.delete(`educations/${education._id}`);

@@ -21,7 +21,7 @@ const TITLE = {
   certificate: "자격증",
 };
 
-export default function Box({ title, mvp }) {
+export default function Box({ title }) {
   const [isProject, setIsProject] = useState(false);
   const [isEducation, setIsEducation] = useState(false);
   const [isAward, setIsAward] = useState(false);
@@ -40,8 +40,6 @@ export default function Box({ title, mvp }) {
     };
     getUserInfo();
   }, []);
-
-  // 중복되는 API 수정 예정
 
   const getProjectData = async () => {
     setProjectDatas(await getData(`projects/user/${pathname || userInfo?.id}`));
@@ -78,9 +76,15 @@ export default function Box({ title, mvp }) {
   return (
     <PortfolioBox>
       <Title>{title}</Title>
+
       {title === TITLE.education &&
         educationDatas?.map((education) => (
-          <EducationDetail education={education} userId={userInfo?.id} getEducationData={getEducationData} />
+          <EducationDetail
+            key={education._id}
+            education={education}
+            userId={userInfo?.id}
+            getEducationData={getEducationData}
+          />
         ))}
       {isEducation && (
         <EducationForm
@@ -91,15 +95,20 @@ export default function Box({ title, mvp }) {
       )}
 
       {title === TITLE.award &&
-        awardDatas?.map((award) => <AwardDetail award={award} getAwardData={getAwardData} userId={userInfo?.id} />)}
+        awardDatas?.map((award) => (
+          <AwardDetail key={award._id} award={award} getAwardData={getAwardData} userId={userInfo?.id} />
+        ))}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
+
       {title === TITLE.project &&
         projectDatas?.map((project) => (
-          <Project project={project} getProjectData={getProjectData} userId={userInfo?.id} />
+          <Project key={project._id} project={project} getProjectData={getProjectData} userId={userInfo?.id} />
         ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
+
       {title === TITLE.certificate && <CertificateDetail />}
       {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} />}
+
       {location.pathname === "/" && (
         <Button variant="contained" color="success" onClick={onClickBtn}>
           {isProject || isEducation || isAward || isCertificate ? "-" : "+"}
