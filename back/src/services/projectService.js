@@ -25,9 +25,13 @@ class ProjectService {
     return projects;
   }
 
-  static async setProject({ projectId, projectName,startDate,endDate,content }) {
+  static async changeProject({ projectId, projectName, startDate, endDate, content, userId }) {
     let project = await Project.findById({projectId});
     console.log('projectService : ', project);
+
+    if(project.userId !== userId){
+      throw new Error('유효하지 않은 유저입니다.');
+    }
 
     if (!project) {
       const errorMessage =
@@ -35,17 +39,24 @@ class ProjectService {
       return { errorMessage };
     }
 
-    project = await Project.update({projectId,projectName,startDate,endDate,content})
+    project = await Project.update({projectId, projectName, startDate, endDate, content})
 
     return project;
   }
 
-  static async deleteProject(projectId) {
-    console.log(projectId);
+  static async deleteProject(projectId, userId) {
+    console.log('projectSerivce deleteProject projectId : ', projectId);
+    console.log('projectSerivce deleteProject userId : ', userId);
+    const project = await Project.findById({ projectId });
+    
+    if(project.userId !== userId){
+      throw new Error('유효하지 않은 유저입니다.');
+    }
+    
     await Project.deleteById(projectId);
-
     return { status: "ok" };
   }
+
 }
 
 export { ProjectService };
