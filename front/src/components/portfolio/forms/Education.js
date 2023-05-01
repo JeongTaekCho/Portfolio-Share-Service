@@ -19,7 +19,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
       setMajor(education?.major);
       setPosition(education?.position);
     }
-  }, []);
+  }, [education]);
 
   const onClickCancelForm = () => {
     setIsEducation(false);

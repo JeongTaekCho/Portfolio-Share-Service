@@ -19,7 +19,7 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
       setAwardName(award?.awardName);
       setDate(dayjs(award?.date));
     }
-  }, []);
+  }, [award]);
 
   const onChangeAwardName = (e) => {
     setAwardName(e.target.value);
