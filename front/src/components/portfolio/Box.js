@@ -12,9 +12,16 @@ import { useEffect } from "react";
 import { get } from "../../api";
 import AwardDetail from "./details/Award";
 import CertificateDetail from "./details/Certificate";
-import { useLocation, useNavigate, useNavigation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export default function Box({ title }) {
+const TITLE = {
+  education: "학력",
+  project: "프로젝트",
+  award: "수상이력",
+  certificate: "자격증",
+};
+
+export default function Box({ title, mvp }) {
   const [isProject, setIsProject] = useState(false);
   const [isEducation, setIsEducation] = useState(false);
   const [isAward, setIsAward] = useState(false);
@@ -26,8 +33,6 @@ export default function Box({ title }) {
 
   const location = useLocation();
   const pathname = location.pathname.slice(7);
-
-  console.log(pathname);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -59,27 +64,25 @@ export default function Box({ title }) {
     getAwardData();
   }, [userInfo, location.pathname]);
 
-  console.log(awardDatas);
-
   const onClickBtn = () => {
-    if (title === "프로젝트") {
+    if (title === TITLE.project) {
       setIsProject((prev) => !prev);
     }
-    if (title === "학력") {
+    if (title === TITLE.education) {
       setIsEducation((prev) => !prev);
     }
-    if (title === "수상이력") {
+    if (title === TITLE.award) {
       setIsAward((prev) => !prev);
     }
-    if (title === "자격증") {
+    if (title === TITLE.certificate) {
       setIsCertificate((prev) => !prev);
     }
   };
-
+  console.log(mvp.title);
   return (
     <PortfolioBox>
       <Title>{title}</Title>
-      {title === "학력" &&
+      {title === TITLE.education &&
         educationDatas.map((education) => (
           <EducationDetail education={education} userId={userInfo?.id} getEducationData={getEducationData} />
         ))}
@@ -91,15 +94,15 @@ export default function Box({ title }) {
         />
       )}
 
-      {title === "수상이력" &&
+      {title === TITLE.award &&
         awardDatas.map((award) => <AwardDetail award={award} getAwardData={getAwardData} userId={userInfo?.id} />)}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
-      {title === "프로젝트" &&
+      {title === TITLE.project &&
         projectDatas?.map((project) => (
           <Project project={project} getProjectData={getProjectData} userId={userInfo?.id} />
         ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
-      {title === "자격증" && <CertificateDetail />}
+      {title === TITLE.certificate && <CertificateDetail />}
       {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} />}
       {location.pathname === "/" && (
         <Button variant="contained" color="success" onClick={onClickBtn}>
