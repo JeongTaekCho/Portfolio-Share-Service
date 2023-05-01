@@ -26,8 +26,14 @@ class AwardService {
     return awards;
   }
 
-  static async setAward({ awardId, awardName, date }) {
+  static async changeAward({ awardId, awardName, date, userId }) {
+    console.log('awardService changeAward userId : ', userId);
     let award = await Award.findById({ awardId });
+    console.log('awardService changeAward award.userId : ', award.userId);
+
+    if(award.userId !== userId){
+      throw new Error('유효하지 않는 유저입니다.');
+    }
 
     if (!award) {
       const errorMessage =
@@ -35,12 +41,19 @@ class AwardService {
       return { errorMessage };
     }
 
-    award = await Award.update({awardId, awardName, date})
+    award = await Award.update({awardName, date})
 
     return award;
   }
 
-  static async deleteAward(awardId) {
+  static async deleteAward(awardId, userId) {
+    console.log('awardService deleteAward awardId : ', awardId);
+    console.log('awardService deleteAward userId : ', userId);
+    const award = await Award.findById({ awardId });
+
+    if(award.userId !== userId){
+      throw new Error('유효하지 않는 유저입니다.');
+    }
     await Award.deleteById(awardId);
     
     return { status: "ok" };

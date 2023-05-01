@@ -10,7 +10,7 @@ projectRouter.get("/:id"
 ,login_required
 ,async function (req, res, next) {
   try {
-    const projectId = req.params.id;
+    const projectId = req.params.id.trim();
     console.log(projectId);
     const project = await ProjectService.getProject({ projectId });
 
@@ -74,9 +74,11 @@ projectRouter.put("/:id"
   try {
     const projectId = req.params.id;
     const userId = req.currentUserId;
-    console.log('projectRouter projectId : ',projectId);
+    console.log('projectRouter userId : ', userId);
+    console.log('projectRouter projectId : ', projectId);
+
     const { projectName,startDate,endDate,content } = req.body;
-    const project = await ProjectService.setProject({ projectId, projectName, startDate, endDate, content });
+    const project = await ProjectService.changeProject({ projectId, projectName, startDate, endDate, content, userId });
     console.log('projectRouter project: ', project);
 
     if (project.errorMessage) {
@@ -95,9 +97,11 @@ projectRouter.delete("/:id"
 , async function (req, res, next) {
   try {
     const projectId = req.params.id;
-    console.log(projectId);
+    const userId = req.currentUserId;
+    console.log('projectRouter projectId : ', projectId);
+    console.log('projectRouter userId : ', userId);
 
-    const result = await ProjectService.deleteProject(projectId);
+    const result = await ProjectService.deleteProject(projectId, userId);
 
     if (result.errorMessage) {
       throw new Error(result.errorMessage);
@@ -109,4 +113,4 @@ projectRouter.delete("/:id"
   }
 });
 
-export default projectRouter;
+export { projectRouter };

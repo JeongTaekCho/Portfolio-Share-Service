@@ -3,8 +3,8 @@ import express from "express";
 import { userAuthRouter } from "./routers/userRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 
-import projectRouter from "./routers/projectRouter";
-import {awardRouter} from "./routers/awardRouter";
+import { projectRouter } from "./routers/projectRouter";
+import { awardRouter } from "./routers/awardRouter";
 
 import { educationRouter } from "./routers/educationRouter";
 import { certificationRouter } from "./routers/certificationRouter";

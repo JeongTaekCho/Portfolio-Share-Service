@@ -17,10 +17,10 @@ class Project {
     return projects;
   }
 
-  static async update({ projectId, projectName,startDate,endDate,content }) {
+  static async update({ projectId, projectName, startDate, endDate, content}) {
     const updatedProject = await ProjectModel.updateOne(
       {_id:projectId}
-      ,{projectName,startDate,endDate,content}
+      ,{projectName, startDate, endDate, content}
       ,{new: true});
 
     return updatedProject;
