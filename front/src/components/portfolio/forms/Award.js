@@ -8,6 +8,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Button from "@mui/joy/Button";
 import { post, put } from "../../../api";
 import dayjs from "dayjs";
+import { errorModal, successModal } from "../../modals/AlertModal";
 
 export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowBtn, award }) {
   const [awardName, setAwardName] = useState("");
@@ -40,12 +41,12 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
         await post("awards", data);
         getAwardData();
         setIsAward(false);
-        alert("수상이력이 등록되었습니다.");
+        successModal("수상이력이 등록되었습니다.");
       } else {
-        alert("빈칸을 채워주세요.");
+        errorModal("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 
@@ -59,12 +60,12 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
         await put(`awards/${award._id}`, data);
         onClickToggleShowBtn();
         getAwardData();
-        alert("수상이력이 수정되었습니다.");
+        successModal("수상이력이 수정되었습니다.");
       } else {
-        alert("빈칸을 채워주세요.");
+        errorModal("빈칸을 채워주세요.");
       }
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 

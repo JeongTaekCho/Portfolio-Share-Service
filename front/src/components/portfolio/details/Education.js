@@ -3,6 +3,7 @@ import { BtnBox, DetailWrap, EducationBox, EducationText } from "../../../styles
 import * as Api from "../../../api";
 import { Button } from "@mui/material";
 import EducationForm from "../forms/Education";
+import { errorModal, successModal } from "../../modals/AlertModal";
 
 export default function EducationDetail({ education, userId, getEducationData }) {
   const [isEditShow, setIsEditShow] = useState(false);
@@ -11,9 +12,9 @@ export default function EducationDetail({ education, userId, getEducationData })
     try {
       await Api.delete(`educations/${education._id}`);
       getEducationData();
-      alert("학력정보가 삭제되었습니다.");
+      successModal("학력정보가 삭제되었습니다.");
     } catch (err) {
-      console.log(err.message);
+      errorModal(err.message);
     }
   };
 
