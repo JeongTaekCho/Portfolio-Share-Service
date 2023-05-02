@@ -8,6 +8,8 @@ import { awardRouter } from "./routers/awardRouter";
 
 import { educationRouter } from "./routers/educationRouter";
 import { certificationRouter } from "./routers/certificationRouter";
+import { imgRouter } from "./routers/imageRouter";
+import path from "path";
 
 const app = express();
 
@@ -20,6 +22,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static("back")); // 백엔드 폴더를 static 파일로 제공
+
+app.get("/uploads/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const filePath = `uploads/${filename}`;
+  const options = {
+    root: path.join(__dirname, "../"),
+  };
+  res.sendFile(filePath, options);
+});
+
 // 기본 페이지
 app.get("/", (req, res) => {
   res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
@@ -27,10 +40,11 @@ app.get("/", (req, res) => {
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
 app.use(userAuthRouter);
-app.use('/educations', educationRouter);
-app.use('/projects', projectRouter);
-app.use('/awards', awardRouter);
-app.use('/certifications', certificationRouter);
+app.use("/educations", educationRouter);
+app.use("/projects", projectRouter);
+app.use("/awards", awardRouter);
+app.use("/certifications", certificationRouter);
+app.use("/upload", imgRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);

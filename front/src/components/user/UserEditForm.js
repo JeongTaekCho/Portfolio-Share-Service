@@ -4,6 +4,7 @@ import * as Api from "../../api";
 import { TextField } from "@mui/material";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
+import axios from "axios";
 
 function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
   //useState로 name 상태를 생성함.
@@ -13,14 +14,38 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
   //useState로 description 상태를 생성함.
   const [description, setDescription] = useState(user.description);
 
+  const [file, setFile] = useState(null);
+  const [imgFile, setImgFile] = useState(null);
+
+  const onChangeImage = (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      setImgFile(reader.result);
+    };
+    setFile(e.target.files[0]);
+  };
+
+  console.log(file);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // "users/유저id" 엔드포인트로 PUT 요청함.
+    const formData = new FormData();
+    formData.append("img", file);
+
+    const profile = await axios.post("http://localhost:5001/upload", formData, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+
     const res = await Api.put(`users/${user.id}`, {
       name,
       email,
       description,
+      profile,
     });
     // 유저 정보는 response의 data임.
     const updatedUser = res.data;
@@ -43,12 +68,12 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
             variant="top"
             style={{ display: "block", width: "100%", height: "100%" }}
             className=""
-            src="http://placekitten.com/200/200"
+            src={imgFile || `http://localhost:5001/${user?.profile}`}
             alt="고양이 사진"
             rounded
           />
         </ImageBox>
-        <InputFile type="file" id="editPhoto" />
+        <InputFile type="file" id="editPhoto" onChange={onChangeImage} />
         <EditLabel htmlFor="editPhoto">
           <img src="/images/camera.png" />
         </EditLabel>
