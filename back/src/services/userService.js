@@ -69,9 +69,10 @@ class userAuthService {
     return loginUser;
   }
 
-  static async getUsers() {
-    const users = await User.findAll();
-    return users;
+  static async getUsers(skip, limit) {
+    const { users, count } = await User.findAndCountAll(skip, limit);
+
+    return { users, count };
   }
 
   static async setUser({ user_id, toUpdate }) {
