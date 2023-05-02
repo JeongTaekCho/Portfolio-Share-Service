@@ -33,7 +33,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         variant="top"
         style={{ width: "90%", height: "180px", margin: "10px auto 0" }}
         className=""
-        src="http://placekitten.com/200/200"
+        src={`http://localhost:5001/${user?.profile}`}
         alt="고양이 사진"
         rounded
       />
