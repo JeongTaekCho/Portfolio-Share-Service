@@ -2,7 +2,6 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { CommentService } from "../services/commentService";
-import { userAuthService } from "../services/userService"
 
 const commentRouter = Router();
 
@@ -16,8 +15,7 @@ commentRouter.post("/"
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
-    //const currentId = req.currentUserId;
-    //const writerId = await userAuthService.getUserInfo({ user_id: req.currentUserId })
+
     const writerId = req.currentUserId
     const { content, portfolioId } = req.body;
 
