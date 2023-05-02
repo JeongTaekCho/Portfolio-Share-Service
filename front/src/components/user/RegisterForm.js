@@ -7,17 +7,14 @@ import { Wrap, Container, ImgBox, Form, Title } from "../../styles/user/Register
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { errorModal } from "../modals/AlertModal";
 
 function RegisterForm() {
   const navigate = useNavigate();
 
-  //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
   const [password, setPassword] = useState("");
-  //useState로 confirmPassword 상태를 생성함.
   const [confirmPassword, setConfirmPassword] = useState("");
-  //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
 
   const [errorName, setErrorName] = useState([]);
@@ -29,26 +26,7 @@ function RegisterForm() {
   const [emailValid, setEmailValid] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [confirmPasswordValid, setConfirmPasswordValid] = useState(false);
-
-  //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
-  //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
-  const isEmailValid = validateEmail(email);
-  // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPasswordValid = password.length >= 4;
-  // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
-  const isPasswordSame = password === confirmPassword;
-  // 이름이 2글자 이상인지 여부를 확인함.
-  const isNameValid = name.length >= 2;
-
-  // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
+  const [isValid, setIsValid] = useState(false);
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -58,6 +36,12 @@ function RegisterForm() {
     } else {
       setNameValid(false);
       setErrorName([]);
+    }
+
+    if (e.target.value && email && password && confirmPassword && password === confirmPassword) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
     }
   };
 
@@ -74,6 +58,11 @@ function RegisterForm() {
       setEmailValid(true);
       setErrorEmail(["이메일 형식이 올바르지 않습니다."]);
     }
+    if (name && e.target.value && password && confirmPassword && password === confirmPassword) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
   };
 
   const onChagnePassword = (e) => {
@@ -84,6 +73,18 @@ function RegisterForm() {
     } else {
       setPasswordValid(false);
       setErrorPassword([]);
+    }
+    if (e.target.value !== confirmPassword) {
+      setConfirmPasswordValid(true);
+      setErrorConfirm(["비밀번호가 일치하지 않습니다."]);
+    } else if (e.target.value === confirmPassword) {
+      setConfirmPasswordValid(false);
+      setErrorConfirm([]);
+    }
+    if (name && email && e.target.value && confirmPassword && e.target.value === confirmPassword) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
     }
   };
 
@@ -96,20 +97,29 @@ function RegisterForm() {
       setConfirmPasswordValid(false);
       setErrorConfirm([]);
     }
+    if (name && email && password && e.target.value && password === e.target.value) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await Api.post("user/register", {
-        email,
-        password,
-        name,
-      });
-
+      if (email && password && confirmPassword && name) {
+        await Api.post("user/register", {
+          email,
+          password,
+          name,
+        });
+      } else {
+        errorModal("빈 칸을 채워주세요.");
+        return;
+      }
       navigate("/login");
     } catch (err) {
-      alert(err.message);
+      errorModal("회원가입에 실패 했습니다.");
     }
   };
 
@@ -173,7 +183,12 @@ function RegisterForm() {
             onChange={onChangeConfirmPassword}
             helperText={errorConfirm[0]}
           />
-          <Button onClick={handleSubmit} variant="contained" type="submit">
+          <Button
+            onClick={handleSubmit}
+            variant="contained"
+            type="submit"
+            disabled={!nameValid && !emailValid && !passwordValid && !confirmPasswordValid && isValid ? false : true}
+          >
             Register
           </Button>
         </Form>
