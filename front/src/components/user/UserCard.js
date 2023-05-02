@@ -34,7 +34,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         style={{ width: "90%", height: "180px", margin: "10px auto 0" }}
         className=""
         src={`http://localhost:5001/${user?.profile}`}
-        alt="고양이 사진"
+        alt="유저 프로필 사진"
         rounded
       />
       <Card.Body>

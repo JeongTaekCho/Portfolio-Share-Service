@@ -26,7 +26,7 @@ function Network() {
     <Wrap fluid>
       <Container>
         <ContetnBox style={{ gap: "20px" }}>
-          {users.map((user) => (
+          {users?.users?.map((user) => (
             <UserCard key={user.id} user={user} isNetwork />
           ))}
         </ContetnBox>

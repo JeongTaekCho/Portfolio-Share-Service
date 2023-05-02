@@ -21,7 +21,7 @@ const TITLE = {
   certificate: "자격증",
 };
 
-export default function Box({ title }) {
+export default function Box({ title, mvpId }) {
   const [isProject, setIsProject] = useState(false);
   const [isEducation, setIsEducation] = useState(false);
   const [isAward, setIsAward] = useState(false);
@@ -83,7 +83,7 @@ export default function Box({ title }) {
     <PortfolioBox>
       <Title>{title}</Title>
 
-      {title === TITLE.education &&
+      {mvpId === "education" &&
         educationDatas?.map((education) => (
           <EducationDetail
             key={education._id}
@@ -100,23 +100,28 @@ export default function Box({ title }) {
         />
       )}
 
-      {title === TITLE.award &&
+      {mvpId === "award" &&
         awardDatas?.map((award) => (
           <AwardDetail key={award._id} award={award} getAwardData={getAwardData} userId={userInfo?.id} />
         ))}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
 
-      {title === TITLE.project &&
+      {mvpId === "project" &&
         projectDatas?.map((project) => (
           <Project key={project._id} project={project} getProjectData={getProjectData} userId={userInfo?.id} />
         ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
 
-      {title === TITLE.certificate &&
+      {mvpId === "certificate" &&
         certificateDatas?.map((certificate) => (
-          <CertificateDetail key={certificate._id} certificate={certificate} getCertificateData={getCertificateData} userId={userInfo?.id}/>
+          <CertificateDetail
+            key={certificate._id}
+            certificate={certificate}
+            getCertificateData={getCertificateData}
+            userId={userInfo?.id}
+          />
         ))}
-      {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} getCertificateData={getCertificateData}/>}
+      {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} getCertificateData={getCertificateData} />}
 
       {location.pathname === "/" && (
         <Button variant="contained" color="success" onClick={onClickBtn}>
