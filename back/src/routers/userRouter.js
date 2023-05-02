@@ -60,8 +60,20 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
-      const users = await userAuthService.getUsers();
-      res.status(200).send(users);
+      const page = parseInt(req.query.page || 1);
+      const limit = 10;
+      const skip = (page - 1) * limit;
+      console.log('page : ', page);
+      console.log('skip : ', skip);
+
+      const {users, count} = await userAuthService.getUsers(skip, limit);
+      res.status(200).send({
+        currentPage: page
+        ,totalPages: Math.ceil(count / limit)
+        ,users
+        ,
+      }
+        );
     } catch (error) {
       next(error);
     }

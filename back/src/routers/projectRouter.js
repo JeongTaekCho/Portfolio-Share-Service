@@ -49,7 +49,7 @@ projectRouter.post("/"
       );
     }
 
-    const userId = req.currentUserId
+    const userId = req.currentUserId;
     const { projectName, startDate, endDate, content } = req.body;
 
     const newProject = await ProjectService.addProject({
