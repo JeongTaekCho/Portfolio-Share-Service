@@ -16,11 +16,14 @@ educationRouter.post("/"
       );
     }
     const userId = req.currentUserId;
-    console.log(userId);
     const { school, major, position } = req.body;
-    const education = await EducationService.addEducation({userId, school, major, position});
-    res.status(201).json(education)
 
+    const education = await EducationService.addEducation({userId, school, major, position});
+    
+    if (education.errorMessage) 
+      throw new Error(education.errorMessage);
+    
+    res.status(201).json(education)
   } catch (error) {
     next(error);
   }
@@ -31,9 +34,13 @@ educationRouter.get("/:id"
 ,async function (req, res, next) {
   try {
     const educationId = req.params.id;
-    const educationList = await EducationService.getEducation({educationId});
-    res.json(educationList);
 
+    const educationList = await EducationService.getEducation({educationId});
+    
+    if (educationList.errorMessage) 
+      throw new Error(educationList.errorMessage);
+
+    res.json(educationList);
   } catch (error) {
     next(error);
   }
@@ -44,9 +51,12 @@ educationRouter.get("/user/:userId"
 ,async function (req, res, next) {
   try {
     const userId = req.params.userId;
-    console.log('req.params.userId: ',req.params.userId);
-    console.log('req.currentUserId: ',req.currentUserId);
+
     const educations = await EducationService.getEducations({userId});
+
+    if (educations.errorMessage) 
+      throw new Error(educations.errorMessage);
+
     res.json(educations);
   } catch (error) {
     next(error);
@@ -60,12 +70,12 @@ educationRouter.put("/:id"
     const educationId = req.params.id;
     const currentUserId = req.currentUserId;
     const { school, major, position } = req.body;  
+
     const education = await EducationService.ChangeEducation({ educationId, currentUserId, school, major, position });
 
-    if (education.errorMessage) {
+    if (education.errorMessage) 
       throw new Error(education.errorMessage);
-    }
-
+    
     res.json(education);
   } catch (error) {
     next(error);
@@ -78,10 +88,12 @@ educationRouter.delete("/:id"
   try {
     const educationId = req.params.id;
     const currentUserId = req.currentUserId;
-    const result = await EducationService.deleteEducation(educationId, currentUserId);
-    
-    if (result.errorMessage) throw new Error(result.errorMessage);
 
+    const education = await EducationService.deleteEducation(educationId, currentUserId);
+    
+    if (education.errorMessage) 
+      throw new Error(education.errorMessage);
+    
     res.status(200).json({ message: "education 삭제 완료"});
 
   } catch (error) {

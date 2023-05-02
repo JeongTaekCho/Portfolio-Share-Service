@@ -85,7 +85,7 @@ awardRouter.put("/:id"
 });
 
 awardRouter.delete("/:id"
-,login_required
+, login_required
 , async function (req, res, next) {
   try {
     const awardId = req.params.id;
