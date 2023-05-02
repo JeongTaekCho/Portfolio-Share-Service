@@ -6,25 +6,23 @@ class Comment {
     const createdNewComment = await CommentModel.create(newComment);
     return createdNewComment;
   }
-  // Comment 검색
-  static async findByUserId({ userId }) {
-    const comments = await CommentModel.find({ userId });
-    return comments;
-  }
-  // 개인 Comment 검색
   static async find({ commentId }) {
-    const comments = await CommentModel.find({ portfolioId: commentId });
+    const comments = await CommentModel.find({ commentId });
     return comments;
   }
-
+  // 1개의 Comment 검색
   static async findById({ commentId }) {
     const comment = await CommentModel.findById(commentId);
     return comment;
   }
+  // Comment 검색
+  static async findByUserId({ portfolioId }) {
+    const comments = await CommentModel.find({ portfolioId });
+    return comments;
+  }
 
   // update
   static async update({ commentId, content }) {
-    console.log("content: ", content);
     const updatedComment = await CommentModel.findOneAndUpdate({ _id: commentId }, { content }, { new: true });
 
     return updatedComment;

@@ -10,13 +10,13 @@ class Certification {
   static async find(query) {
     const certificates = await CertificationModel.find(query);
     return certificates;
-}
-  // Certification 검색
+  }
+  // 1개의 Certification 검색
   static async findById({certificationId}) {
     const certification = await CertificationModel.findById(certificationId);
     return certification;
   }
-  // 개인 Certification 검색
+  // Certification 검색
   static async findByUserId({userId}) {
     const certification = await CertificationModel.find({ userId });
     return certification;
