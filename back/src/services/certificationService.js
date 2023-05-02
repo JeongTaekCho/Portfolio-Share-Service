@@ -2,19 +2,24 @@ import { Certification } from "../db/models/Certification";
 
 class CertificationService {
   static async addCertification({ userId, certificationName, description, date }) {
+    const foundCertification = await Certification.find({ userId, certificationName })
+    if(foundCertification.length > 0){
+      const errorMessage = "해당 자격증이 존재합니다";
+      return { errorMessage };
+    }
+    
     const newCertification = { userId, certificationName, description, date };
-    console.log('newCertification service: ',newCertification);
+ 
     const createdNewCertification = await Certification.create(newCertification );
 
     return createdNewCertification;
   }
 
   static async getCertification({ certificationId }) {
-    console.log(certificationId);
     const certification = await Certification.findById({certificationId });
+
     if (!certification) {
-      const errorMessage =
-        "해당 id를 가진 certification 데이터는 없습니다.";
+      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
       return { errorMessage };
     }
     return certification;
@@ -22,6 +27,11 @@ class CertificationService {
 
   static async getCertifications({ userId }) {
     const certification = await Certification.findByUserId({userId});
+
+    if (!certification) {
+      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
+      return { errorMessage };
+    }
     return certification;
   }
 

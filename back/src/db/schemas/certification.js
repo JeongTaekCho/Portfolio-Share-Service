@@ -3,19 +3,19 @@ import { Schema, model } from 'mongoose';
 // award schema
 const CertificationSchema = new Schema(
   {
-    userId: {
+    userId: {  // userId
       type: String,
       required: true,
     },
-    certificationName: {
+    certificationName: { // 자격증 이름
       type: String,
       required: true,
     },
-    description: {
+    description: { // 상세내용 
       type: String,
       required: true,
     },
-    date: {
+    date: { //취득 날짜
       type: Date,
       required: true,
     },

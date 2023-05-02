@@ -2,19 +2,19 @@ import { Schema, model } from "mongoose";
 
 const educationSchema = new Schema(
   {
-    userId: {
+    userId: { // userId
       type: String,
       required: true,
     },
-    school: {
+    school: { // 학교 이름
       type: String,
       required: true,
     },
-    major: {
+    major: {  // 전공명
       type: String,
       required: true,
     },
-    position: {
+    position: { // 학력 상태
       type: String,
       required: true,
     },

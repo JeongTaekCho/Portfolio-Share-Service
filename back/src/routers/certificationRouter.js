@@ -16,15 +16,14 @@ certificationRouter.post("/"
       );
     }
     const userId = req.currentUserId;
-    console.log(userId);
     const { certificationName, description, date} = req.body;
+
     const newCertification = await CertificationService.addCertification({
       userId, certificationName, description, date
     });
 
-    if (newCertification.errorMessage) {
+    if (newCertification.errorMessage) 
       throw new Error(newCertification.errorMessage);
-    }
 
     console.log('newCertification ',newCertification);
     res.status(201).json(newCertification);
@@ -40,13 +39,13 @@ certificationRouter.get("/:id"
   try {
     const certificationId = req.params.id;
     console.log(certificationId);
+
     const certification = await CertificationService.getCertification({ certificationId });
 
-    if (certification.errorMessage) {
+    if (certification.errorMessage) 
       throw new Error(certification.errorMessage);
-    }
+  
     res.json(certification);
-
   } catch (error) {
     next(error);
   }
@@ -57,7 +56,12 @@ certificationRouter.get("/user/:id"
 ,async function (req, res, next) {
   try {
     const userId = req.params.id;
+
     const certifications = await CertificationService.getCertifications({ userId });
+
+    if (certifications.errorMessage) 
+      throw new Error(certifications.errorMessage);
+
     res.json(certifications);
   } catch (error) {
     next(error);
@@ -73,10 +77,9 @@ certificationRouter.put("/:id"
     const { certificationName, description, date } = req.body;
     const certification = await CertificationService.changeCertification({ certificationId, currentUserId, certificationName, description, date});
 
-    if (certification.errorMessage) {
+    if (certification.errorMessage) 
       throw new Error(certification.errorMessage);
-    }
-
+    
     res.json(certification);
   } catch (error) {
     next(error);
@@ -89,16 +92,16 @@ certificationRouter.delete("/:id"
   try {
     const certificationId = req.params.id;
     const currentUserId = req.currentUserId;
+
     const result = await CertificationService.deleteCertification(certificationId, currentUserId);
     
-    if (result.errorMessage) throw new Error(result.errorMessage);
+    if (result.errorMessage) 
+      throw new Error(result.errorMessage);
     
     res.status(200).json({ message: "certification 삭제 완료" });
-    
   } catch (error) {
     next(error);
   }
 });
-
 
 export {certificationRouter};
