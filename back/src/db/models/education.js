@@ -32,8 +32,8 @@ class Education {
 
 
   static async deleteById( educationId ) {
-      await EducationModel.findByIdAndDelete(educationId );
-      return;
+      await EducationModel.findByIdAndDelete(educationId);
+      return ;
   }
 }
 
