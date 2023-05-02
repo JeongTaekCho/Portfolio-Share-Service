@@ -29,6 +29,7 @@ export default function Box({ title }) {
   const [educationDatas, setEducationDatas] = useState([]);
   const [projectDatas, setProjectDatas] = useState([]);
   const [awardDatas, setAwardDatas] = useState([]);
+  const [certificateDatas, setCertificateDatas] = useState([]);
   const [userInfo, setUserInfo] = useState();
 
   const location = useLocation();
@@ -53,10 +54,15 @@ export default function Box({ title }) {
     setAwardDatas(await getData(`awards/user/${pathname || userInfo?.id}`));
   };
 
+  const getCertificateData = async () => {
+    setCertificateDatas(await getData(`certifications/user/${pathname || userInfo?.id}`));
+  };
+
   useEffect(() => {
     getProjectData();
     getEducationData();
     getAwardData();
+    getCertificateData();
   }, [userInfo, location.pathname]);
 
   const onClickBtn = () => {
@@ -106,8 +112,11 @@ export default function Box({ title }) {
         ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
 
-      {title === TITLE.certificate && <CertificateDetail />}
-      {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} />}
+      {title === TITLE.certificate &&
+        certificateDatas?.map((certificate) => (
+          <CertificateDetail key={certificate._id} certificate={certificate} getCertificateData={getCertificateData} userId={userInfo?.id}/>
+        ))}
+      {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} getCertificateData={getCertificateData}/>}
 
       {location.pathname === "/" && (
         <Button variant="contained" color="success" onClick={onClickBtn}>

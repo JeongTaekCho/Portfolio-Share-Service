@@ -17,17 +17,9 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const handleShow = () => setShow(true);
 
   return (
-
-    <Container
-    style={{padding:"100px 0px 50px 0px"}}>
-
-<Row xs={1} md={4} className="g-4">
-      {Array.from({ length: 1 }).map((_, idx) => (
-        <Col key={idx}>
-
     <Card border="light" style={{ width: "18rem", backgroundColor:"#a996f5"}}>
       <Card.Header
-      style={{fontWeight:"600", fontSize:"40px", color:"white", backgroundColor:"#7217bc", textAlign:"center", height:"70px"}}
+      style={{width: "100%", fontWeight:"600", fontSize:"40px", color:"white", backgroundColor:"#7217bc", textAlign:"center", height:"70px"}}
       >{user?.name}</Card.Header>
       <Image 
         variant="top"
@@ -40,12 +32,18 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
       <Card.Body>
         <Button 
         variant=""
-        style={{width:"100%", backgroundColor:"#6722c7", color:"white", fontWeight:"550"}}
+        style={{width:"100%", backgroundColor:"#6722c7", color:"#FFFFFF", fontWeight:"550"}}
         onClick={handleShow}>
         Description
       </Button>
+      
 
-      <Modal show={show} onHide={handleClose} animation={false}>
+      <Modal
+      show={show} onHide={handleClose}
+      animation={false}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered>
         <Modal.Header closeButton>
           <Modal.Title>{user?.name}</Modal.Title>
         </Modal.Header>
@@ -87,10 +85,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         >{user?.email}</Card.Footer>{<br/>}
       </Card.Body>
     </Card>
-    </Col>
-      ))}
-    </Row>
-    </Container>
+
+
 
     // <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
     //   <Card.Body>
