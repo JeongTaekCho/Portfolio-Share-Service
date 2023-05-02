@@ -8,6 +8,8 @@ import { awardRouter } from "./routers/awardRouter";
 import { educationRouter } from "./routers/educationRouter";
 import { certificationRouter } from "./routers/certificationRouter";
 import { commentRouter } from "./routers/commentRouter";
+import { imgRouter } from "./routers/imageRouter";
+import path from "path";
 
 const app = express();
 
@@ -19,6 +21,17 @@ app.use(cors());
 // express.urlencoded: 주로 Form submit 에 의해 만들어지는 URL-Encoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(express.static("back")); // 백엔드 폴더를 static 파일로 제공
+
+app.get("/uploads/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const filePath = `uploads/${filename}`;
+  const options = {
+    root: path.join(__dirname, "../"),
+  };
+  res.sendFile(filePath, options);
+});
 
 // 기본 페이지
 app.get("/", (req, res) => {
@@ -32,6 +45,7 @@ app.use('/projects', projectRouter);
 app.use('/awards', awardRouter);
 app.use('/certifications', certificationRouter);
 app.use('/comments', commentRouter);
+app.use("/upload", imgRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);

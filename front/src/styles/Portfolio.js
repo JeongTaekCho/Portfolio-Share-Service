@@ -14,9 +14,14 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const PortfolioList = styled.div`
+export const PortfolioContainer = styled.div`
   width: 800px;
+`;
+
+export const PortfolioList = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-bottom: 40px;
 `;

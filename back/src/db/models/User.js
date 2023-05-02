@@ -17,9 +17,13 @@ class User {
     return user;
   }
 
-  static async findAll() {
-    const users = await UserModel.find({});
-    return users;
+  static async findAndCountAll(skip, limit) {
+    const users = await UserModel.find()
+                      .skip(skip)
+                      .limit(limit)
+                      .exec();
+    const count = await UserModel.countDocuments();
+    return { users, count };
   }
 
   static async update({ user_id, fieldToUpdate, newValue }) {

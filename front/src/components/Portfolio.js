@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import { Container, Col, Row } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-import { Container, PortfolioList, Wrap } from "../styles/Portfolio";
+import { Container, PortfolioContainer, PortfolioList, Wrap } from "../styles/Portfolio";
 import Box from "./portfolio/Box";
 import Loading from "./Loading";
+import Feedback from "./feedbacks/feedback";
 
 const LIST = [
   {
@@ -61,11 +61,14 @@ function Portfolio() {
     <Wrap>
       <Container>
         <User portfolioOwnerId={portfolioOwner.id} isEditable={portfolioOwner.id === userState.user?.id} />
-        <PortfolioList>
-          {LIST.map((el, index) => (
-            <Box key={index} title={el.title} />
-          ))}
-        </PortfolioList>
+        <PortfolioContainer>
+          <PortfolioList>
+            {LIST.map((el, index) => (
+              <Box key={index} title={el.title} />
+            ))}
+          </PortfolioList>
+          <Feedback />
+        </PortfolioContainer>
       </Container>
     </Wrap>
   );
