@@ -69,7 +69,7 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
             style={{ display: "block", width: "100%", height: "100%" }}
             className=""
             src={imgFile || `http://localhost:5001/${user?.profile}`}
-            alt="고양이 사진"
+            alt="유저 프로필 사진"
             rounded
           />
         </ImageBox>

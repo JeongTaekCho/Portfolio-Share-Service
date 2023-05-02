@@ -11,15 +11,19 @@ import Feedback from "./feedbacks/feedback";
 
 const LIST = [
   {
+    id: "education",
     title: "학력",
   },
   {
+    id: "award",
     title: "수상이력",
   },
   {
+    id: "project",
     title: "프로젝트",
   },
   {
+    id: "certificate",
     title: "자격증",
   },
 ];
@@ -64,10 +68,10 @@ function Portfolio() {
         <PortfolioContainer>
           <PortfolioList>
             {LIST.map((el, index) => (
-              <Box key={index} title={el.title} />
+              <Box key={index} title={el.title} mvpId={el.id} />
             ))}
           </PortfolioList>
-          <Feedback />
+          <Feedback user={userState?.user} portfolioOwner={portfolioOwner} />
         </PortfolioContainer>
       </Container>
     </Wrap>
