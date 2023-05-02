@@ -16,19 +16,8 @@ function User({ portfolioOwnerId, isEditable }) {
 
   return (
     <>
-      {isEditing ? (
-        <UserEditForm
-          user={user}
-          setIsEditing={setIsEditing}
-          setUser={setUser}
-        />
-      ) : (
-        <UserCard
-          user={user}
-          setIsEditing={setIsEditing}
-          isEditable={isEditable}
-        />
-      )}
+      {isEditing && <UserEditForm user={user} setIsEditing={setIsEditing} setUser={setUser} isEditing={isEditing} />}
+      <UserCard user={user} setIsEditing={setIsEditing} isEditable={isEditable} />
     </>
   );
 }

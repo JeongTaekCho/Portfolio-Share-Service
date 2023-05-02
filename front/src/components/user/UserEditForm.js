@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import { Button, Modal } from "antd";
 import * as Api from "../../api";
+import { TextField } from "@mui/material";
+import { Image } from "react-bootstrap";
+import styled from "styled-components";
 
-function UserEditForm({ user, setIsEditing, setUser }) {
+function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
   //useState로 name 상태를 생성함.
   const [name, setName] = useState(user.name);
   //useState로 email 상태를 생성함.
@@ -28,51 +31,78 @@ function UserEditForm({ user, setIsEditing, setUser }) {
     setIsEditing(false);
   };
 
+  const handleCancel = (e) => {
+    setIsEditing(false);
+  };
+
   return (
-    <Card className="mb-2">
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="useEditName" className="mb-3">
-            <Form.Control
-              type="text"
-              placeholder="이름"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="userEditEmail" className="mb-3">
-            <Form.Control
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="userEditDescription">
-            <Form.Control
-              type="text"
-              placeholder="정보, 인사말"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Form.Group>
-
-          <Form.Group as={Row} className="mt-3 text-center">
-            <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
-                확인
-              </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
-                취소
-              </Button>
-            </Col>
-          </Form.Group>
-        </Form>
-      </Card.Body>
-    </Card>
+    <>
+      <Modal title="내 정보 변경" open={isEditing} onOk={handleSubmit} onCancel={handleCancel}>
+        <ImageBox>
+          <Image
+            variant="top"
+            style={{ display: "block", width: "100%", height: "100%" }}
+            className=""
+            src="http://placekitten.com/200/200"
+            alt="고양이 사진"
+            rounded
+          />
+        </ImageBox>
+        <InputFile type="file" id="editPhoto" />
+        <EditLabel htmlFor="editPhoto">
+          <img src="/images/camera.png" />
+        </EditLabel>
+        <TextField
+          label="이름"
+          name="name"
+          id="outlined-start-adornment"
+          sx={{ m: 1, width: "100%" }}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextField
+          label="이메일"
+          name="email"
+          id="outlined-start-adornment"
+          sx={{ m: 1, width: "100%" }}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+        />
+        <TextField
+          label="상태 메세지"
+          name="description"
+          id="outlined-start-adornment"
+          sx={{ m: 1, width: "100%" }}
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+        />
+      </Modal>
+    </>
   );
 }
+
+const ImageBox = styled.div`
+  width: 60%;
+  height: 250px;
+  position: relative;
+  margin: 0 auto 10px;
+`;
+
+const InputFile = styled.input`
+  display: none;
+`;
+
+const EditLabel = styled.label`
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  cursor: pointer;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export default UserEditForm;
