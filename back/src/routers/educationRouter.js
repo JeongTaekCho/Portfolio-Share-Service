@@ -28,7 +28,7 @@ educationRouter.post("/"
 
 educationRouter.get("/:id"
 ,login_required
-,async (req, res, next) => {
+,async function (req, res, next) {
   try {
     const educationId = req.params.id;
     const educationList = await EducationService.getEducation({educationId});
@@ -41,7 +41,7 @@ educationRouter.get("/:id"
 
 educationRouter.get("/user/:userId"
 ,login_required
-,async (req, res, next) => {
+,async function (req, res, next) {
   try {
     const userId = req.params.userId;
     console.log('req.params.userId: ',req.params.userId);
@@ -58,11 +58,9 @@ educationRouter.put("/:id"
 ,async function (req, res, next) {
   try {
     const educationId = req.params.id;
-    const userId = req.currentUserId;
-    console.log('educationRouter educationId : ',educationId);
+    const currentUserId = req.currentUserId;
     const { school, major, position } = req.body;  
-    const education = await EducationService.setEducation({ educationId, school, major, position });
-    console.log('educationRouter education: ', education);
+    const education = await EducationService.ChangeEducation({ educationId, currentUserId, school, major, position });
 
     if (education.errorMessage) {
       throw new Error(education.errorMessage);
@@ -76,14 +74,16 @@ educationRouter.put("/:id"
 
 educationRouter.delete("/:id"
 ,login_required
-,async (req, res, next) => {
+,async function (req, res, next){
   try {
     const educationId = req.params.id;
-    if (educationId){
-      await EducationService.deleteEducation(educationId);
-      res.status(200).json({ message: "education 삭제 완료" });
-    } 
-    else res.status(400).json({ message: "educationId는 필수값입니다." });
+    const currentUserId = req.currentUserId;
+    const result = await EducationService.deleteEducation(educationId, currentUserId);
+    
+    if (result.errorMessage) throw new Error(result.errorMessage);
+
+    res.status(200).json({ message: "education 삭제 완료"});
+
   } catch (error) {
     next(error);
   }

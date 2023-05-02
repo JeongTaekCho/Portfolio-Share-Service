@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 
 class EducationService {
-  static async addEducation({ userId, school, major, position }) {
+  static async addEducation({ userId, currentUserId, school, major, position }) {
     const newEducation = { userId, school, major, position };
     const createdNewEducation = await Education.create(newEducation);
     createdNewEducation.errorMessage = null;
@@ -26,7 +26,7 @@ class EducationService {
     return educations;
   }
 
-  static async setEducation({ educationId, school, major, position }) {
+  static async ChangeEducation({ educationId, currentUserId, school, major, position }) {
     let education = await Education.findById({educationId});
     console.log('educationService : ', education);
 
@@ -35,6 +35,11 @@ class EducationService {
         "해당 id를 가진 education 데이터는 없습니다.";
       return { errorMessage };
     }
+    if (education.userId !== currentUserId) {
+      const errorMessage = "해당 education 수정 권한이 없습니다.";
+      return { errorMessage };
+    }
+    
     education = await Education.update({ educationId, school, major, position })
 
     return education;
@@ -42,7 +47,18 @@ class EducationService {
 
 
   
-  static async deleteEducation(educationId) {
+  static async deleteEducation(educationId, currentUserId) {
+    const education = await Education.findById({educationId});
+    console.log('education: ',education);
+    if (!education) {
+      const errorMessage = "해당 id를 가진 education 데이터는 없습니다.";
+      return { errorMessage };
+    }
+    if (education.userId !== currentUserId) {
+      const errorMessage = "해당 education 수정 권한이 없습니다.";
+      return { errorMessage };
+    }
+
     await Education.deleteById(educationId);
     return { status: "ok" };
   }
