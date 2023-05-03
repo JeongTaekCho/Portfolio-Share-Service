@@ -15,18 +15,23 @@ const upload = multer({
   }),
 });
 
-imgRouter.post("/", upload.single("img"),async(req, res) => {
-  console.log("req.body.profile : ", req.body.profile);
+imgRouter.post("/", upload.single("img"), async (req, res) => {
+  try {
+    console.log("req.body.profile : ", req.body.profile);
 
-  res.json(req.file.path);
+    res.json(req.file.path);
 
-  fs.unlink(req.body.profile , (err) =>{
-    if(err){
-      next(err);
-      return;
+    if (req.body.profile !== "uploads/profile.png") {
+      fs.unlink(req.body.profile, (err) => {
+        if (err) {
+          throw new Error(err);
+        }
+        console.log("이미지가 삭제되었습니다.");
+      });
     }
-    console.log('이미지가 삭제되었습니다.');
-  });
+  } catch (err) {
+    next(err);
+  }
 });
 
 export { imgRouter };
