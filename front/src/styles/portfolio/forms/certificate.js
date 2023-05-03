@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const Form = styled.form`
   width: 100%;
-  padding: 30px;
+  padding: 3rem;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 0.8rem;
 
   .css-ekfslj-MuiFormControl-root-MuiTextField-root {
     width: 100%;
@@ -13,20 +13,20 @@ export const Form = styled.form`
   .css-1xhypcz-MuiStack-root {
     width: 100%;
     justify-content: space-between;
-    margin: 20px 0;
+    margin: 2rem 0;
   }
   .css-1xhypcz-MuiStack-root > .MuiTextField-root {
     width: 100%;
   }
   .css-1nvn3ta-JoyTextarea-root {
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
 `;
 
 export const BtnBox = styled.div`
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 1rem;
   align-items: center;
 
   .cancelBtn {

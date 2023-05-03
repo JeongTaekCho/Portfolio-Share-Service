@@ -2,22 +2,22 @@ import styled from "styled-components";
 
 export const Form = styled.form`
   width: 100%;
-  padding: 30px;
+  padding: 3rem;
   background-color: #fff;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border-radius: 0.8rem;
+  margin-bottom: 2rem;
 
   .css-ekfslj-MuiFormControl-root-MuiTextField-root {
     width: 100%;
     margin: 0;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
   .css-9ou33r-JoyRadioGroup-root {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
     span {
       margin: 0;
     }
@@ -27,7 +27,7 @@ export const Form = styled.form`
 export const BtnBox = styled.div`
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 1rem;
   align-items: center;
 
   .cancelBtn {

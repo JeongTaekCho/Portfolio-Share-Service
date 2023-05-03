@@ -128,7 +128,7 @@ export default function Box({ title, mvpId }) {
       {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} getCertificateData={getCertificateData} />}
 
       {location.pathname === "/" && (
-        <Button variant="contained" color="success" onClick={onClickBtn}>
+        <Button variant="contained" color="success" onClick={onClickBtn} style={{ fontSize: "1.8rem" }}>
           {isProject || isEducation || isAward || isCertificate ? "-" : "+"}
         </Button>
       )}
