@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import AwardDetail from "./details/Award";
 import CertificateDetail from "./details/Certificate";
 import { useLocation, useParams } from "react-router-dom";
-import { getData } from "../../hooks/getData";
+import { getData } from "../../utils/getData";
 
 const TITLE = {
   education: "학력",
