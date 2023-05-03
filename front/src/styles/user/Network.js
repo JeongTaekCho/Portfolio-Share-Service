@@ -11,7 +11,7 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const ContetnBox = styled.div`
+export const ContentBox = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
