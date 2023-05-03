@@ -25,7 +25,6 @@ export default function FeedbackWrite({ feedbackData, isEdit, user, getFeedbackD
     try {
       await post("comments", {
         portfolioId: pathname || user?.id,
-        name: user?.name,
         content: feedback,
       });
 
