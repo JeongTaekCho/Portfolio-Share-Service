@@ -31,26 +31,37 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append("img", file);
-      formData.append("profile", user.profile);
+      if (file !== null) {
+        const formData = new FormData();
+        formData.append("img", file || null);
+        formData.append("profile", user.profile);
 
-      const profile = await axios.post("http://localhost:5001/upload", formData, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-        },
-      });
-
-      const res = await Api.put(`users/${user.id}`, {
-        name,
-        email,
-        description,
-        profile,
-      });
-      const updatedUser = res.data;
-      setUser(updatedUser);
-      setIsEditing(false);
-      successModal("프로필 업데이트에 성공하였습니다.");
+        const profile = await axios.post("http://localhost:5001/upload", formData, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+          },
+        });
+        const res = await Api.put(`users/${user.id}`, {
+          name,
+          email,
+          description,
+          profile,
+        });
+        const updatedUser = res.data;
+        setUser(updatedUser);
+        setIsEditing(false);
+        successModal("프로필 업데이트에 성공하였습니다.");
+      } else {
+        const res = await Api.put(`users/${user.id}`, {
+          name,
+          email,
+          description,
+        });
+        const updatedUser = res.data;
+        setUser(updatedUser);
+        setIsEditing(false);
+        successModal("프로필 업데이트에 성공하였습니다.");
+      }
     } catch (err) {
       errorModal("프로필 업데이트에 실패하였습니다.");
     }
