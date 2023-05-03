@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Alert, Space, Spin } from "antd";
+import { Space, Spin } from "antd";
 
 export function Chat({ onClickBotBtn }) {
   const [question, setQuestion] = useState("");
@@ -70,9 +70,11 @@ export function Chat({ onClickBotBtn }) {
         ))}
         {isLoading && (
           <Space style={{ margin: "20px" }}>
-            <Spin tip="AI가 열심히 답변중입니다...">
-              <div className="content" />
-            </Spin>
+            <SpinWrap>
+              <Spin tip="AI가 열심히 답변중입니다...">
+                <div className="content" />
+              </Spin>
+            </SpinWrap>
           </Space>
         )}
       </MsgBox>
@@ -106,6 +108,9 @@ const ChatBox = styled.div`
     left: -98px;
     text-shadow: none;
     color: #fff;
+  }
+  .ant-spin .ant-spin-dot-item {
+    background-color: orange;
   }
 `;
 
@@ -181,4 +186,8 @@ const CancelBtn = styled.button`
   color: #111;
   border: none;
   background: none;
+`;
+
+const SpinWrap = styled.div`
+  /* margin-left: ; */
 `;
