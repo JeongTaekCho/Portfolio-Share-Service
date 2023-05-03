@@ -4,35 +4,62 @@ import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 import UserCard from "./UserCard";
 import { UserStateContext } from "../../App";
-import { Container, ContetnBox, Wrap } from "../../styles/user/Network";
+import { Container, ContentBox, Wrap } from "../../styles/user/Network";
+import { Pagination } from "antd";
+import styled from "styled-components";
 
 function Network() {
   const navigate = useNavigate();
   const userState = useContext(UserStateContext);
-  // useState 훅을 통해 users 상태를 생성함.
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
     if (!userState.user) {
       navigate("/login");
       return;
     }
-    // "userlist" 엔드포인트로 GET 요청을 하고, users를 response의 data로 세팅함.
-    Api.get("userlist").then((res) => setUsers(res.data));
-  }, [userState, navigate]);
+
+    Api.get(`userlist?page=${page}`).then((res) => setUsers(res.data));
+  }, [userState, navigate, page]);
+
+  const onChangePage = async (value) => {
+    setPage(value);
+  };
+
+  console.log(users);
 
   return (
     <Wrap fluid>
       <Container>
-        <ContetnBox style={{ gap: "20px" }}>
+        <ContentBox style={{ gap: "20px" }}>
           {users?.users?.map((user) => (
             <UserCard key={user.id} user={user} isNetwork />
           ))}
-        </ContetnBox>
+        </ContentBox>
+        <PagenationBox>
+          <Pagination total={users?.totalPages * 8} onChange={onChangePage} current={page} />
+        </PagenationBox>
       </Container>
     </Wrap>
   );
 }
 
 export default Network;
+
+const PagenationBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0;
+  .css-dev-only-do-not-override-yp8pcc.ant-pagination .ant-pagination-item a {
+    color: #fff;
+  }
+  .css-dev-only-do-not-override-yp8pcc.ant-pagination .ant-pagination-item-active a {
+    color: #9932cc;
+  }
+  .ant-pagination-item-link svg {
+    color: #fff;
+  }
+`;

@@ -56,13 +56,13 @@ userAuthRouter.get("/userlist", login_required, async function (req, res, next) 
   try {
     // 전체 사용자 목록을 얻음
     const page = parseInt(req.query.page || 1);
-    const limit = 10;
+    const limit = 8;
     const skip = (page - 1) * limit;
     console.log("page : ", page);
     console.log("skip : ", skip);
 
     const { users, count } = await userAuthService.getUsers(skip, limit);
-    res.status(200).send({
+    res.status(200).json({
       currentPage: page,
       totalPages: Math.ceil(count / limit),
       users,

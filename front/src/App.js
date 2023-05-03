@@ -11,6 +11,7 @@ import Network from "./components/user/Network";
 import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
 import Loading from "./components/Loading";
+import GlobalStyle from "./styles/GlobalCss";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -55,6 +56,7 @@ function App() {
   return (
     <DispatchContext.Provider value={dispatch}>
       <UserStateContext.Provider value={userState}>
+        <GlobalStyle />
         <StyleProvider hashPriority="high">
           <Router>
             <Header />

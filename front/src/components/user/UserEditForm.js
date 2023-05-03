@@ -34,6 +34,9 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
     // "users/유저id" 엔드포인트로 PUT 요청함.
     const formData = new FormData();
     formData.append("img", file);
+    formData.append("profile", user.profile);
+
+    console.log(formData);
 
     const profile = await axios.post("http://localhost:5001/upload", formData, {
       headers: {
