@@ -1,6 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import path from "path";
+import fs from "fs";
 
 const imgRouter = Router();
 const upload = multer({
@@ -14,9 +15,18 @@ const upload = multer({
   }),
 });
 
-imgRouter.post("/", upload.single("img"), (req, res) => {
+imgRouter.post("/", upload.single("img"),async(req, res) => {
+  console.log("req.body.profile : ", req.body.profile);
+
   res.json(req.file.path);
-  console.log(req.file);
+
+  fs.unlink(req.body.profile , (err) =>{
+    if(err){
+      next(err);
+      return;
+    }
+    console.log('이미지가 삭제되었습니다.');
+  });
 });
 
 export { imgRouter };
