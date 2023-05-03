@@ -27,7 +27,6 @@ class Project {
   }
 
   static async deleteById(projectId) {
-    console.log(projectId);
     await ProjectModel.findByIdAndDelete(projectId);
   }
 }

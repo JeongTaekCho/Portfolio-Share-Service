@@ -2,15 +2,13 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import { validateEmptyBody } from "../utils/validators"
 
 const userAuthRouter = Router();
 
 userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-    }
-
+    validateEmptyBody(req);
     // req (request) 에서 데이터 가져오기
     const name = req.body.name;
     const email = req.body.email;
