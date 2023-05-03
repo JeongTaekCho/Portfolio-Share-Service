@@ -25,3 +25,15 @@ export const PortfolioList = styled.div`
   gap: 30px;
   margin-bottom: 40px;
 `;
+
+export const BotImgBox = styled.div`
+  width: 100px;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  cursor: pointer;
+`;
+
+export const BotImg = styled.img`
+  width: 100%;
+`;
