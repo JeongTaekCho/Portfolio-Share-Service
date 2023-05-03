@@ -60,7 +60,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
               <Modal.Body style={{ fontSize: "1.8rem" }}>{user?.description}</Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose} style={{ fontSize: "1.8rem" }}>
-                  Close
+                  취소
                 </Button>
               </Modal.Footer>
             </ModalContainer>

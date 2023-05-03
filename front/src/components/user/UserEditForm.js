@@ -27,8 +27,6 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
     setFile(e.target.files[0]);
   };
 
-  console.log(file);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,7 +62,14 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
 
   return (
     <UserEditContainer>
-      <Modal title="내 정보 변경" open={isEditing} onOk={handleSubmit} onCancel={handleCancel}>
+      <Modal
+        title="내 정보 변경"
+        open={isEditing}
+        onOk={handleSubmit}
+        onCancel={handleCancel}
+        okText="수정"
+        cancelText="취소"
+      >
         <ImageBox>
           <Image
             variant="top"
