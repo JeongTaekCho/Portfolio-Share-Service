@@ -1,5 +1,5 @@
 import React from "react";
-import { PortfolioBox, Title } from "../../styles/portfolio/Box";
+import { BoxText, PortfolioBox, Title } from "../../styles/portfolio/Box";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import ProjectForm from "./forms/Project";
@@ -82,7 +82,7 @@ export default function Box({ title, mvpId }) {
   return (
     <PortfolioBox>
       <Title>{title}</Title>
-
+      {mvpId === "education" && educationDatas.length === 0 && <BoxText>학력정보가 없습니다. 추가해보세요!</BoxText>}
       {mvpId === "education" &&
         educationDatas?.map((education) => (
           <EducationDetail
@@ -99,19 +99,23 @@ export default function Box({ title, mvpId }) {
           getEducationData={getEducationData}
         />
       )}
-
+      {mvpId === "award" && awardDatas.length === 0 && <BoxText>수상이력 정보가 없습니다. 추가해보세요!</BoxText>}
       {mvpId === "award" &&
         awardDatas?.map((award) => (
           <AwardDetail key={award._id} award={award} getAwardData={getAwardData} userId={userInfo?.id} />
         ))}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
 
+      {mvpId === "project" && projectDatas.length === 0 && <BoxText>프로젝트 정보가 없습니다. 추가해보세요!</BoxText>}
       {mvpId === "project" &&
         projectDatas?.map((project) => (
           <Project key={project._id} project={project} getProjectData={getProjectData} userId={userInfo?.id} />
         ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
 
+      {mvpId === "certificate" && certificateDatas.length === 0 && (
+        <BoxText>자격증 정보가 없습니다. 추가해보세요!</BoxText>
+      )}
       {mvpId === "certificate" &&
         certificateDatas?.map((certificate) => (
           <CertificateDetail

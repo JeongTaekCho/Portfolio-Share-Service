@@ -36,6 +36,8 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
     formData.append("img", file);
     formData.append("profile", user.profile);
 
+    console.log(formData);
+
     const profile = await axios.post("http://localhost:5001/upload", formData, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
