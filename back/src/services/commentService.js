@@ -2,13 +2,13 @@ import { Comment } from "../db/models/Comment";
 
 class CommentService {
   static async addComment({ writerId, content, portfolioId, name }) {
-    const createdNewComment = await Comment.create({ writerId, content, portfolioId, name });
+    const createdNewComment = await Comment.create({ portfolioId, writerId, content, name });
 
     return createdNewComment;
   }
 
   static async getComment({ commentId }) {
-    const comment = await Comment.find({ commentId });
+    const comment = await Comment.findById({ commentId });
 
     if (!comment) {
       const errorMessage = "해당 comment는 없습니다.";
@@ -18,8 +18,8 @@ class CommentService {
     return comment;
   }
 
-  static async getComments({ userId }) {
-    const comments = await Comment.findByUserId({ userId });
+  static async getComments({ portfolioId }) {
+    const comments = await Comment.findByUserId({ portfolioId });
 
     if (!comments) {
       const errorMessage = "해당 comment는 없습니다.";
@@ -37,8 +37,7 @@ class CommentService {
       return { errorMessage };
     }
 
-    console.log(comment);
-    if (comment.portfolioId !== currentUserId) {
+    if (comment.writerId !== currentUserId) {
       const errorMessage = "해당 comment 수정 권한이 없습니다.";
       return { errorMessage };
     }

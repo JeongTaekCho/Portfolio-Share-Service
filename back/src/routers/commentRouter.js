@@ -2,6 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { CommentService } from "../services/commentService";
+import { userAuthService } from "../services/userService";
 
 const commentRouter = Router();
 
@@ -13,9 +14,10 @@ commentRouter.post("/", login_required, async function (req, res, next) {
     }
 
     const writerId = req.currentUserId;
-    const { content, portfolioId, name } = req.body;
+    const writeUser = await userAuthService.getUserInfo({ user_id: writerId })
+    const { content, portfolioId } = req.body;
 
-    const comment = await CommentService.addComment({ writerId, content, portfolioId, name });
+    const comment = await CommentService.addComment({ portfolioId, writerId, content, name: writeUser.name });
     res.status(201).json(comment);
   } catch (error) {
     next(error);
@@ -34,11 +36,11 @@ commentRouter.get("/:id", login_required, async function (req, res, next) {
   }
 });
 
-commentRouter.get("/user/:userId", login_required, async function (req, res, next) {
+commentRouter.get("/user/:portfolioId", login_required, async function (req, res, next) {
   try {
-    const userId = req.params.userId;
+    const portfolioId = req.params.portfolioId;
 
-    const comments = await CommentService.getComments({ userId });
+    const comments = await CommentService.getComments({ portfolioId });
 
     res.json(comments);
   } catch (error) {
@@ -79,3 +81,4 @@ commentRouter.delete("/:id", login_required, async function (req, res, next) {
 });
 
 export { commentRouter };
+
