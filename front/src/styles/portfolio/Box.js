@@ -21,3 +21,9 @@ export const Title = styled.h2`
   color: #fff;
   margin-bottom: 30px;
 `;
+
+export const BoxText = styled.p`
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+`;
