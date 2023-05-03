@@ -19,7 +19,7 @@ export const Content = styled.pre`
   font-weight: 500;
   color: #000;
   white-space: pre-wrap;
-`;
+  `;
 
 export const DetailFoot = styled.div`
   display: flex;
