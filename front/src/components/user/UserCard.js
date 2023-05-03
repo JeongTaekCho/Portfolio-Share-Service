@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Image from "react-bootstrap/Image";
+
+import Pagination from 'react-bootstrap/Pagination';
 
 import React, { useState } from "react";
 
@@ -16,6 +18,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const handleShow = () => setShow(true);
 
   return (
+  <>
     <Card border="light" style={{ width: "23.75%", maxHeight: "500px", backgroundColor: "#a996f5" }}>
       <Card.Header
         style={{
@@ -106,6 +109,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         {<br />}
       </Card.Body>
     </Card>
+</>
+    
+
+    
 
     // <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
     //   <Card.Body>
@@ -145,5 +152,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
     // </Card>
   );
 }
+
+
+
 
 export default UserCard;
