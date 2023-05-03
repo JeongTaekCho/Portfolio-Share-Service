@@ -11,18 +11,18 @@ export const Wrap = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 1.5rem;
   background: #9053c7;
   background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
   background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
   background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
   background: linear-gradient(-135deg, #c850c0, #4158d0);
-`
+`;
 
 export const Container = styled.div`
   width: 960px;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 1rem;
   overflow: hidden;
   display: -webkit-box;
   display: -webkit-flex;
@@ -31,49 +31,47 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 100px 130px 100px 95px;
-  margin-top: 57px;
-`
+  padding: 10rem 13rem 10rem 9.5rem;
+  margin-top: 5.7rem;
+`;
 export const ImgBox = styled.div`
-  width: 300px;
-  padding-top: 50px;
+  width: 30rem;
+  padding-top: 5rem;
   img {
     width: 100%;
   }
 `;
 
-  
 export const Title = styled.span`
   font-family: Poppins-Bold;
-  font-size: 40px;
+  font-size: 4rem;
   color: black;
   line-height: 1.2;
   text-align: center;
   width: 100%;
   display: block;
-  padding-bottom: 50px;
+  padding-bottom: 5rem;
   font-weight: 700;
-  `;
+`;
 
-
-  export const Form = styled.form`
+export const Form = styled.form`
   width: 290px;
   .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
-  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
-  .css-10botns-MuiInputBase-input-MuiFilledInput-input{
+  .css-10botns-MuiInputBase-input-MuiFilledInput-input {
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
-  .css-sghohy-MuiButtonBase-root-MuiButton-root{
+  .css-sghohy-MuiButtonBase-root-MuiButton-root {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 2rem;
     font-family: Poppins-Bold;
     font-weight: 550;
   }
-  `;
+`;

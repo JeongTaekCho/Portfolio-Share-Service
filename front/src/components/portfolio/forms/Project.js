@@ -10,6 +10,7 @@ import Button from "@mui/joy/Button";
 import { post, put } from "../../../api";
 import dayjs from "dayjs";
 import { errorModal, successModal } from "../../modals/AlertModal";
+import styled from "styled-components";
 
 export default function ProjectForm({ setIsProject, getProjectData, project, onClickToggleShowBtn }) {
   const [projectName, setProjectName] = useState("");
@@ -95,20 +96,82 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
         label="프로젝트명"
         name="projectName"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
+        sx={{
+          m: 1,
+          width: "100%",
+          " .MuiOutlinedInput-root": {
+            fontSize: "1.6rem",
+          },
+          margin: 0,
+        }}
+        InputLabelProps={{
+          style: { fontSize: "1.6rem" },
+        }}
         onChange={onChangeInput}
         value={projectName}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label="프로젝트 시작" onChange={onChangeStartDate} value={startDate} />
-          <DatePicker label="프로젝트 마감" onChange={onChangeEndDate} value={endDate} />
+        <DemoContainer
+          components={["DatePicker", "DatePicker"]}
+          sx={{
+            m: 1,
+            width: "100%",
+            " .MuiOutlinedInput-root": {
+              fontSize: "1.6rem",
+            },
+            margin: 0,
+          }}
+        >
+          <DatePicker
+            label="프로젝트 시작"
+            onChange={onChangeStartDate}
+            value={startDate}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
+          />
+        </DemoContainer>
+        <DemoContainer
+          components={["DatePicker", "DatePicker"]}
+          sx={{
+            m: 1,
+            width: "100%",
+            " .MuiOutlinedInput-root": {
+              fontSize: "1.6rem",
+            },
+            margin: 0,
+          }}
+        >
+          <DatePicker
+            label="프로젝트 마감"
+            onChange={onChangeEndDate}
+            value={endDate}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
+          />
         </DemoContainer>
       </LocalizationProvider>
-      <Textarea minRows={2} name="content" placeholder="프로젝트 내용" onChange={onChangeInput} value={content} />
+      <Textarea
+        minRows={2}
+        name="content"
+        placeholder="프로젝트 내용"
+        onChange={onChangeInput}
+        value={content}
+        style={{ width: "100%", minHeight: "150px", marginTop: "10px", fontSize: "1.6rem" }}
+      />
       <BtnBox>
-        <Button onClick={project ? onClickEditProject : onClickAddProject}>{project ? "수정" : "등록"}</Button>
-        <Button className="cancelBtn" onClick={project ? onClickToggleShowBtn : onClickCancelForm}>
+        <Button
+          onClick={project ? onClickEditProject : onClickAddProject}
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
+        >
+          {project ? "수정" : "등록"}
+        </Button>
+        <Button
+          className="cancelBtn"
+          onClick={project ? onClickToggleShowBtn : onClickCancelForm}
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
+        >
           취소
         </Button>
       </BtnBox>

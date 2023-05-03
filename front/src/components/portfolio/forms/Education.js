@@ -86,7 +86,18 @@ export default function EducationForm({ setIsEducation, education, getEducationD
         label="학교명"
         name="school"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
+        sx={{
+          m: 1,
+          width: "100%",
+          " .MuiOutlinedInput-root": {
+            fontSize: "1.6rem",
+          },
+          margin: 0,
+          marginBottom: "10px",
+        }}
+        InputLabelProps={{
+          style: { fontSize: "1.6rem" },
+        }}
         onChange={onChangeValue}
         value={school}
       />
@@ -94,25 +105,41 @@ export default function EducationForm({ setIsEducation, education, getEducationD
         label="전공"
         name="major"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
+        sx={{
+          m: 1,
+          width: "100%",
+          " .MuiOutlinedInput-root": {
+            fontSize: "1.6rem",
+          },
+          margin: 0,
+          marginBottom: "10px",
+        }}
+        InputLabelProps={{
+          style: { fontSize: "1.6rem" },
+        }}
         onChange={onChangeValue}
         value={major}
       />
       <FormControl>
-        <RadioGroup defaultValue="medium" name="radio-buttons-group">
+        <RadioGroup defaultValue="medium" name="radio-buttons-group" style={{ flexWrap: "wrap" }}>
           <Radio
             value="재학중"
             name="position"
             label="재학중"
-            size="md"
+            size="lg"
             onChange={onChangeValue}
             checked={position === "재학중"}
+            InputLabelProps={{
+              style: {
+                fontSize: 18,
+              },
+            }}
           />
           <Radio
             value="고등학교 졸업"
             name="position"
             label="고등학교 졸업"
-            size="md"
+            size="lg"
             onChange={onChangeValue}
             checked={position === "고등학교 졸업"}
           />
@@ -120,7 +147,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
             value="학사 졸업"
             name="position"
             label="학사 졸업"
-            size="md"
+            size="lg"
             onChange={onChangeValue}
             checked={position === "학사 졸업"}
           />
@@ -128,7 +155,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
             value="석사 졸업"
             name="position"
             label="석사 졸업"
-            size="md"
+            size="lg"
             onChange={onChangeValue}
             checked={position === "석사 졸업"}
           />
@@ -136,7 +163,7 @@ export default function EducationForm({ setIsEducation, education, getEducationD
             value="박사 졸업"
             name="position"
             label="박사 졸업"
-            size="md"
+            size="lg"
             onChange={onChangeValue}
             checked={position === "박사 졸업"}
           />
@@ -144,8 +171,14 @@ export default function EducationForm({ setIsEducation, education, getEducationD
       </FormControl>
 
       <BtnBox>
-        <Button type="submit">{education ? "수정" : "등록"}</Button>
-        <Button className="cancelBtn" onClick={education ? onClickToggleShowBtn : onClickCancelForm}>
+        <Button type="submit" style={{ fontSize: "1.6rem", padding: "1rem" }}>
+          {education ? "수정" : "등록"}
+        </Button>
+        <Button
+          className="cancelBtn"
+          onClick={education ? onClickToggleShowBtn : onClickCancelForm}
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
+        >
           취소
         </Button>
       </BtnBox>

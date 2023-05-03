@@ -7,6 +7,8 @@ import Modal from "react-bootstrap/Modal";
 import Image from "react-bootstrap/Image";
 
 import React, { useState } from "react";
+import styled from "styled-components";
+import { res } from "../../styles/responsive";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
@@ -17,22 +19,26 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 
   return (
     <>
-      <Card border="light" style={{ width: "23.75%", maxHeight: "500px", backgroundColor: "#a996f5" }}>
+      <Card
+        border="light"
+        className="userCard"
+        style={{ width: "23.75%", maxHeight: "50rem", backgroundColor: "#a996f5" }}
+      >
         <Card.Header
           style={{
             fontWeight: "600",
-            fontSize: "40px",
+            fontSize: "3rem",
             color: "white",
             backgroundColor: "#7217bc",
             textAlign: "center",
-            height: "70px",
+            height: "7rem",
           }}
         >
           {user?.name}
         </Card.Header>
         <Image
           variant="top"
-          style={{ width: "90%", height: "180px", margin: "10px auto 0" }}
+          style={{ width: "90%", height: "22rem", margin: "1rem auto 0", fontSize: "1.8rem" }}
           className=""
           src={`http://localhost:5001/${user?.profile}`}
           alt="유저 프로필 사진"
@@ -41,22 +47,23 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         <Card.Body>
           <Button
             variant=""
-            style={{ width: "100%", backgroundColor: "#6722c7", color: "white", fontWeight: "550" }}
+            style={{ width: "100%", backgroundColor: "#6722c7", color: "white", fontWeight: "550", fontSize: "1.8rem" }}
             onClick={handleShow}
           >
             Introduce
           </Button>
-
           <Modal show={show} onHide={handleClose} animation={false}>
-            <Modal.Header closeButton>
-              <Modal.Title>{user?.name}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{user?.description}</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-            </Modal.Footer>
+            <ModalContainer>
+              <Modal.Header closeButton>
+                <Modal.Title style={{ fontSize: "1.8rem" }}>{user?.name}</Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{ fontSize: "1.8rem" }}>{user?.description}</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose} style={{ fontSize: "1.8rem" }}>
+                  취소
+                </Button>
+              </Modal.Footer>
+            </ModalContainer>
           </Modal>
 
           {isEditable && (
@@ -70,7 +77,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                       color: "white",
                       backgroundColor: "#9c0a9d",
                       fontWeight: "550",
-                      marginBottom: "20px",
+                      marginBottom: "2rem",
+                      fontSize: "1.8rem",
                     }}
                     onClick={() => setIsEditing(true)}
                   >
@@ -88,7 +96,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
                 color: "white",
                 backgroundColor: "#9119c0",
                 fontWeight: "550",
-                marginBottom: "30px",
+                marginBottom: "3rem",
+                fontSize: "1.8rem",
               }}
               variant=""
               className="mt-3"
@@ -100,7 +109,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           )}
           <Card.Footer
             className="text-muted"
-            style={{ fontWeight: "600", backgroundColor: "#e7dcff", textAlign: "center" }}
+            style={{ fontWeight: "600", backgroundColor: "#e7dcff", textAlign: "center", fontSize: "1.8rem" }}
           >
             {user?.email}
           </Card.Footer>
@@ -112,3 +121,19 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 }
 
 export default UserCard;
+
+const ModalContainer = styled.div`
+  width: 600px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+
+  @media ${res.tablet} {
+    width: 65%;
+  }
+  @media ${res.mobile} {
+    width: 90%;
+  }
+`;

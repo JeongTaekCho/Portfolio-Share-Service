@@ -7,7 +7,7 @@ import { Wrap, Container, ImgBox, Form, Title } from "../../styles/user/Register
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { errorModal } from "../modals/AlertModal";
+import { errorModal, successModal } from "../modals/AlertModal";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -113,6 +113,7 @@ function RegisterForm() {
           password,
           name,
         });
+        successModal("회원가입이 완료되었습니다.");
       } else {
         errorModal("빈 칸을 채워주세요.");
         return;
@@ -134,28 +135,52 @@ function RegisterForm() {
           <Title>Sign Up</Title>
           <TextField
             error={nameValid}
-            id="filled-basic"
+            id="outlined-basic"
             label="Name"
-            variant="filled"
+            variant="outlined"
             size="small"
             type="text"
             text="off"
             value={name}
             onChange={onChangeName}
             helperText={errorName[0]}
+            sx={{
+              m: 1,
+              width: "100%",
+              " .MuiOutlinedInput-root": {
+                fontSize: "1.6rem",
+              },
+              margin: 0,
+              marginBottom: "1rem",
+            }}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
           />
 
           <TextField
             error={emailValid}
-            id="filled-basic"
+            id="outlined-basic"
             label="Email"
-            variant="filled"
+            variant="outlined"
             size="small"
             type="email"
             autoComplete="off"
             value={email}
             onChange={onChangeEmail}
             helperText={errorEmail[0]}
+            sx={{
+              m: 1,
+              width: "100%",
+              " .MuiOutlinedInput-root": {
+                fontSize: "1.6rem",
+              },
+              margin: 0,
+              marginBottom: "1rem",
+            }}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
           />
 
           <TextField
@@ -169,6 +194,18 @@ function RegisterForm() {
             value={password}
             onChange={onChagnePassword}
             helperText={errorPassword[0]}
+            sx={{
+              m: 1,
+              width: "100%",
+              " .MuiOutlinedInput-root": {
+                fontSize: "1.6rem",
+              },
+              margin: 0,
+              marginBottom: "1rem",
+            }}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
           />
 
           <TextField
@@ -182,102 +219,31 @@ function RegisterForm() {
             value={confirmPassword}
             onChange={onChangeConfirmPassword}
             helperText={errorConfirm[0]}
+            sx={{
+              m: 1,
+              width: "100%",
+              " .MuiOutlinedInput-root": {
+                fontSize: "1.6rem",
+              },
+              margin: 0,
+              marginBottom: "1rem",
+            }}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
           />
           <Button
             onClick={handleSubmit}
             variant="contained"
             type="submit"
             disabled={!nameValid && !emailValid && !passwordValid && !confirmPasswordValid && isValid ? false : true}
+            style={{ fontSize: "1.8rem" }}
           >
             Register
           </Button>
         </Form>
       </Container>
     </Wrap>
-
-    // <Container>
-    //   <Row className="justify-content-md-center mt-5">
-    //     <Col lg={8}>
-    //       <Form onSubmit={handleSubmit}>
-    //         <Form.Group controlId="registerEmail">
-    //           <Form.Label>이메일 주소</Form.Label>
-    //           <Form.Control
-    //             type="email"
-    //             autoComplete="off"
-    //             value={email}
-    //             onChange={(e) => setEmail(e.target.value)}
-    //           />
-    //           {!isEmailValid && (
-    //             <Form.Text className="text-success">
-    //               이메일 형식이 올바르지 않습니다.
-    //             </Form.Text>
-    //           )}
-    //         </Form.Group>
-
-    //         <Form.Group controlId="registerPassword" className="mt-3">
-    //           <Form.Label>비밀번호</Form.Label>
-    //           <Form.Control
-    //             type="password"
-    //             autoComplete="off"
-    //             value={password}
-    //             onChange={(e) => setPassword(e.target.value)}
-    //           />
-    //           {!isPasswordValid && (
-    //             <Form.Text className="text-success">
-    //               비밀번호는 4글자 이상으로 설정해 주세요.
-    //             </Form.Text>
-    //           )}
-    //         </Form.Group>
-
-    //         <Form.Group controlId="registerConfirmPassword" className="mt-3">
-    //           <Form.Label>비밀번호 재확인</Form.Label>
-    //           <Form.Control
-    //             type="password"
-    //             autoComplete="off"
-    //             value={confirmPassword}
-    //             onChange={(e) => setConfirmPassword(e.target.value)}
-    //           />
-    //           {!isPasswordSame && (
-    //             <Form.Text className="text-success">
-    //               비밀번호가 일치하지 않습니다.
-    //             </Form.Text>
-    //           )}
-    //         </Form.Group>
-
-    //         <Form.Group controlId="registerName" className="mt-3">
-    //           <Form.Label>이름</Form.Label>
-    //           <Form.Control
-    //             type="text"
-    //             autoComplete="off"
-    //             value={name}
-    //             onChange={(e) => setName(e.target.value)}
-    //           />
-    //           {!isNameValid && (
-    //             <Form.Text className="text-success">
-    //               이름은 2글자 이상으로 설정해 주세요.
-    //             </Form.Text>
-    //           )}
-    //         </Form.Group>
-
-    //         <Form.Group as={Row} className="mt-3 text-center">
-    //           <Col sm={{ span: 20 }}>
-    //             <Button variant="primary" type="submit" disabled={!isFormValid}>
-    //               회원가입
-    //             </Button>
-    //           </Col>
-    //         </Form.Group>
-
-    //         <Form.Group as={Row} className="mt-3 text-center">
-    //           <Col sm={{ span: 20 }}>
-    //             <Button variant="light" onClick={() => navigate("/login")}>
-    //               로그인하기
-    //             </Button>
-    //           </Col>
-    //         </Form.Group>
-    //       </Form>
-    //     </Col>
-    //   </Row>
-    // </Container>
   );
 }
 

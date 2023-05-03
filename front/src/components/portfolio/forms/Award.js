@@ -79,18 +79,54 @@ export default function AwardForm({ setIsAward, getAwardData, onClickToggleShowB
         label="수상 이름"
         name="awardName"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
+        sx={{
+          m: 1,
+          width: "100%",
+          " .MuiOutlinedInput-root": {
+            fontSize: "1.6rem",
+          },
+          margin: 0,
+        }}
+        InputLabelProps={{
+          style: { fontSize: "1.6rem" },
+        }}
         onChange={onChangeAwardName}
         value={awardName}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label="수상 날짜" name="date" onChange={onChangeDate} value={date} />
+        <DemoContainer
+          components={["DatePicker", "DatePicker"]}
+          sx={{
+            m: 1,
+            width: "100%",
+            " .MuiOutlinedInput-root": {
+              fontSize: "1.6rem",
+            },
+            margin: 0,
+            marginBottom: "10px",
+          }}
+        >
+          <DatePicker
+            label="수상 날짜"
+            name="date"
+            onChange={onChangeDate}
+            value={date}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
+          />
         </DemoContainer>
       </LocalizationProvider>
       <BtnBox>
-        <Button onClick={award ? onClickEditAward : onClickAddAward}> {award ? "수정" : "등록"} </Button>
-        <Button className="cancelBtn" onClick={award ? onClickToggleShowBtn : onClickCancelForm}>
+        <Button onClick={award ? onClickEditAward : onClickAddAward} style={{ fontSize: "1.6rem", padding: "1rem" }}>
+          {" "}
+          {award ? "수정" : "등록"}{" "}
+        </Button>
+        <Button
+          className="cancelBtn"
+          onClick={award ? onClickToggleShowBtn : onClickCancelForm}
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
+        >
           취소
         </Button>
       </BtnBox>
