@@ -26,37 +26,44 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
     setFile(e.target.files[0]);
   };
 
-  console.log(file);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // "users/유저id" 엔드포인트로 PUT 요청함.
-    const formData = new FormData();
-    formData.append("img", file);
-    formData.append("profile", user.profile);
 
-    console.log(formData);
+    try {
+      if (file !== null) {
+        const formData = new FormData();
+        formData.append("img", file || null);
+        formData.append("profile", user.profile);
 
-    const profile = await axios.post("http://localhost:5001/upload", formData, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-      },
-    });
-
-    const res = await Api.put(`users/${user.id}`, {
-      name,
-      email,
-      description,
-      profile,
-    });
-    // 유저 정보는 response의 data임.
-    const updatedUser = res.data;
-    // 해당 유저 정보로 user을 세팅함.
-    setUser(updatedUser);
-
-    // isEditing을 false로 세팅함.
-    setIsEditing(false);
+        const profile = await axios.post("http://localhost:5001/upload", formData, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+          },
+        });
+        const res = await Api.put(`users/${user.id}`, {
+          name,
+          email,
+          description,
+          profile,
+        });
+        const updatedUser = res.data;
+        setUser(updatedUser);
+        setIsEditing(false);
+      } else {
+        const res = await Api.put(`users/${user.id}`, {
+          name,
+          email,
+          description,
+        });
+        const updatedUser = res.data;
+        setUser(updatedUser);
+        setIsEditing(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleCancel = (e) => {
