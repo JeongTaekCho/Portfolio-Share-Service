@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export function Chat() {
+export function Chat({ onClickBotBtn }) {
   const [question, setQuestion] = useState("");
   const [msgHistory, setMsgHistory] = useState([]);
 
@@ -47,7 +47,10 @@ export function Chat() {
 
   return (
     <ChatBox>
-      <ChatTitle>깜장이 봇</ChatTitle>
+      <HeadBox>
+        <ChatTitle>무엇이든 질문해보세요!</ChatTitle>
+        <CancelBtn onClick={onClickBotBtn}>X</CancelBtn>
+      </HeadBox>
       <MsgBox>
         {msgHistory.map((el) => (
           <MsgContainer style={{ justifyContent: el.user === "user" ? "flex-end" : "flex-start" }}>
@@ -75,6 +78,7 @@ const ChatBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   border-radius: 10px;
+  z-index: 9999;
 `;
 
 const MsgBox = styled.div`
@@ -134,4 +138,18 @@ const ChatTitle = styled.h2`
   font-size: 20px;
   font-weight: 500;
   color: #111;
+`;
+
+const HeadBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CancelBtn = styled.button`
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  border: none;
+  background: none;
 `;
