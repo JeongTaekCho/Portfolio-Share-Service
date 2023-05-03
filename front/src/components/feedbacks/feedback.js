@@ -15,7 +15,7 @@ export default function Feedback({ user, portfolioOwner }) {
   }, [pathname]);
 
   const getFeedbackDatas = async () => {
-    setFeedbackDatas(await getData(`comments/${pathname || user?.id}`));
+    setFeedbackDatas(await getData(`comments/user/${pathname || user?.id}`));
   };
 
   return (

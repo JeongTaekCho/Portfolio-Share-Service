@@ -41,7 +41,7 @@ class AwardService {
       return { errorMessage };
     }
 
-    award = await Award.update({awardName, date})
+    award = await Award.update({awardId, awardName, date})
 
     return award;
   }
