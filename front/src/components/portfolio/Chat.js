@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Alert, Space, Spin } from "antd";
 
 export function Chat({ onClickBotBtn }) {
   const [question, setQuestion] = useState("");
   const [msgHistory, setMsgHistory] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeInput = (e) => {
     setQuestion(e.target.value);
@@ -12,35 +14,41 @@ export function Chat({ onClickBotBtn }) {
 
   const onSubmitSend = async (e) => {
     e.preventDefault();
+    try {
+      setMsgHistory((prev) => {
+        return [
+          ...prev,
+          {
+            user: "user",
+            message: question,
+          },
+        ];
+      });
+      setIsLoading(true);
 
-    setMsgHistory((prev) => {
-      return [
-        ...prev,
-        {
-          user: "user",
-          message: question,
+      const bodyData = JSON.stringify({ question });
+
+      const answer = await axios.post("http://localhost:5001/chat", bodyData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
         },
-      ];
-    });
+      });
 
-    const bodyData = JSON.stringify({ question });
-
-    const answer = await axios.post("http://localhost:5001/chat", bodyData, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-      },
-    });
-    setMsgHistory((prev) => {
-      return [
-        ...prev,
-        {
-          user: "ai",
-          message: answer?.data?.result || "곤란한 질문 입니다.",
-        },
-      ];
-    });
-    setQuestion("");
+      setIsLoading(false);
+      setMsgHistory((prev) => {
+        return [
+          ...prev,
+          {
+            user: "ai",
+            message: answer?.data?.result || "곤란한 질문 입니다.",
+          },
+        ];
+      });
+      setQuestion("");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   console.log(msgHistory);
@@ -52,11 +60,21 @@ export function Chat({ onClickBotBtn }) {
         <CancelBtn onClick={onClickBotBtn}>X</CancelBtn>
       </HeadBox>
       <MsgBox>
+        <MsgContainer style={{ justifyContent: "flex-start" }}>
+          <MyMsg>안녕하세요! 저는 AI봇입니다. 궁금한 것을 질문해주세요!</MyMsg>
+        </MsgContainer>
         {msgHistory.map((el) => (
           <MsgContainer style={{ justifyContent: el.user === "user" ? "flex-end" : "flex-start" }}>
-            <MyMsg>{el.message}</MyMsg>
+            <MyMsg style={{ justifyContent: el.user === "user" ? "flex-end" : "flex-start" }}>{el.message}</MyMsg>
           </MsgContainer>
         ))}
+        {isLoading && (
+          <Space style={{ margin: "20px" }}>
+            <Spin tip="AI가 열심히 답변중입니다...">
+              <div className="content" />
+            </Spin>
+          </Space>
+        )}
       </MsgBox>
       <MsgForm>
         <MsgInput type="text" placeholder="궁금한 것을 질문해주세요." value={question} onChange={onChangeInput} />
@@ -79,6 +97,16 @@ const ChatBox = styled.div`
   justify-content: space-between;
   border-radius: 10px;
   z-index: 9999;
+  .ant-spin-nested-loading > div > .ant-spin .ant-spin-dot {
+    margin-left: -18px;
+    margin-bottom: 5px;
+  }
+  .ant-spin-nested-loading > div > .ant-spin .ant-spin-text {
+    width: 310px;
+    left: -98px;
+    text-shadow: none;
+    color: #fff;
+  }
 `;
 
 const MsgBox = styled.div`
@@ -126,12 +154,13 @@ const MsgContainer = styled.div`
 `;
 
 const MyMsg = styled.p`
-  width: 90%;
+  width: auto;
   min-height: 35px;
   background-color: #fff;
   border-radius: 15px;
   padding: 10px;
   margin-bottom: 0;
+  display: flex;
 `;
 
 const ChatTitle = styled.h2`
