@@ -1,4 +1,5 @@
 import { Comment } from "../db/models/Comment";
+import { findModelById } from "../utils/findById";
 
 class CommentService {
   static async addComment({ writerId, content, portfolioId, name }) {
@@ -8,39 +9,21 @@ class CommentService {
   }
 
   static async getComment({ commentId }) {
-    const comment = await Comment.findById({ commentId });
-
-    if (!comment) {
-      const errorMessage = "해당 comment는 없습니다.";
-      return { errorMessage };
-    }
-
+    const comment = await findModelById(Comment.findById({ commentId })) 
+ 
     return comment;
   }
 
   static async getComments({ portfolioId }) {
-    const comments = await Comment.findByUserId({ portfolioId });
-
-    if (!comments) {
-      const errorMessage = "해당 comment는 없습니다.";
-      return { errorMessage };
-    }
+    const comments = await findModelById(Comment.findByUserId({ portfolioId })) 
 
     return comments;
   }
 
   static async ChangeComment({ commentId, currentUserId, content }) {
-    let comment = await Comment.findById({ commentId });
-
-    if (!comment) {
-      const errorMessage = "해당 id를 가진 comment 데이터는 없습니다.";
-      return { errorMessage };
-    }
-
-    if (comment.writerId !== currentUserId) {
-      const errorMessage = "해당 comment 수정 권한이 없습니다.";
-      return { errorMessage };
-    }
+    let comment = await findModelById(Comment.findById({ commentId }))
+    if(comment.writerId !== currentUserId)
+      throw new Error("수정 권한이 없습니다.");
 
     comment = await Comment.update({ commentId, content });
 
@@ -48,18 +31,12 @@ class CommentService {
   }
 
   static async deleteComment(commentId, currentUserId) {
-    const comment = await Comment.findById({ commentId });
-
-    if (!comment) {
-      const errorMessage = "해당 id를 가진 comment 데이터는 없습니다.";
-      return { errorMessage };
-    }
-    if (comment.writerId !== currentUserId) {
-      const errorMessage = "해당 comment 수정 권한이 없습니다.";
-      return { errorMessage };
-    }
+    const comment = await findModelById(Comment.findById({ commentId }))
+    if(comment.writerId !== currentUserId)
+      throw new Error("수정 권한이 없습니다.");
 
     await Comment.deleteById(commentId);
+
     return { status: "ok" };
   }
 }
