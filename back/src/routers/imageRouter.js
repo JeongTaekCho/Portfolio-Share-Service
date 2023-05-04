@@ -15,17 +15,17 @@ const upload = multer({
   }),
 });
 
-imgRouter.post("/", upload.single("img"), async (req, res) => {
+imgRouter.put("/", upload.single("img"), async (req, res) => {
   try {
     res.json(req.file.path);
 
-    // if (req.body.profile !== "uploads/profile.png") {
-    //   fs.unlink(req.body.profile, (err) => {
-    //     if (err) {
-    //       throw new Error(err);
-    //     }
-    //   });
-    // }
+    if (req.body.profile !== "uploads/profile.png") {
+      fs.unlink(req.body.profile, (err) => {
+        if (err) {
+          throw new Error(err);
+        }
+      });
+    }
   } catch (err) {
     next(err);
   }
