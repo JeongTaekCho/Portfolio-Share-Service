@@ -12,6 +12,7 @@ import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
 import Loading from "./components/Loading";
 import GlobalStyle from "./styles/GlobalCss";
+import Footer from "./components/Footer";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -68,6 +69,7 @@ function App() {
               <Route path="/network" element={<Network />} />
               <Route path="*" element={<Portfolio />} />
             </Routes>
+            <Footer />
           </Router>
         </StyleProvider>
       </UserStateContext.Provider>

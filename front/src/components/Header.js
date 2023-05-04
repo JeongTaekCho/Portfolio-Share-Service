@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
-import { Wrap, Head, HeadContainer, LogoBox, Navigation, Menu, MenuList, ListBtn } from "../styles/user/Header";
+import { Wrap, Head, HeadContainer, LogoBox, Navigation, Menu, MenuList, ListBtn } from "../styles/Header";
 
 function Header() {
   const navigate = useNavigate();
