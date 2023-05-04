@@ -40,7 +40,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
           variant="top"
           style={{ width: "90%", height: "22rem", margin: "1rem auto 0", fontSize: "1.8rem" }}
           className=""
-          src={`http://localhost:5001/${user?.profile}`}
+          src={`${user?.profile}`}
           alt="유저 프로필 사진"
           rounded
         />

@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const backendPortNumber = "5001";
-const serverUrl = "http://" + window.location.hostname + ":" + backendPortNumber + "/";
+const serverUrl = "/";
 
 async function get(endpoint, params = "") {
-  return axios.get(serverUrl + endpoint + "/" + params, {
+  return axios.get(endpoint + "/" + params, {
     // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -17,7 +17,7 @@ async function post(endpoint, data) {
   // 예시: {name: "Kim"} => {"name": "Kim"}
   const bodyData = JSON.stringify(data);
 
-  return axios.post(serverUrl + endpoint, bodyData, {
+  return axios.post(endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -41,7 +41,7 @@ async function put(endpoint, data) {
 // 아래 함수명에 관해, delete 단어는 자바스크립트의 reserved 단어이기에,
 // 여기서는 우선 delete 대신 del로 쓰고 아래 export 시에 delete로 alias 함.
 async function del(endpoint, params = "") {
-  return axios.delete(serverUrl + endpoint + "/" + params, {
+  return axios.delete(endpoint + "/" + params, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },

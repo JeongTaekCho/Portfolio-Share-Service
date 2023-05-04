@@ -7,7 +7,7 @@ import { Space, Spin } from "antd";
 export function Chat({ onClickBotBtn }) {
   const [question, setQuestion] = useState("");
   const [msgHistory, setMsgHistory] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeInput = (e) => {
     setQuestion(e.target.value);
@@ -29,7 +29,7 @@ export function Chat({ onClickBotBtn }) {
 
       const bodyData = JSON.stringify({ question });
 
-      const answer = await axios.post("http://localhost:5001/chat", bodyData, {
+      const answer = await axios.post("chat", bodyData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
