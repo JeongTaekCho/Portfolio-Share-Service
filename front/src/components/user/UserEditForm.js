@@ -86,7 +86,7 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
             variant="top"
             style={{ display: "block", width: "100%", height: "100%" }}
             className=""
-            src={imgFile || `${user?.profile}`}
+            src={imgFile || `http://localhost:5001/${user?.profile}`}
             alt="유저 프로필 사진"
             rounded
           />
