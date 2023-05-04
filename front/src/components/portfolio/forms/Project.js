@@ -60,7 +60,7 @@ export default function ProjectForm({ setIsProject, getProjectData, project, onC
         await post("projects", data);
         setIsProject(false);
         getProjectData();
-        successModal("수상이력이 등록되었습니다.");
+        successModal("프로젝트가 등록되었습니다.");
       } else {
         errorModal("빈칸을 채워주세요.");
       }
