@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { res } from "../responsive";
 
 export const Wrap = styled.div`
   width: 100%;
@@ -6,7 +7,7 @@ export const Wrap = styled.div`
 
 export const Head = styled.header`
   width: 100%;
-  height: 84px;
+  height: 8.4rem;
   position: absolute;
   top: 0;
   left: 50%;
@@ -20,10 +21,13 @@ export const HeadContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media ${res.tablet} {
+    width: 90%;
+  }
 `;
 
 export const LogoBox = styled.div`
-  width: 95px;
+  width: 9.5rem;
   cursor: pointer;
   img {
     width: 100%;
@@ -39,7 +43,7 @@ export const Navigation = styled.nav``;
 export const Menu = styled.ul`
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 2.4rem;
   margin-bottom: 0;
 `;
 
@@ -50,11 +54,11 @@ export const MenuList = styled.li`
 export const ListBtn = styled.button`
   border: none;
   background: none;
-  font-size: 15px;
+  font-size: 1.5rem;
   font-weight: 400;
   color: #fff;
   &:hover {
-    font-size: 17px;
+    font-size: 1.7rem;
     transition: 0.2s;
     font-weight: 600;
   }

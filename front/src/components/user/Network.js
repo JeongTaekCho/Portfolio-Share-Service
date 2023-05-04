@@ -32,7 +32,7 @@ function Network() {
   return (
     <Wrap fluid>
       <Container>
-        <ContentBox style={{ gap: "20px" }}>
+        <ContentBox style={{ gap: "2rem" }}>
           {users?.users?.map((user) => (
             <UserCard key={user.id} user={user} isNetwork />
           ))}
@@ -52,7 +52,7 @@ const PagenationBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px 0;
+  padding: 3rem 0;
   .css-dev-only-do-not-override-yp8pcc.ant-pagination .ant-pagination-item a {
     color: #fff;
   }

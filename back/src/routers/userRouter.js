@@ -3,6 +3,7 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
 import { validateEmptyBody } from "../utils/validators"
+import { UserModel } from "../db/schemas/user";
 
 const userAuthRouter = Router();
 
@@ -88,8 +89,10 @@ userAuthRouter.get("/user/current", login_required, async function (req, res, ne
   }
 });
 
-userAuthRouter.put("/users/:id", login_required, async function (req, res, next) {
+userAuthRouter.put("/users/:id", login_required, async function async(req, res, next) {
   try {
+    const user = await UserModel.findOne({ id: req.currentUserId });
+
     // URI로부터 사용자 id를 추출함.
     const user_id = req.params.id;
     // body data 로부터 업데이트할 사용자 정보를 추출함.
@@ -97,10 +100,7 @@ userAuthRouter.put("/users/:id", login_required, async function (req, res, next)
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const description = req.body.description ?? null;
-    const profile = req.body.profile.data ?? null;
-
-    console.log(profile);
-    console.log(typeof profile);
+    const profile = req.body.profile ? req.body.profile.data : user.profile;
 
     const toUpdate = { name, email, password, description, profile };
 

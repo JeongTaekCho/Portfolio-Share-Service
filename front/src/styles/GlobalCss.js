@@ -5,8 +5,12 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  body {
+  html,body{
     font-family: 'Poor Story', cursive;
+    font-size: 10px;
+  }
+
+  body {
     line-height: 1.5;
   }
 `;
