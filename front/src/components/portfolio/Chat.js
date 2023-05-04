@@ -4,11 +4,10 @@ import styled from "styled-components";
 import { res } from "../../styles/responsive";
 import { Space, Spin } from "antd";
 
-
 export function Chat({ onClickBotBtn }) {
   const [question, setQuestion] = useState("");
   const [msgHistory, setMsgHistory] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onChangeInput = (e) => {
     setQuestion(e.target.value);
@@ -71,7 +70,7 @@ export function Chat({ onClickBotBtn }) {
           </MsgContainer>
         ))}
         {isLoading && (
-          <Space>
+          <Space className="space">
             <SpinWrap>
               <Spin tip="AI가 열심히 답변중입니다...">
                 <div className="content" />
@@ -118,14 +117,16 @@ const ChatBox = styled.div`
     }
   }
 
+  .ant-spin .ant-spin-dot-item {
+    background-color: orange;
+  }
+
   @media ${res.tablet} {
     width: 95%;
     height: 95vh;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  .ant-spin .ant-spin-dot-item {
-    background-color: orange;
   }
 `;
 
