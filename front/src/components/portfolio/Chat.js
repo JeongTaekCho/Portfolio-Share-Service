@@ -29,7 +29,7 @@ export function Chat({ onClickBotBtn }) {
 
       const bodyData = JSON.stringify({ question });
 
-      const answer = await axios.post("chat", bodyData, {
+      const answer = await axios.post("http://localhost:5001/chat", bodyData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { res } from "../responsive";
 
 export const Wrap = styled.div`
   width: 100%;
@@ -33,12 +34,18 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 10rem 13rem 10rem 9.5rem;
   margin-top: 5.7rem;
+  @media ${res.tablet} {
+    padding: 3.5rem;
+  }
 `;
 export const ImgBox = styled.div`
   width: 30rem;
   padding-top: 5rem;
   img {
     width: 100%;
+  }
+  @media ${res.tablet} {
+    margin: 0 auto;
   }
 `;
 
@@ -73,5 +80,8 @@ export const Form = styled.form`
     margin-top: 2rem;
     font-family: Poppins-Bold;
     font-weight: 550;
+  }
+  @media ${res.tablet} {
+    width: 100%;
   }
 `;

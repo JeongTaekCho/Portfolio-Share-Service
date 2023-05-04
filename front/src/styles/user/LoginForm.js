@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { res } from "../responsive";
 
 export const Wrap = styled.div`
   width: 100%;
@@ -33,12 +34,19 @@ export const Container = styled.div`
   justify-content: space-between;
   padding: 17.7rem 13rem 3.3rem 9.5rem;
   margin-top: 5.7rem;
+
+  @media ${res.tablet} {
+    padding: 3.5rem;
+  }
 `;
 
 export const ImgBox = styled.div`
   width: 31.6rem;
   img {
     width: 100%;
+  }
+  @media ${res.tablet} {
+    margin: 0 auto;
   }
 `;
 
@@ -49,6 +57,9 @@ export const Form = styled.form`
     margin-bottom: 2rem;
   }
   .css-jh47zj-MuiButtonBase-root-MuiButton-root {
+    width: 100%;
+  }
+  @media ${res.tablet} {
     width: 100%;
   }
 `;
