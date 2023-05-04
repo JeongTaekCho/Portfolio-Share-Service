@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import * as Api from "../../api";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
@@ -86,7 +86,7 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
             variant="top"
             style={{ display: "block", width: "100%", height: "100%" }}
             className=""
-            src={imgFile || `http://localhost:5001/${user?.profile}`}
+            src={imgFile || `${Api.serverUrl}${user?.profile}`}
             alt="유저 프로필 사진"
             rounded
           />
