@@ -17,8 +17,6 @@ const upload = multer({
 
 imgRouter.post("/", upload.single("img"), async (req, res) => {
   try {
-    console.log("req.body.profile : ", req.body.profile);
-
     res.json(req.file.path);
 
     if (req.body.profile !== "uploads/profile.png") {
@@ -26,7 +24,6 @@ imgRouter.post("/", upload.single("img"), async (req, res) => {
         if (err) {
           throw new Error(err);
         }
-        console.log("이미지가 삭제되었습니다.");
       });
     }
   } catch (err) {

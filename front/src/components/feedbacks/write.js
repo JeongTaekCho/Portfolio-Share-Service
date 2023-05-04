@@ -10,8 +10,6 @@ export default function FeedbackWrite({ feedbackData, isEdit, user, getFeedbackD
   const location = useLocation();
   const pathname = location.pathname.slice(7);
 
-  console.log(pathname);
-
   useEffect(() => {
     setFeedback(feedbackData?.content);
   }, [feedbackData]);

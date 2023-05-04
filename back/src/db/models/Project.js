@@ -8,7 +8,6 @@ class Project {
 
   static async findById({ projectId }) {
     const project = await ProjectModel.findById(projectId);
-    console.log(project)
     return project;
   }
 
@@ -17,11 +16,12 @@ class Project {
     return projects;
   }
 
-  static async update({ projectId, projectName, startDate, endDate, content}) {
+  static async update({ projectId, projectName, startDate, endDate, content }) {
     const updatedProject = await ProjectModel.updateOne(
-      {_id:projectId}
-      ,{projectName, startDate, endDate, content}
-      ,{new: true});
+      { _id: projectId },
+      { projectName, startDate, endDate, content },
+      { new: true }
+    );
 
     return updatedProject;
   }

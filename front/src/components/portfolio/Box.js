@@ -43,8 +43,6 @@ export default function Box({ title, mvpId }) {
     getUserInfo();
   }, []);
 
-  console.log(educationDatas);
-
   const getProjectData = async () => {
     setProjectDatas(await getData(`projects/user/${userId || userInfo?.id}`));
   };

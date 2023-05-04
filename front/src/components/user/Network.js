@@ -27,8 +27,6 @@ function Network() {
     setPage(value);
   };
 
-  console.log(users);
-
   return (
     <Wrap fluid>
       <Container>

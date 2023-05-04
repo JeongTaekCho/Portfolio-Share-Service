@@ -52,8 +52,6 @@ export function Chat({ onClickBotBtn }) {
     }
   };
 
-  console.log(msgHistory);
-
   return (
     <ChatBox>
       <HeadBox>
