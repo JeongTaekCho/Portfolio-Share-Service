@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { res } from "../responsive";
+import { res } from "./responsive";
 
 export const Wrap = styled.div`
   width: 100%;
