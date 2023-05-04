@@ -4,10 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-import { Container, PortfolioContainer, PortfolioList, Wrap } from "../styles/Portfolio";
+import { BotImg, BotImgBox, Container, PortfolioContainer, PortfolioList, Wrap } from "../styles/Portfolio";
 import Box from "./portfolio/Box";
 import Loading from "./Loading";
 import Feedback from "./feedbacks/feedback";
+import { Chat } from "./portfolio/Chat";
 
 const LIST = [
   {
@@ -33,6 +34,7 @@ function Portfolio() {
   const params = useParams();
   const [portfolioOwner, setPortfolioOwner] = useState(null);
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  const [isShow, setIsShow] = useState(false);
   const userState = useContext(UserStateContext);
 
   const fetchPorfolioOwner = async (ownerId) => {
@@ -61,6 +63,10 @@ function Portfolio() {
     return <Loading />;
   }
 
+  const onClickBotBtn = () => {
+    setIsShow((prev) => !prev);
+  };
+
   return (
     <Wrap>
       <Container>
@@ -74,6 +80,10 @@ function Portfolio() {
           <Feedback user={userState?.user} portfolioOwner={portfolioOwner} />
         </PortfolioContainer>
       </Container>
+      {isShow && <Chat onClickBotBtn={onClickBotBtn} />}
+      <BotImgBox onClick={onClickBotBtn}>
+        <BotImg src="/images/bot.png" />
+      </BotImgBox>
     </Wrap>
   );
 }

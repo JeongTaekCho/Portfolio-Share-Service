@@ -2,19 +2,14 @@ import is from "@sindresorhus/is";
 import express from "express";
 import { login_required } from "../middlewares/login_required";
 import { CertificationService } from "../services/certificationService";
+import { validateEmptyBody } from "../utils/validators"
 
 const certificationRouter = express.Router();
 
 // certification 생성
-certificationRouter.post("/"
-,login_required
-,async function (req, res, next) {
+certificationRouter.post("/", login_required, async function (req, res, next) {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
+    validateEmptyBody(req)
     const userId = req.currentUserId;
     const { certificationName, description, date} = req.body;
 
@@ -25,7 +20,6 @@ certificationRouter.post("/"
     if (newCertification.errorMessage) 
       throw new Error(newCertification.errorMessage);
 
-    console.log('newCertification ',newCertification);
     res.status(201).json(newCertification);
   } catch (error) {
     next(error);
@@ -33,17 +27,11 @@ certificationRouter.post("/"
 });
 
 // certification 조회
-certificationRouter.get("/:id"
-,login_required
-,async function (req, res, next) {
+certificationRouter.get("/:id", login_required, async function (req, res, next) {
   try {
     const certificationId = req.params.id;
-    console.log(certificationId);
 
     const certification = await CertificationService.getCertification({ certificationId });
-
-    if (certification.errorMessage) 
-      throw new Error(certification.errorMessage);
   
     res.json(certification);
   } catch (error) {
@@ -51,16 +39,11 @@ certificationRouter.get("/:id"
   }
 });
 
-certificationRouter.get("/user/:id"
-,login_required
-,async function (req, res, next) {
+certificationRouter.get("/user/:id", login_required, async function (req, res, next) {
   try {
     const userId = req.params.id;
 
     const certifications = await CertificationService.getCertifications({ userId });
-
-    if (certifications.errorMessage) 
-      throw new Error(certifications.errorMessage);
 
     res.json(certifications);
   } catch (error) {
@@ -68,17 +51,15 @@ certificationRouter.get("/user/:id"
   }
 });
 
-certificationRouter.put("/:id"
-,login_required
-,async function (req, res, next) {
+certificationRouter.put("/:id", login_required, async function (req, res, next) {
   try {
     const certificationId = req.params.id;
     const currentUserId = req.currentUserId;
     const { certificationName, description, date } = req.body;
-    const certification = await CertificationService.changeCertification({ certificationId, currentUserId, certificationName, description, date});
 
-    if (certification.errorMessage) 
-      throw new Error(certification.errorMessage);
+    const certification = await CertificationService.changeCertification({ 
+      certificationId, currentUserId, certificationName, description, date
+    });
     
     res.json(certification);
   } catch (error) {
@@ -86,18 +67,13 @@ certificationRouter.put("/:id"
   }
 });
 
-certificationRouter.delete("/:id"
-,login_required
-,async function (req, res, next) {
+certificationRouter.delete("/:id", login_required, async function (req, res, next) {
   try {
     const certificationId = req.params.id;
     const currentUserId = req.currentUserId;
 
     const result = await CertificationService.deleteCertification(certificationId, currentUserId);
-    
-    if (result.errorMessage) 
-      throw new Error(result.errorMessage);
-    
+  
     res.status(200).json({ message: "certification 삭제 완료" });
   } catch (error) {
     next(error);

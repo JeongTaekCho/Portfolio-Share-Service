@@ -1,7 +1,7 @@
-import is from "@sindresorhus/is";
 import express from "express";
 import { login_required } from "../middlewares/login_required";
 import { ProjectService } from "../services/projectService";
+import { validateEmptyBody } from "../utils/validators"
 
 const projectRouter = express.Router();
 
@@ -11,7 +11,6 @@ projectRouter.get("/:id"
 ,async function (req, res, next) {
   try {
     const projectId = req.params.id.trim();
-    console.log(projectId);
     const project = await ProjectService.getProject({ projectId });
 
     if (project.errorMessage) {
@@ -43,12 +42,7 @@ projectRouter.post("/"
 ,login_required
 ,async function (req, res, next) {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
-      );
-    }
-
+    validateEmptyBody(req);
     const userId = req.currentUserId;
     const { projectName, startDate, endDate, content } = req.body;
 
@@ -72,14 +66,12 @@ projectRouter.put("/:id"
 ,login_required
 ,async function (req, res, next) {
   try {
+    validateEmptyBody(req);
     const projectId = req.params.id;
     const userId = req.currentUserId;
-    console.log('projectRouter userId : ', userId);
-    console.log('projectRouter projectId : ', projectId);
 
     const { projectName,startDate,endDate,content } = req.body;
     const project = await ProjectService.changeProject({ projectId, projectName, startDate, endDate, content, userId });
-    console.log('projectRouter project: ', project);
 
     if (project.errorMessage) {
       throw new Error(project.errorMessage);
@@ -98,14 +90,8 @@ projectRouter.delete("/:id"
   try {
     const projectId = req.params.id;
     const userId = req.currentUserId;
-    console.log('projectRouter projectId : ', projectId);
-    console.log('projectRouter userId : ', userId);
 
-    const result = await ProjectService.deleteProject(projectId, userId);
-
-    if (result.errorMessage) {
-      throw new Error(result.errorMessage);
-    }
+    await ProjectService.deleteProject(projectId, userId);
 
     res.json({ message: 'project 삭제 완료' });
   } catch (error) {

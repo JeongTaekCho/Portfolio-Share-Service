@@ -1,5 +1,5 @@
 import React from "react";
-import { PortfolioBox, Title } from "../../styles/portfolio/Box";
+import { BoxText, PortfolioBox, Title } from "../../styles/portfolio/Box";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import ProjectForm from "./forms/Project";
@@ -11,8 +11,8 @@ import Project from "./details/Project";
 import { useEffect } from "react";
 import AwardDetail from "./details/Award";
 import CertificateDetail from "./details/Certificate";
-import { useLocation } from "react-router-dom";
-import { getData } from "../../hooks/getData";
+import { useLocation, useParams } from "react-router-dom";
+import { getData } from "../../utils/getData";
 
 const TITLE = {
   education: "학력",
@@ -33,7 +33,8 @@ export default function Box({ title, mvpId }) {
   const [userInfo, setUserInfo] = useState();
 
   const location = useLocation();
-  const pathname = location.pathname.slice(7);
+  const params = useParams();
+  const userId = params.userId;
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -42,28 +43,32 @@ export default function Box({ title, mvpId }) {
     getUserInfo();
   }, []);
 
+  console.log(educationDatas);
+
   const getProjectData = async () => {
-    setProjectDatas(await getData(`projects/user/${pathname || userInfo?.id}`));
+    setProjectDatas(await getData(`projects/user/${userId || userInfo?.id}`));
   };
 
   const getEducationData = async () => {
-    setEducationDatas(await getData(`educations/user/${pathname || userInfo?.id}`));
+    setEducationDatas(await getData(`educations/user/${userId || userInfo?.id}`));
   };
 
   const getAwardData = async () => {
-    setAwardDatas(await getData(`awards/user/${pathname || userInfo?.id}`));
+    setAwardDatas(await getData(`awards/user/${userId || userInfo?.id}`));
   };
 
   const getCertificateData = async () => {
-    setCertificateDatas(await getData(`certifications/user/${pathname || userInfo?.id}`));
+    setCertificateDatas(await getData(`certifications/user/${userId || userInfo?.id}`));
   };
 
   useEffect(() => {
-    getProjectData();
-    getEducationData();
-    getAwardData();
-    getCertificateData();
-  }, [userInfo, location.pathname]);
+    if (userId || (!userId && userInfo?.id)) {
+      getProjectData();
+      getEducationData();
+      getAwardData();
+      getCertificateData();
+    }
+  }, [userInfo, userId]);
 
   const onClickBtn = () => {
     if (title === TITLE.project) {
@@ -82,7 +87,7 @@ export default function Box({ title, mvpId }) {
   return (
     <PortfolioBox>
       <Title>{title}</Title>
-
+      {mvpId === "education" && educationDatas.length === 0 && <BoxText>학력정보가 없습니다. 추가해보세요!</BoxText>}
       {mvpId === "education" &&
         educationDatas?.map((education) => (
           <EducationDetail
@@ -99,19 +104,23 @@ export default function Box({ title, mvpId }) {
           getEducationData={getEducationData}
         />
       )}
-
+      {mvpId === "award" && awardDatas.length === 0 && <BoxText>수상이력 정보가 없습니다. 추가해보세요!</BoxText>}
       {mvpId === "award" &&
         awardDatas?.map((award) => (
           <AwardDetail key={award._id} award={award} getAwardData={getAwardData} userId={userInfo?.id} />
         ))}
       {isAward && <AwardForm setIsAward={setIsAward} getAwardData={getAwardData} />}
 
+      {mvpId === "project" && projectDatas.length === 0 && <BoxText>프로젝트 정보가 없습니다. 추가해보세요!</BoxText>}
       {mvpId === "project" &&
         projectDatas?.map((project) => (
           <Project key={project._id} project={project} getProjectData={getProjectData} userId={userInfo?.id} />
         ))}
       {isProject && <ProjectForm setIsProject={setIsProject} getProjectData={getProjectData} />}
 
+      {mvpId === "certificate" && certificateDatas.length === 0 && (
+        <BoxText>자격증 정보가 없습니다. 추가해보세요!</BoxText>
+      )}
       {mvpId === "certificate" &&
         certificateDatas?.map((certificate) => (
           <CertificateDetail
@@ -124,7 +133,7 @@ export default function Box({ title, mvpId }) {
       {isCertificate && <CertificateForm setIsCertificate={setIsCertificate} getCertificateData={getCertificateData} />}
 
       {location.pathname === "/" && (
-        <Button variant="contained" color="success" onClick={onClickBtn}>
+        <Button variant="contained" color="success" onClick={onClickBtn} style={{ fontSize: "1.8rem" }}>
           {isProject || isEducation || isAward || isCertificate ? "-" : "+"}
         </Button>
       )}

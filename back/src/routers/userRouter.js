@@ -2,15 +2,14 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
+import { validateEmptyBody } from "../utils/validators"
+import { UserModel } from "../db/schemas/user";
 
 const userAuthRouter = Router();
 
 userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-    }
-
+    validateEmptyBody(req);
     // req (request) 에서 데이터 가져오기
     const name = req.body.name;
     const email = req.body.email;
@@ -56,13 +55,13 @@ userAuthRouter.get("/userlist", login_required, async function (req, res, next) 
   try {
     // 전체 사용자 목록을 얻음
     const page = parseInt(req.query.page || 1);
-    const limit = 10;
+    const limit = 8;
     const skip = (page - 1) * limit;
     console.log("page : ", page);
     console.log("skip : ", skip);
 
     const { users, count } = await userAuthService.getUsers(skip, limit);
-    res.status(200).send({
+    res.status(200).json({
       currentPage: page,
       totalPages: Math.ceil(count / limit),
       users,
@@ -90,8 +89,10 @@ userAuthRouter.get("/user/current", login_required, async function (req, res, ne
   }
 });
 
-userAuthRouter.put("/users/:id", login_required, async function (req, res, next) {
+userAuthRouter.put("/users/:id", login_required, async function async(req, res, next) {
   try {
+    const user = await UserModel.findOne({ id: req.currentUserId });
+
     // URI로부터 사용자 id를 추출함.
     const user_id = req.params.id;
     // body data 로부터 업데이트할 사용자 정보를 추출함.
@@ -99,10 +100,7 @@ userAuthRouter.put("/users/:id", login_required, async function (req, res, next)
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const description = req.body.description ?? null;
-    const profile = req.body.profile.data ?? null;
-
-    console.log(profile);
-    console.log(typeof profile);
+    const profile = req.body.profile ? req.body.profile.data : user.profile;
 
     const toUpdate = { name, email, password, description, profile };
 

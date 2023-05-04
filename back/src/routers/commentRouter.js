@@ -3,15 +3,14 @@ import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { CommentService } from "../services/commentService";
 import { userAuthService } from "../services/userService";
+import { validateEmptyBody } from "../utils/validators"
 
 const commentRouter = Router();
 
 // comment 생성
 commentRouter.post("/", login_required, async function (req, res, next) {
   try {
-    if (is.emptyObject(req.body)) {
-      throw new Error("headers의 Content-Type을 application/json으로 설정해주세요");
-    }
+    validateEmptyBody(req)
 
     const writerId = req.currentUserId;
     const writeUser = await userAuthService.getUserInfo({ user_id: writerId })

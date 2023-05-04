@@ -10,7 +10,6 @@ import { post, put } from "../../../api";
 import dayjs from "dayjs";
 import { errorModal, successModal } from "../../modals/AlertModal";
 
-
 export default function CertificateForm({ setIsCertificate, getCertificateData, onClickToggleShowBtn, certificate }) {
   const [certificationName, setCertificationName] = useState("");
   const [date, setDate] = useState(null);
@@ -43,7 +42,7 @@ export default function CertificateForm({ setIsCertificate, getCertificateData, 
         const data = {
           certificationName,
           date,
-          description
+          description,
         };
 
         await post("certifications", data);
@@ -77,7 +76,7 @@ export default function CertificateForm({ setIsCertificate, getCertificateData, 
       errorModal(err.message);
     }
   };
-  
+
   const onClickCancelForm = () => {
     setIsCertificate(false);
   };
@@ -85,28 +84,76 @@ export default function CertificateForm({ setIsCertificate, getCertificateData, 
   return (
     <Form>
       <TextField
-      label="자격증 이름"
-      id="outlined-start-adornment"
-      sx={{ m: 1, width: "25ch" }}
-      onChange={onChangeCertificationName}
-      value={certificationName}
+        label="자격증 이름"
+        id="outlined-start-adornment"
+        sx={{
+          m: 1,
+          width: "100%",
+          " .MuiOutlinedInput-root": {
+            fontSize: "1.6rem",
+          },
+          margin: 0,
+        }}
+        InputLabelProps={{
+          style: { fontSize: "1.6rem" },
+        }}
+        onChange={onChangeCertificationName}
+        value={certificationName}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label="자격증 취득날짜" name="date" onChange={onChangeDate} value={date}/>
+        <DemoContainer
+          components={["DatePicker", "DatePicker"]}
+          sx={{
+            m: 1,
+            width: "100%",
+            " .MuiOutlinedInput-root": {
+              fontSize: "1.6rem",
+            },
+            margin: 0,
+            marginBottom: "10px",
+          }}
+        >
+          <DatePicker
+            label="자격증 취득날짜"
+            name="date"
+            onChange={onChangeDate}
+            value={date}
+            InputLabelProps={{
+              style: { fontSize: "1.6rem" },
+            }}
+          />
         </DemoContainer>
       </LocalizationProvider>
       <TextField
-        style={{ marginBottom: "20px" }}
+        style={{ marginBottom: "2rem" }}
         label="발급기관"
         id="outlined-start-adornment"
-        sx={{ m: 1, width: "25ch" }}
+        sx={{
+          m: 1,
+          width: "100%",
+          " .MuiOutlinedInput-root": {
+            fontSize: "1.6rem",
+          },
+          margin: 0,
+        }}
+        InputLabelProps={{
+          style: { fontSize: "1.6rem" },
+        }}
         value={description}
         onChange={onChangeDescription}
       />
       <BtnBox>
-        <Button onClick={certificate ? onClickEditCertificate : onClickAddCertificate}> {certificate ? "수정" : "등록"} </Button>
-        <Button className="cancelBtn" onClick={certificate ? onClickToggleShowBtn : onClickCancelForm}>
+        <Button
+          onClick={certificate ? onClickEditCertificate : onClickAddCertificate}
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
+        >
+          {certificate ? "수정" : "등록"}{" "}
+        </Button>
+        <Button
+          className="cancelBtn"
+          onClick={certificate ? onClickToggleShowBtn : onClickCancelForm}
+          style={{ fontSize: "1.6rem", padding: "1rem" }}
+        >
           취소
         </Button>
       </BtnBox>

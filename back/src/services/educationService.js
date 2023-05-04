@@ -1,73 +1,37 @@
 import  { Education }  from "../db/models/Education";
+import { findModelById } from "../utils/findById";
 
 class EducationService {
   static async addEducation({ userId, school, major, position }) {
+    if (!userId || !school || !major || !position) 
+      throw new Error("모두 기입해 주세요.");
     const createdNewEducation = await Education.create({ userId, school, major, position });
-    createdNewEducation.errorMessage = null;
-
-    if (!userId || !school || !major || !position) {
-      const errorMessage = "모두 기입해 주세요";
-      return { errorMessage };
-    }
 
     return createdNewEducation;
   }
   
   static async getEducation({ educationId }) {
-    console.log('educationId: ',educationId);
-    const education = await Education.findById({ educationId });
-    
-    if (!education) {
-      const errorMessage = "해당 id를 가진 education 데이터는 없습니다.";
-      return { errorMessage };
-    }
+    const education = findModelById(Education.findById({ educationId }))
 
     return education;
   }
 
   static async getEducations({ userId }) {
-    const educations = await Education.findByUserId({ userId });
-
-    if (!educations) {
-      const errorMessage = "해당 id를 가진 education 데이터는 없습니다.";
-      return { errorMessage };
-    }
+    const educations = findModelById(Education.findByUserId({ userId }))
 
     return educations;
   }
 
-  static async ChangeEducation({ educationId, currentUserId, school, major, position }) {
-    let education = await Education.findById({educationId});
-    console.log('educationService : ', education);
+  static async changeEducation({ educationId, currentUserId, school, major, position }) {
+    let education = await findModelById(Education.findById({educationId}), currentUserId)
 
-    if (!education) {
-      const errorMessage =
-        "해당 id를 가진 education 데이터는 없습니다.";
-      return { errorMessage };
-    }
-    if (education.userId !== currentUserId) {
-      const errorMessage = "해당 education 수정 권한이 없습니다.";
-      return { errorMessage };
-    }
-    
     education = await Education.update({ educationId, school, major, position })
 
     return education;
   }
 
-
-  
   static async deleteEducation(educationId, currentUserId) {
-    const education = await Education.findById({educationId});
-    console.log('education: ',education);
-    if (!education) {
-      const errorMessage = "해당 id를 가진 education 데이터는 없습니다.";
-      return { errorMessage };
-    }
-    if (education.userId !== currentUserId) {
-      const errorMessage = "해당 education 수정 권한이 없습니다.";
-      return { errorMessage };
-    }
+    const education = await findModelById(Education.findById({educationId}), currentUserId);
 
     await Education.deleteById(educationId);
     return { status: "ok" };

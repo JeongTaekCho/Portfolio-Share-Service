@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const DetailWrap = styled.div`
   width: 100%;
-  padding: 30px;
+  padding: 3rem;
   background-color: #fff;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border-radius: 0.8rem;
+  margin-bottom: 2rem;
 `;
 
 export const ProjectBox = styled.div`
@@ -14,11 +14,11 @@ export const ProjectBox = styled.div`
 export const ProjectTextBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
 `;
 export const ProjectText = styled.span`
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 400;
   color: #111;
 `;
@@ -26,7 +26,7 @@ export const ProjectText = styled.span`
 export const ProjectContentBox = styled.div``;
 
 export const ProjectContent = styled.pre`
-  font-size: 18px;
+  font-size: 1.8rem;
   font-weight: 400;
   color: #111;
   white-space: pre-wrap;
@@ -36,8 +36,8 @@ export const ProjectContent = styled.pre`
 export const BtnBox = styled.div`
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 1.5rem;
+  margin-top: 2rem;
   .css-ke5b6m-MuiButtonBase-root-MuiButton-root {
     margin: 0;
   }

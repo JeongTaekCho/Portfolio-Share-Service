@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import * as Api from "../../api";
-import { TextField } from "@mui/material";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
+import TextField from "@mui/material/TextField";
+import { errorModal, successModal } from "../modals/AlertModal";
 
 function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
   //useState로 name 상태를 생성함.
@@ -26,34 +27,44 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
     setFile(e.target.files[0]);
   };
 
-  console.log(file);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // "users/유저id" 엔드포인트로 PUT 요청함.
-    const formData = new FormData();
-    formData.append("img", file);
+    try {
+      if (file !== null) {
+        const formData = new FormData();
+        formData.append("img", file || null);
+        formData.append("profile", user.profile);
 
-    const profile = await axios.post("http://localhost:5001/upload", formData, {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-      },
-    });
-
-    const res = await Api.put(`users/${user.id}`, {
-      name,
-      email,
-      description,
-      profile,
-    });
-    // 유저 정보는 response의 data임.
-    const updatedUser = res.data;
-    // 해당 유저 정보로 user을 세팅함.
-    setUser(updatedUser);
-
-    // isEditing을 false로 세팅함.
-    setIsEditing(false);
+        const profile = await axios.post("http://localhost:5001/upload", formData, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+          },
+        });
+        const res = await Api.put(`users/${user.id}`, {
+          name,
+          email,
+          description,
+          profile,
+        });
+        const updatedUser = res.data;
+        setUser(updatedUser);
+        setIsEditing(false);
+        successModal("프로필 업데이트에 성공하였습니다.");
+      } else {
+        const res = await Api.put(`users/${user.id}`, {
+          name,
+          email,
+          description,
+        });
+        const updatedUser = res.data;
+        setUser(updatedUser);
+        setIsEditing(false);
+        successModal("프로필 업데이트에 성공하였습니다.");
+      }
+    } catch (err) {
+      errorModal("프로필 업데이트에 실패하였습니다.");
+    }
   };
 
   const handleCancel = (e) => {
@@ -61,8 +72,15 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
   };
 
   return (
-    <>
-      <Modal title="내 정보 변경" open={isEditing} onOk={handleSubmit} onCancel={handleCancel}>
+    <UserEditContainer>
+      <Modal
+        title="내 정보 변경"
+        open={isEditing}
+        onOk={handleSubmit}
+        onCancel={handleCancel}
+        okText="수정"
+        cancelText="취소"
+      >
         <ImageBox>
           <Image
             variant="top"
@@ -81,7 +99,17 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
           label="이름"
           name="name"
           id="outlined-start-adornment"
-          sx={{ m: 1, width: "100%" }}
+          sx={{
+            m: 1,
+            width: "100%",
+            " .MuiOutlinedInput-root": {
+              fontSize: "1.8rem",
+            },
+          }}
+          InputLabelProps={{
+            style: { fontSize: "1.8rem" },
+          }}
+          style={{ font: "1.8rem" }}
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -89,7 +117,16 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
           label="이메일"
           name="email"
           id="outlined-start-adornment"
-          sx={{ m: 1, width: "100%" }}
+          sx={{
+            m: 1,
+            width: "100%",
+            " .MuiOutlinedInput-root": {
+              fontSize: "1.8rem",
+            },
+          }}
+          InputLabelProps={{
+            style: { fontSize: "1.8rem" },
+          }}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
@@ -97,20 +134,35 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
           label="상태 메세지"
           name="description"
           id="outlined-start-adornment"
-          sx={{ m: 1, width: "100%" }}
+          sx={{
+            m: 1,
+            width: "100%",
+            " .MuiOutlinedInput-root": {
+              fontSize: "1.8rem",
+            },
+          }}
+          InputLabelProps={{
+            style: { fontSize: "1.8rem" },
+          }}
           onChange={(e) => setDescription(e.target.value)}
           value={description}
         />
       </Modal>
-    </>
+    </UserEditContainer>
   );
 }
 
+const UserEditContainer = styled.div`
+  input {
+    font-size: 18px !important;
+  }
+`;
+
 const ImageBox = styled.div`
   width: 60%;
-  height: 250px;
+  height: 25rem;
   position: relative;
-  margin: 0 auto 10px;
+  margin: 0 auto 1rem;
 `;
 
 const InputFile = styled.input`
@@ -119,10 +171,10 @@ const InputFile = styled.input`
 
 const EditLabel = styled.label`
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  margin: 0 auto 20px;
+  margin: 0 auto 2rem;
   cursor: pointer;
   img {
     width: 100%;

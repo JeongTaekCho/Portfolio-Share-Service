@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FeedBackContainer, FeedbackMent, FeedbackTitle } from "../../styles/feedbacks/feedback";
 import FeedbackDetail from "./detail";
 import FeedbackWrite from "./write";
-import { getData } from "../../hooks/getData";
+import { getData } from "../../utils/getData";
 import { useLocation } from "react-router-dom";
 
 export default function Feedback({ user, portfolioOwner }) {

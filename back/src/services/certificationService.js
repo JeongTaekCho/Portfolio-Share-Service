@@ -1,66 +1,43 @@
 import { Certification } from "../db/models/Certification"; 
+import { findModelById } from "../utils/findById";
 
 class CertificationService {
   static async addCertification({ userId, certificationName, description, date }) {
     const foundCertification = await Certification.find({ userId, certificationName })
-    if(foundCertification.length > 0){
-      const errorMessage = "해당 자격증이 존재합니다";
-      return { errorMessage };
-    }
-    
+    if(foundCertification.length > 0)
+      throw new Error("해당 자격증이 존재합니다."); 
+      
     const newCertification = { userId, certificationName, description, date };
- 
     const createdNewCertification = await Certification.create(newCertification );
 
     return createdNewCertification;
   }
 
   static async getCertification({ certificationId }) {
-    const certification = await Certification.findById({certificationId });
+    const certification = findModelById(Certification.findById({certificationId }))
 
-    if (!certification) {
-      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
-      return { errorMessage };
-    }
     return certification;
   }
 
   static async getCertifications({ userId }) {
-    const certification = await Certification.findByUserId({userId});
-
-    if (!certification) {
-      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
-      return { errorMessage };
-    }
-    return certification;
+    const certifications = findModelById(Certification.findByUserId({userId}))
+  
+    return certifications;
   }
 
   static async changeCertification({ certificationId, currentUserId, certificationName, description, date }) {
-    let certification = await Certification.findById({certificationId});
-    if (!certification) {
-      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
-      return { errorMessage };
-    }
-    if (certification.userId !== currentUserId) {
-      const errorMessage = "해당 certification 수정 권한이 없습니다.";
-      return { errorMessage };
-    }
+    let certification = findModelById(Certification.findById({certificationId}), currentUserId)
 
     certification = await Certification.update({certificationId, certificationName, description, date})
+    
     return certification;
   }
 
   static async deleteCertification(certificationId, currentUserId) {
-    const certification = await Certification.findById({certificationId});
-    if (!certification) {
-      const errorMessage = "해당 id를 가진 certification 데이터는 없습니다.";
-      return { errorMessage };
-    }
-    if (certification.userId !== currentUserId) {
-      const errorMessage = "해당 certification 수정 권한이 없습니다.";
-      return { errorMessage };
-    }
+    const certification = findModelById(Certification.findById({certificationId}), currentUserId)
+    
     await Certification.deleteById(certificationId);
+    
     return { status: "ok" };
   }
 }
