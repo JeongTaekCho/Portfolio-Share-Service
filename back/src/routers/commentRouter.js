@@ -55,10 +55,6 @@ commentRouter.put("/:id", login_required, async function (req, res, next) {
 
     const comment = await CommentService.ChangeComment({ commentId, currentUserId, content });
 
-    if (comment.errorMessage) {
-      throw new Error(comment.errorMessage);
-    }
-
     res.json(comment);
   } catch (error) {
     next(error);
@@ -71,7 +67,7 @@ commentRouter.delete("/:id", login_required, async function (req, res, next) {
     const currentUserId = req.currentUserId;
     const result = await CommentService.deleteComment(commentId, currentUserId);
 
-    if (result.errorMessage) throw new Error(result.errorMessage);
+    //if (result.errorMessage) throw new Error(result.errorMessage);
 
     res.status(200).json({ message: "comment 삭제 완료" });
   } catch (error) {

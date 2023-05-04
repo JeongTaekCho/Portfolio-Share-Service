@@ -6,7 +6,7 @@ export async function findModelById(classFuction, currentUserId){
   }
   
   if (currentUserId){
-    if(findModel.userId !== currentUserId) 
+    if(findModel.userId !== currentUserId)
       throw new Error("수정 권한이 없습니다.");
   }
 

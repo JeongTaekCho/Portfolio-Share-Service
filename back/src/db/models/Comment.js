@@ -23,7 +23,10 @@ class Comment {
 
   // update
   static async update({ commentId, content }) {
-    const updatedComment = await CommentModel.findOneAndUpdate({ _id: commentId }, { content }, { new: true });
+    const updatedComment = await CommentModel.findOneAndUpdate(
+      { _id: commentId }
+      ,{ content }
+      ,{ new: true });
 
     return updatedComment;
   }

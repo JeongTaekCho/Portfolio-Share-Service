@@ -11,13 +11,13 @@ class EducationService {
   }
   
   static async getEducation({ educationId }) {
-    const education = findModelById(Education.findById({ educationId }))
+    const education = await findModelById(Education.findById({ educationId }))
 
     return education;
   }
 
   static async getEducations({ userId }) {
-    const educations = findModelById(Education.findByUserId({ userId }))
+    const educations = await findModelById(Education.findByUserId({ userId }))
 
     return educations;
   }
