@@ -50,6 +50,20 @@ app.use("/upload", imgRouter);
 app.use("/chat", gptRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
+
+app.use((req, res) => {
+  res.status(404).send("Not Found");
+});
+
+// 405 오류 처리
+app.use((err, req, res, next) => {
+  if (err.status === 405) {
+    res.status(405).send("Method Not Allowed");
+  } else {
+    next(err);
+  }
+});
+
 app.use(errorMiddleware);
 
 export { app };

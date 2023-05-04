@@ -15,16 +15,42 @@ const upload = multer({
   }),
 });
 
-imgRouter.put("/", upload.single("img"), async (req, res) => {
+// HTTP PUT 메서드 처리 로직
+imgRouter.put("/", upload.single("img"), async (req, res, next) => {
   try {
-    res.json(req.file.path);
+    // 파일 업로드 후 업로드된 파일의 경로를 클라이언트에 응답
+    res.json({ path: req.file.path });
 
-    if (req.body.profile !== "uploads/profile.png") {
-      fs.unlink(req.body.profile, (err) => {
-        if (err) {
-          throw new Error(err);
-        }
-      });
+    // 이전 프로필 이미지 파일 삭제
+    if (req.body.profile) {
+      if (fs.existsSync(req.body.profile)) {
+        fs.unlink(req.body.profile, (err) => {
+          if (err) {
+            throw new Error(err);
+          }
+        });
+      }
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+// HTTP POST 메서드 처리 로직
+imgRouter.post("/", upload.single("img"), async (req, res, next) => {
+  try {
+    // 파일 업로드 후 업로드된 파일의 경로를 클라이언트에 응답
+    res.json({ path: req.file.path });
+
+    // 이전 프로필 이미지 파일 삭제
+    if (req.body.profile) {
+      if (fs.existsSync(req.body.profile)) {
+        fs.unlink(req.body.profile, (err) => {
+          if (err) {
+            throw new Error(err);
+          }
+        });
+      }
     }
   } catch (err) {
     next(err);
