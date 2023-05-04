@@ -14,6 +14,11 @@ import { gptRouter } from "./routers/gptRouter";
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://kdt-ai7-team06.elicecoding.com");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 // CORS 에러 방지
 app.use(cors());
 
