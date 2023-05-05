@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { res } from "../../styles/responsive";
 import { Space, Spin } from "antd";
+import { serverUrl } from "../../api";
 
 export function Chat({ onClickBotBtn }) {
   const [question, setQuestion] = useState("");
@@ -29,7 +30,7 @@ export function Chat({ onClickBotBtn }) {
 
       const bodyData = JSON.stringify({ question });
 
-      const answer = await axios.post("http://localhost:5001/chat", bodyData, {
+      const answer = await axios.post(`${serverUrl}chat`, bodyData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

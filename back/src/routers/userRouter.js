@@ -2,7 +2,7 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
-import { validateEmptyBody } from "../utils/validators"
+import { validateEmptyBody } from "../utils/validators";
 import { UserModel } from "../db/schemas/user";
 
 const userAuthRouter = Router();
@@ -57,8 +57,6 @@ userAuthRouter.get("/userlist", login_required, async function (req, res, next) 
     const page = parseInt(req.query.page || 1);
     const limit = 8;
     const skip = (page - 1) * limit;
-    console.log("page : ", page);
-    console.log("skip : ", skip);
 
     const { users, count } = await userAuthService.getUsers(skip, limit);
     res.status(200).json({
@@ -100,7 +98,7 @@ userAuthRouter.put("/users/:id", login_required, async function async(req, res, 
     const email = req.body.email ?? null;
     const password = req.body.password ?? null;
     const description = req.body.description ?? null;
-    const profile = req.body.profile ? req.body.profile.data : user.profile;
+    const profile = req.body.profile ? req.body.profile : user.profile;
 
     const toUpdate = { name, email, password, description, profile };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 import * as Api from "../../api";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
@@ -34,9 +34,9 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
       if (file !== null) {
         const formData = new FormData();
         formData.append("img", file || null);
-        formData.append("profile", user.profile);
+        formData.append("profile", user.profile.path);
 
-        const profile = await axios.post("/upload", formData, {
+        const profile = await axios.post(`${Api.serverUrl}upload`, formData, {
           headers: {
             Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
           },
@@ -45,7 +45,7 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
           name,
           email,
           description,
-          profile,
+          profile: profile.data.path,
         });
         const updatedUser = res.data;
         setUser(updatedUser);
@@ -86,7 +86,7 @@ function UserEditForm({ user, setIsEditing, setUser, isEditing }) {
             variant="top"
             style={{ display: "block", width: "100%", height: "100%" }}
             className=""
-            src={imgFile || `http://localhost:5001/${user?.profile}`}
+            src={imgFile || `${Api.serverUrl}${user?.profile}`}
             alt="유저 프로필 사진"
             rounded
           />
