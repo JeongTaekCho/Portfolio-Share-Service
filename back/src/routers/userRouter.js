@@ -57,8 +57,6 @@ userAuthRouter.get("/userlist", login_required, async function (req, res, next) 
     const page = parseInt(req.query.page || 1);
     const limit = 8;
     const skip = (page - 1) * limit;
-    console.log("page : ", page);
-    console.log("skip : ", skip);
 
     const { users, count } = await userAuthService.getUsers(skip, limit);
     res.status(200).json({
